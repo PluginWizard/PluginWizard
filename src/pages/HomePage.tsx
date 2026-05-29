@@ -44,7 +44,7 @@ const features = [
 export default function HomePage() {
   return (
     <main className="flex flex-col">
-      <section className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden sm:px-8 lg:px-16 xl:px-24">
+      <section className="relative flex min-h-screen items-center overflow-hidden sm:px-8 lg:px-16 xl:px-24">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/images/banner.png')" }}
