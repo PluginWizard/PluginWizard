@@ -60,8 +60,8 @@ export default function HomePage() {
               </h1>
 
               <p className="max-w-2xl text-lg text-card-muted-foreground sm:text-xl md:text-2xl">
-                Build Paper plugins using visual blocks, without getting buried in boilerplate.
-                Design your logic, connect the pieces, and ship ideas faster.
+                Build Paper plugins using visual blocks, no programming knowledge needed.
+                Drag, drop, and create amazing plugins in minutes.
               </p>
             </div>
 
