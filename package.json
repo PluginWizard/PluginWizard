@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "blockly": "^12.5.1",
+    "@blockly/continuous-toolbox": "^7.0.8",
+    "@blockly/field-colour-hsv-sliders": "^6.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
