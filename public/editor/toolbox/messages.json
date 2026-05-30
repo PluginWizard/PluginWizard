@@ -1,0 +1,75 @@
+{
+  "kind": "category",
+  "name": "Messages",
+  "colour": "#de3ed5",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "send_message",
+      "inputs": {
+        "MESSAGE": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "<green><bold>Hello!"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "broadcast_message",
+      "inputs": {
+        "MESSAGE": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "&6&lServer announcement!"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "chat_message"
+    },
+    {
+      "kind": "block",
+      "type": "chat_message_sprite"
+    },
+
+    {
+      "kind": "LABEL",
+      "text": "Titles",
+      "web-class": "ioLabel"
+    },
+    {
+      "kind": "block",
+      "type": "display_title"
+    },
+    {
+      "kind": "block",
+      "type": "display_subtitle"
+    },
+    {
+      "kind": "block",
+      "type": "display_actionbar"
+    },
+
+        {
+      "kind": "LABEL",
+      "text": "Sounds",
+      "web-class": "ioLabel"
+    },
+    {
+      "kind": "block",
+      "type": "play_sound"
+    },
+    {
+      "kind": "block",
+      "type": "play_sound_at"
+    }
+  ]
+}

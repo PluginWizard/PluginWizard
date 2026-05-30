@@ -1,0 +1,275 @@
+{
+    "player": {
+        "message0": "player",
+        "output": "Player",
+        "colour": "#22c55e",
+        "tooltip": "The player object",
+        "helpkUrl": ""
+    },
+    "player_get": {
+        "message0": "Get %1 from player %2",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "GET",
+                "options": [
+                    [
+                        "Name",
+                        ".getName()"
+                    ],
+                    [
+                        "Display Name",
+                        ".getDisplayName()"
+                    ],
+                    [
+                        "UUID",
+                        ".getUniqueId()"
+                    ],
+                    [
+                        "World",
+                        ".getWorld()"
+                    ],
+                    [
+                        "Location",
+                        ".getLocation()"
+                    ],
+                    [
+                        "Health",
+                        ".getHealth()"
+                    ],
+                    [
+                        "Max Health",
+                        ".getMaxHealth()"
+                    ],
+                    [
+                        "Food Level",
+                        ".getFoodLevel()"
+                    ],
+                    [
+                        "Saturation Level",
+                        ".getSaturationLevel()"
+                    ],
+                    [
+                        "Game Mode",
+                        ".getGameMode()"
+                    ],
+                    [
+                        "Pose",
+                        ".getPose()"
+                    ],
+                    [
+                        "Ping",
+                        ".getPing()"
+                    ],
+                    [
+                        "Exp",
+                        ".getExperience()"
+                    ],
+                    [
+                        "Exp Level",
+                        ".getExperienceLevel()"
+                    ],
+                    [
+                        "Killer",
+                        ".getKiller()"
+                    ],
+                    [
+                        "Last death location",
+                        ".getLastDeathLocation()"
+                    ],
+                    [
+                        "allow flight",
+                        ".getAllowFlight()"
+                    ]
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "PLAYER",
+                "check": "Player"
+            }
+        ],
+        "inputsInline": true,
+        "output": null,
+        "colour": "#22c55e",
+        "tooltip": "Get a value from a player",
+        "helpUrl": ""
+    },
+    "player_set": {
+        "message0": "Set %1 of player %2 to %3",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "SET",
+                "options": [
+                    [
+                        "Health",
+                        ".setHealth("
+                    ],
+                    [
+                        "Max Health",
+                        ".setMaxHealth("
+                    ],
+                    [
+                        "Food Level",
+                        ".setFoodLevel("
+                    ],
+                    [
+                        "Saturation Level",
+                        ".setSaturationLevel("
+                    ],
+                    [
+                        "Game Mode",
+                        ".setGameMode("
+                    ],
+                    [
+                        "Pose",
+                        ".setPose("
+                    ],
+                    [
+                        "Exp",
+                        ".setExperience("
+                    ],
+                    [
+                        "Exp Level",
+                        ".setExperienceLevel("
+                    ],
+                    [
+                        "Velocity",
+                        ".setVelocity("
+                    ],
+                    [
+                        "set allow flight",
+                        ".setAllowFlight("
+                    ]
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "PLAYER",
+                "check": "Player"
+            },
+            {
+                "type": "input_value",
+                "name": "VALUE"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#22c55e",
+        "tooltip": "Set a value of a player",
+        "helpUrl": ""
+    },
+    "player_game_modes": {
+        "message0": "game mode %1",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "GAME_MODE",
+                "options": [
+                    [
+                        "Survival",
+                        "SURVIVAL"
+                    ],
+                    [
+                        "Creative",
+                        "CREATIVE"
+                    ],
+                    [
+                        "Adventure",
+                        "ADVENTURE"
+                    ],
+                    [
+                        "Spectator",
+                        "SPECTATOR"
+                    ]
+                ]
+            }
+        ],
+        "output": "GameMode",
+        "colour": "#22c55e"
+    },
+    "player_methods": {
+        "message0": "%1 %2 %3",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "PLAYER",
+                "check": "Player"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "METHOD",
+                "options": [
+                    [
+                        "can see (Entity/Player)",
+                        ".canSee("
+                    ],
+                    [
+                        "has permission",
+                        ".hasPermission("
+                    ]
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "ARG",
+                "check": null
+            }
+        ],
+        "inputsInline": true,
+        "output": null,
+        "tooltip": "Use a method on the player object",
+        "colour": "#22c55e",
+        "helpUrl": ""
+    },
+    "player_location": {
+        "message0": "%1 location%2",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "PLAYER",
+                "check": "Player"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "METHOD",
+                "options": [
+                    [
+                        ".getX()",
+                        ".getX()"
+                    ],
+                    [
+                        ".getY()",
+                        ".getY()"
+                    ],
+                    [
+                        ".getZ()",
+                        ".getZ()"
+                    ],
+                    [
+                        ".getWorld()",
+                        ".getWorld()"
+                    ],
+                    [
+                        ".getBlockX()",
+                        ".getBlockX()"
+                    ],
+                    [
+                        ".getBlockY()",
+                        ".getBlockY()"
+                    ],
+                    [
+                        ".getBlockZ()",
+                        ".getBlockZ()"
+                    ]
+                ]
+            }
+        ],
+        "output": null,
+        "tooltip": "Use a method on the player object",
+        "colour": "#22c55e",
+        "helpUrl": ""
+    }
+}

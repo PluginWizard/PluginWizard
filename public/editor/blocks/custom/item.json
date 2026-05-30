@@ -1,0 +1,173 @@
+{
+    "string_to_item": {
+        "message0": "create item %1",
+        "output": null,
+        "colour": "#06b6d4",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ITEM_NAME",
+                "text": "minecraft:diamond"
+            }
+        ]
+    },
+    "create_item": {
+        "message0": "Create item %1 Lore: %2 Flags: %3",
+        "output": null,
+        "colour": "#06b6d4",
+        "inputsInline": true,
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ITEM_NAME",
+                "text": "minecraft:diamond"
+            },
+            {
+                "type": "input_value",
+                "name": "LORE",
+                "check": [
+                    "List",
+                    "Array"
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "FLAGS",
+                "check": "ItemFlags"
+            }
+        ]
+    },
+    "item_flags": {
+        "message0": "Item Flags\n",
+        "output": "ItemFlags",
+        "colour": "#06b6d4",
+        "message1": "Hide armor trims %1\n Hide Attributes %2\n Hide destroys %3\n Hide dye %4\n Hide enchants %5\n Hide unbreakable %6\n Hide damage %7\n Hide lore %8\n Hide durability %9\n Unbreakable %10",
+        "args1": [
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "CHECKBOX"
+            }
+        ]
+    },
+    "give_item": {
+        "message0": "Give %1 amount %2 to %3",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "ITEM"
+            },
+            {
+                "type": "input_value",
+                "name": "AMOUNT",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "RECEIVER",
+                "check": [
+                    "Player",
+                    "Entity"
+                ]
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#06b6d4",
+        "tooltip": "Gives an item to the player",
+        "helpUrl": ""
+    },
+    "give_item_slot": {
+        "message0": "Set slot %1 of %4 to %2 amount %3",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "SLOT"
+            },
+            {
+                "type": "input_value",
+                "name": "ITEM"
+            },
+            {
+                "type": "input_value",
+                "name": "AMOUNT",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "RECEIVER",
+                "check": [
+                    "Player",
+                    "Entity"
+                ]
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#06b6d4",
+        "tooltip": "Gives an item to the player",
+        "helpUrl": ""
+    },
+    "drop_item": {
+        "message0": "Drop %1 amount %2 at %3",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "ITEM"
+            },
+            {
+                "type": "input_value",
+                "name": "AMOUNT",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "LOCATION",
+                "check": "Location"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#06b6d4",
+        "tooltip": "Drops an item at a location",
+        "helpUrl": ""
+    }
+}

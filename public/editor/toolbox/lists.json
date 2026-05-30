@@ -1,0 +1,75 @@
+{
+    "kind": "category",
+    "name": "Lists",
+    "colour": "#55af8a",
+    "contents": [
+        {
+            "kind": "block",
+            "type": "lists_create_with"
+        },
+        {
+            "kind": "block",
+            "type": "lists_create_empty"
+        },
+        {
+            "kind": "block",
+            "type": "lists_repeat",
+            "inputs": {
+                "NUM": {
+                    "shadow": {
+                        "type": "math_number",
+                        "fields": {
+                            "NUM": 5
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "kind": "block",
+            "type": "lists_length"
+        },
+        {
+            "kind": "block",
+            "type": "lists_isEmpty"
+        },
+        {
+            "kind": "block",
+            "type": "lists_indexOf"
+        },
+        {
+            "kind": "block",
+            "type": "lists_getIndex"
+        },
+        {
+            "kind": "block",
+            "type": "lists_setIndex"
+        },
+        {
+            "kind": "block",
+            "type": "lists_getSublist"
+        },
+        {
+            "kind": "block",
+            "type": "lists_split",
+            "inputs": {
+                "DELIM": {
+                    "shadow": {
+                        "type": "text",
+                        "fields": {
+                            "TEXT": ","
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "kind": "block",
+            "type": "lists_sort"
+        },
+        {
+            "kind": "block",
+            "type": "lists_reverse"
+        }
+    ]
+}

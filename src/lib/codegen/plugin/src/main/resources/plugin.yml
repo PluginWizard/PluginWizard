@@ -1,0 +1,6 @@
+name: Plugin
+version: '1.0.0'
+main: net.kalbskinder.plugin.Plugin
+description: "A collection of helper methods for PluginWizard"
+author: "PluginWizard Development Team"
+api-version: '1.21'

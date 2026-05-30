@@ -1,0 +1,234 @@
+{
+    "create_display_entity": {
+        "message0": "Create display entity type %1 with ID %2",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "TYPE",
+                "options": [
+                    [
+                        "Item",
+                        "item_display"
+                    ],
+                    [
+                        "Block",
+                        "block_display"
+                    ],
+                    [
+                        "Entity",
+                        "entity_display"
+                    ],
+                    [
+                        "Text",
+                        "text_display"
+                    ]
+                ]
+            },
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            }
+        ],
+        "nextStatement": null,
+        "previousStatement": null,
+        "colour": "#edb940",
+        "tooltip": "Create a new display entity and store it by ID"
+    },
+    "set_display_position": {
+        "message0": "Set display position %1 to %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            },
+            {
+                "type": "input_value",
+                "name": "X",
+                "check": "Location"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#edb940",
+        "tooltip": "Set the position of a display entity",
+        "helpUrl": ""
+    },
+    "set_display_rotation": {
+        "message0": "Set display rotation %1 to \nPitch: %2 \nYaw: %3",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            },
+            {
+                "type": "input_value",
+                "name": "PITCH",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "YAW",
+                "check": "Number"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#edb940",
+        "tooltip": "Set the rotation of a display entity",
+        "helpUrl": ""
+    },
+    "set_display_scale": {
+        "message0": "Set display scale %1 to \nX: %2 \nY: %3 \nZ: %4",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            },
+            {
+                "type": "input_value",
+                "name": "X",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "Y",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "Z",
+                "check": "Number"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#edb940",
+        "tooltip": "Set the scale of a display entity",
+        "helpUrl": ""
+    },
+    "set_display_entity_model": {
+        "message0": "Set display entity model %1 to %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            },
+            {
+                "type": "field_input",
+                "name": "MODEL",
+                "text": "minecraft:zombie"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#edb940",
+        "tooltip": "Set the model for an entity_display",
+        "helpUrl": ""
+    },
+    "set_display_item": {
+        "message0": "Set display item %1 to %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            },
+            {
+                "type": "field_input",
+                "name": "ITEM",
+                "text": "minecraft:diamond_sword"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#edb940",
+        "tooltip": "Set the item for an item_display",
+        "helpUrl": ""
+    },
+    "set_display_text": {
+        "message0": "Set display text %1 to %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            },
+            {
+                "type": "input_value",
+                "name": "TEXT",
+                "check": "String"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#edb940",
+        "tooltip": "Set the text of a text_display",
+        "helpUrl": ""
+    },
+    "set_display_visibility": {
+        "message0": "Set display visibility %1 to %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "VISIBLE",
+                "options": [
+                    [
+                        "true",
+                        "TRUE"
+                    ],
+                    [
+                        "false",
+                        "FALSE"
+                    ]
+                ]
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#edb940",
+        "tooltip": "Set whether the display entity is visible",
+        "helpUrl": ""
+    },
+    "on_click_display": {
+        "message0": "On click of display entity %1 do %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            },
+            {
+                "type": "input_statement",
+                "name": "DO"
+            }
+        ],
+        "colour": "#edb940",
+        "tooltip": "Triggers when the display entity is clicked",
+        "helpUrl": ""
+    },
+    "delete_display_entity": {
+        "message0": "Delete display entity %1",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ID",
+                "text": "myDisplay"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#edb940",
+        "tooltip": "Deletes the display entity with the given ID",
+        "helpUrl": ""
+    }
+}

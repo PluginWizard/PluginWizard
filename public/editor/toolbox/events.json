@@ -1,0 +1,48 @@
+{
+  "kind": "category",
+  "name": "Events",
+  "colour": "#3a7ada",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "minecraft_event"
+    },
+    {
+      "kind": "block",
+      "type": "cancel_event"
+    },
+    {
+      "kind": "block",
+      "type": "event_get"
+    },
+    {
+      "kind": "LABEL",
+      "text": "Commands",
+      "web-class": "ioLabel"
+    },
+    {
+      "kind": "block",
+      "type": "new_command"
+    },
+    {
+      "kind": "block",
+      "type": "sub_command"
+    },
+    {
+      "kind": "block",
+      "type": "command_argument"
+    },
+    {
+      "kind": "block",
+      "type": "custom_command_argument"
+    },
+    {
+      "kind": "block",
+      "type": "command_argument_get"
+    },
+    {
+      "kind": "block",
+      "type": "command_sender_get"
+    }
+  ]
+}

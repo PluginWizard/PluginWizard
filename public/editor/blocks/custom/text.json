@@ -1,0 +1,15 @@
+{
+    "string_value_of": {
+        "message0": "string value of %1",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "VALUE"
+            }
+        ],
+        "output": "String",
+        "colour": "#8b5cf6",
+        "tooltip": "Gets the string value of the input",
+        "helpUrl": ""
+    }    
+}

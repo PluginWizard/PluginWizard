@@ -1,0 +1,152 @@
+{
+    "minecraft_event": {
+        "message0": "Player %1 event %2 do %3",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "EVENT_CLASS",
+                "options": [
+                    [
+                        "join",
+                        "PlayerJoinEvent.class"
+                    ],
+                    [
+                        "leave",
+                        "PlayerQuitEvent.class"
+                    ],
+                    [
+                        "kick",
+                        "PlayerKickEvent.class"
+                    ],
+                    [
+                        "block break",
+                        "BlockBreakEvent.class"
+                    ],
+                    [
+                        "block place",
+                        "BlockPlaceEvent.class"
+                    ],
+                    [
+                        "block interact",
+                        "PlayerInteractEvent.class"
+                    ],
+                    [
+                        "entity interact",
+                        "PlayerInteractEntityEvent.class"
+                    ],
+                    [
+                        "chat",
+                        "AsyncChatEvent.class"
+                    ],
+                    [
+                        "death",
+                        "PlayerDeathEvent.class"
+                    ],
+                    [
+                        "respawn",
+                        "PlayerRespawnEvent.class"
+                    ],
+                    [
+                        "move",
+                        "PlayerMoveEvent.class"
+                    ],
+                    [
+                        "enter bed",
+                        "PlayerBedEnterEvent.class"
+                    ],
+                    [
+                        "leave bed",
+                        "PlayerBedLeaveEvent.class"
+                    ],
+                    [
+                        "changed world",
+                        "PlayerChangedWorldEvent.class"
+                    ],
+                    [
+                        "send command",
+                        "PlayerCommandSendEvent.class"
+                    ],
+                    [
+                        "change gamemode",
+                        "PlayerGameModeChangeEvent.class"
+                    ],
+                    [
+                        "drop item",
+                        "PlayerDropItemEvent.class"
+                    ],
+                    [
+                        "breaks item",
+                        "PlayerItemBreakEvent.class"
+                    ],
+                    [
+                        "consume item",
+                        "PlayerItemConsumeEvent.class"
+                    ],
+                    [
+                        "pickup item",
+                        "EntityPickupItemEvent.class"
+                    ]
+                ]
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "input_statement",
+                "name": "DO"
+            }
+        ],
+        "colour": "#3a7ada",
+        "tooltip": "Triggers when a Minecraft event occurs",
+        "helpUrl": ""
+    },
+    "cancel_event": {
+        "message0": "cancel event",
+        "colour": "#3a7ada",
+        "tooltip": "Cancels the triggered event",
+        "helpUrl": "",
+        "previousStatement": null,
+        "nextStatement": null
+    },
+    "event_get": {
+        "message0": "event %1",
+        "colour": "#3a7ada",
+        "output": null,
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "GET",
+                "options": [
+                    [
+                        "Player",
+                        "event.getPlayer()"
+                    ],
+                    [
+                        "Block",
+                        "event.getBlock()"
+                    ],
+                    [
+                        "Item",
+                        "event.getItem()"
+                    ],
+                    [
+                        "Entity",
+                        "event.getEntity()"
+                    ],
+                    [
+                        "Location",
+                        "event.getLocation()"
+                    ],
+                    [
+                        "Message",
+                        "Helpers.miniMessageHelper.serialize(event.message())"
+                    ],
+                    [
+                        "Death message",
+                        "Helpers.miniMessageHelper.serialize(event.deathMessage())"
+                    ]
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,72 @@
+{
+  "kind": "category",
+  "name": "Entitys",
+  "colour": "#edb940",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "create_entity"
+    },
+    {
+      "kind": "block",
+      "type": "teleport_entity"
+    },
+    {
+      "kind": "block",
+      "type": "entity_events"
+    },
+    {
+      "kind": "block",
+      "type": "entity_event_player"
+    },
+    {
+      "kind": "block",
+      "type": "set_entity"
+    },
+    {
+      "kind": "block",
+      "type": "get_entity"
+    },
+    {
+      "kind": "block",
+      "type": "entity_pose"
+    },
+    {
+      "kind": "label",
+      "text": "Display Entitys",
+      "web-class": "ioLabel"
+    },
+    {
+      "kind": "block",
+      "type": "create_display_entity"
+    },
+    {
+      "kind": "block",
+      "type": "set_display_position"
+    },
+    {
+      "kind": "block",
+      "type": "set_display_rotation"
+    },
+    {
+      "kind": "block",
+      "type": "set_display_scale"
+    },
+    {
+      "kind": "block",
+      "type": "set_display_entity_model"
+    },
+    {
+      "kind": "block",
+      "type": "set_display_item"
+    },
+    {
+      "kind": "block",
+      "type": "set_display_text"
+    },
+    {
+      "kind": "block",
+      "type": "set_display_visibility"
+    }
+  ]
+}

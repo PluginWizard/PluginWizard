@@ -1,0 +1,181 @@
+{
+  "kind": "category",
+  "name": "Text",
+  "colour": "#8b5cf6",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "text"
+    },
+    {
+      "kind": "block",
+      "type": "text_join"
+    },
+    {
+      "kind": "block",
+      "type": "text_length",
+      "inputs": {
+        "VALUE": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "abc"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "string_value_of"
+    },
+    {
+      "kind": "block",
+      "type": "text_isEmpty",
+      "inputs": {
+        "VALUE": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": ""
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "text_indexOf",
+      "inputs": {
+        "VALUE": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "abc"
+            }
+          }
+        },
+        "FIND": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "b"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "text_charAt",
+      "inputs": {
+        "VALUE": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "abc"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "text_getSubstring"
+    },
+    {
+      "kind": "block",
+      "type": "text_changeCase",
+      "inputs": {
+        "TEXT": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "abc"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "text_trim",
+      "inputs": {
+        "TEXT": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "abc"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "text_count",
+      "inputs": {
+        "SUB": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": ""
+            }
+          }
+        },
+        "TEXT": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": ""
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "text_replace",
+      "inputs": {
+        "FROM": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": ""
+            }
+          }
+        },
+        "TO": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": ""
+            }
+          }
+        },
+        "TEXT": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": ""
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "text_reverse",
+      "inputs": {
+        "TEXT": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": ""
+            }
+          }
+        }
+      }
+    }
+  ]
+}

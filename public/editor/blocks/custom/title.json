@@ -1,0 +1,107 @@
+{
+    "display_title": {
+        "tooltip": "Display a title",
+        "helpUrl": "",
+        "message0": "Display title %1 Fade in: %2 Stay: %3 Fade out: %4 to %5",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "TEXT",
+                "check": "String"
+            },
+            {
+                "type": "field_number",
+                "name": "FADEIN",
+                "value": 1,
+                "min": 0,
+                "max": 9
+            },
+            {
+                "type": "field_number",
+                "name": "STAY",
+                "value": 1,
+                "min": 0,
+                "max": 9
+            },
+            {
+                "type": "field_number",
+                "name": "FADEOUT",
+                "value": 1,
+                "min": 0,
+                "max": 9
+            },
+            {
+                "type": "input_value",
+                "name": "TARGET",
+                "check": "Player"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#c92ec1"
+    },
+    "display_subtitle": {
+        "tooltip": "Display a subtitle",
+        "helpUrl": "",
+        "message0": "Display subtitle %1 Fade in: %2 Stay: %3 Fade out: %4 to %5",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "TEXT",
+                "check": "String"
+            },
+            {
+                "type": "field_number",
+                "name": "FADEIN",
+                "value": 1,
+                "min": 0,
+                "max": 9
+            },
+            {
+                "type": "field_number",
+                "name": "STAY",
+                "value": 1,
+                "min": 0,
+                "max": 9
+            },
+            {
+                "type": "field_number",
+                "name": "FADEOUT",
+                "value": 1,
+                "min": 0,
+                "max": 9
+            },
+            {
+                "type": "input_value",
+                "name": "TARGET",
+                "check": "Player"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#c92ec1"
+    },
+      "display_actionbar": {
+        "tooltip": "Display an actionbar message to player",
+        "helpUrl": "",
+        "message0": "Display actionbar %1 to %2",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "TEXT",
+                "check": "String"
+            },
+            {
+                "type": "input_value",
+                "name": "TARGET",
+                "check": "Player"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#c92ec1"
+    }
+}

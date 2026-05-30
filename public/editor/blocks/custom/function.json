@@ -1,0 +1,141 @@
+{
+    "default_function_main": {
+        "message0": "Main function %1 %2",
+        "args0": [
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "input_statement",
+                "name": "BODY"
+            }
+        ],
+        "colour": 330,
+        "tooltip": "Default main function",
+        "helpUrl": ""
+    },
+    "def_function": {
+        "message0": "Function %1 returns %2 %3 %4",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "NAME",
+                "text": "myFunction"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "RET_TYPE",
+                "options": [
+                    [
+                        "nothing",
+                        "void"
+                    ],
+                    [
+                        "int",
+                        "int"
+                    ],
+                    [
+                        "double",
+                        "double"
+                    ],
+                    [
+                        "String",
+                        "String"
+                    ],
+                    [
+                        "boolean",
+                        "boolean"
+                    ],
+                    [
+                        "Player",
+                        "Player"
+                    ],
+                    [
+                        "Entity",
+                        "Entity"
+                    ],
+                    [
+                        "Location",
+                        "Location"
+                    ],
+                    [
+                        "Component",
+                        "Component"
+                    ],
+                    [
+                        "List type String",
+                        "List<String>"
+                    ],
+                    [
+                        "List type int",
+                        "List<Integer>"
+                    ],
+                    [
+                        "List type double",
+                        "List<? extends Number>"
+                    ],
+                    [
+                        "List type Player",
+                        "List<Player>"
+                    ],
+                    [
+                        "List type Location",
+                        "List<Location>"
+                    ]
+                ]
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "input_statement",
+                "name": "BODY"
+            }
+        ],
+        "colour": 330,
+        "tooltip": "Defines a function that returns a value",
+        "helpUrl": ""
+    },
+    "call_function": {
+        "message0": "call function %1",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "NAME",
+                "text": "myFunction"
+            }
+        ],
+        "output": null,
+        "colour": 330,
+        "tooltip": "Calls a function and returns the result",
+        "helpUrl": ""
+    },
+    "return_of_function": {
+        "message0": "return %1",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "VALUE"
+            }
+        ],
+        "previousStatement": null,
+        "colour": 330,
+        "tooltip": "Returns a value from the function",
+        "helpUrl": ""
+    },
+    "call_function_silent": {
+        "message0": "Call function %1 with no return",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "NAME",
+                "text": "myFunction"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 330,
+        "tooltip": "Calls a function without a return",
+        "helpUrl": ""
+    }
+}

@@ -1,0 +1,221 @@
+{
+    "config": {
+        "message0": "Config (config.yml)\n%1",
+        "colour": "#c04545",
+        "args0": [
+            {
+                "type": "input_statement",
+                "name": "CONTENT"
+            }
+        ]
+    },
+    "config_category": {
+        "message0": "category key %1\n%2",
+        "colour": "#c04545",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "KEY"
+            },
+            {
+                "type": "input_statement",
+                "name": "CONTENT"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null
+    },
+    "config_line": {
+        "message0": "key %1 content %2",
+        "colour": "#c04545",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "KEY",
+                "check": "String"
+            },
+            {
+                "type": "input_value",
+                "name": "CONTENT",
+                "check": "String"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null
+    },
+    "config_comment": {
+        "message0": "comment %1",
+        "colour": "#ce5252",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "TEXT"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null
+    },
+    "config_read": {
+        "message0": "%1 from config with key %2",
+        "colour": "#c04545",
+        "output": null,
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "METHOD",
+                "options": [
+                    [
+                        "get String",
+                        "getString"
+                    ],
+                    [
+                        "get Boolean",
+                        "getBoolean"
+                    ],
+                    [
+                        "get Int",
+                        "getInt"
+                    ],
+                    [
+                        "get Double",
+                        "getDouble"
+                    ],
+                    [
+                        "get Float",
+                        "getFloat"
+                    ],
+                    [
+                        "get Color",
+                        "getColor"
+                    ],
+                    [
+                        "contains",
+                        "contains"
+                    ],
+                    [
+                        "get list",
+                        "getList"
+                    ],
+                    [
+                        "get string list",
+                        "getStringList"
+                    ],
+                    [
+                        "get integer list",
+                        "getIntegerList"
+                    ],
+                    [
+                        "get character list",
+                        "getCharacterList"
+                    ],
+                    [
+                        "get boolean list",
+                        "getBooleanList"
+                    ],
+                    [
+                        "get byte list",
+                        "getByteList"
+                    ],
+                    [
+                        "get double list",
+                        "getDoubleList"
+                    ],
+                    [
+                        "get float list",
+                        "getFloatList"
+                    ]
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "KEY",
+                "check": "String"
+            }
+        ]
+    },
+    "config_read_default": {
+        "message0": "%1 from config with key %2 and default value %3",
+        "colour": "#c04545",
+        "output": null,
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "METHOD",
+                "options": [
+                    [
+                        "get String",
+                        "getString"
+                    ],
+                    [
+                        "get Boolean",
+                        "getBoolean"
+                    ],
+                    [
+                        "get Int",
+                        "getInt"
+                    ],
+                    [
+                        "get Double",
+                        "getDouble"
+                    ],
+                    [
+                        "get Float",
+                        "getFloat"
+                    ],
+                    [
+                        "get Color",
+                        "getColor"
+                    ],
+                    [
+                        "contains",
+                        "contains"
+                    ],
+                    [
+                        "get list",
+                        "getList"
+                    ],
+                    [
+                        "get string list",
+                        "getStringList"
+                    ],
+                    [
+                        "get integer list",
+                        "getIntegerList"
+                    ],
+                    [
+                        "get character list",
+                        "getCharacterList"
+                    ],
+                    [
+                        "get boolean list",
+                        "getBooleanList"
+                    ],
+                    [
+                        "get byte list",
+                        "getByteList"
+                    ],
+                    [
+                        "get double list",
+                        "getDoubleList"
+                    ],
+                    [
+                        "get float list",
+                        "getFloatList"
+                    ]
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "KEY",
+                "check": "String"
+            },
+            {
+                "type": "input_value",
+                "name": "DEFAULT",
+                "check": null
+            }
+        ]
+    }
+}

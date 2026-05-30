@@ -1,0 +1,48 @@
+{
+    "math_random_range": {
+        "message0": "random integer from %1 to %2",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "FROM",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "TO",
+                "check": "Number"
+            }
+        ],
+        "output": "Number",
+        "colour": "#3eb34e",
+        "tooltip": "Returns a random integer between two values",
+        "helpUrl": ""
+    },
+    "math_minmax": {
+        "message0": "%1 %2 %3",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "OP",
+                "options": [
+                    ["min", "MIN"],
+                    ["max", "MAX"]
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "A",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "B",
+                "check": "Number"
+            }
+        ],
+        "output": "Number",
+        "colour": "#3eb34e",
+        "tooltip": "Minimum and maximum functions",
+        "helpUrl": ""
+    }
+}

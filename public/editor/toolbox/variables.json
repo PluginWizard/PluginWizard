@@ -1,0 +1,19 @@
+{
+  "kind": "category",
+  "name": "Variables",
+  "colour": "#ff872b",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "variables_declare"
+    },
+    {
+      "kind": "block",
+      "type": "variables_set"
+    },
+    {
+      "kind": "block",
+      "type": "variables_get"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "kind": "category",
+  "name": "Items",
+  "colour": "#06b6d4",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "give_item",
+      "inputs": {
+        "ITEM": {
+          "shadow": {
+            "type": "string_to_item"
+          }
+        },
+        "AMOUNT": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "give_item_slot",
+      "inputs": {
+        "ITEM": {
+          "shadow": {
+            "type": "string_to_item"
+          }
+        },
+        "AMOUNT": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 16
+            }
+          }
+        },
+        "SLOT": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 9
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind":"block",
+      "type":"drop_item",
+      "inputs": {
+        "ITEM": {
+          "shadow": {
+            "type": "string_to_item"
+          }
+        },
+        "AMOUNT": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "string_to_item"
+    },
+    {
+      "kind": "block",
+      "type": "create_item"
+    },
+    {
+      "kind": "block",
+      "type": "item_flags"
+    }
+  ]
+}

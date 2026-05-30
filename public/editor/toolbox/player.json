@@ -1,0 +1,31 @@
+{
+  "kind": "category",
+  "name": "Player",
+  "colour": "#22c55e",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "player"
+    },
+    {
+      "kind": "block",
+      "type": "player_methods"
+    },
+    {
+      "kind": "block",
+      "type": "player_location"
+    },
+    {
+      "kind": "block",
+      "type": "player_get"
+    },
+    {
+      "kind": "block",
+      "type": "player_set"
+    },
+    {
+      "kind": "block",
+      "type": "player_game_modes"
+    }
+  ]
+}

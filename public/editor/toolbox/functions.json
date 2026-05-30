@@ -1,0 +1,27 @@
+{
+  "kind": "category",
+  "name": "Functions",
+  "colour": 330,
+  "contents": [
+    {
+      "kind": "block",
+      "type": "default_function_main"
+    },
+    {
+      "kind": "block",
+      "type": "def_function"
+    },
+    {
+      "kind": "block",
+      "type": "call_function"
+    },
+    {
+      "kind": "block",
+      "type": "call_function_silent"
+    },
+    {
+      "kind": "block",
+      "type": "return_of_function"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+    "play_sound": {
+        "tooltip": "Play a sound a sound",
+        "helpUrl": "",
+        "message0": "Play sound %1 Volume: %2 Pitch: %3 to %4",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "SOUND",
+                "text": "BLOCK_NOTE_BLOCK_PLING"
+            },
+            {
+                "type": "field_number",
+                "name": "VOLUME",
+                "value": 1,
+                "min": 0,
+                "max": 2
+            },
+            {
+                "type": "field_number",
+                "name": "PITCH",
+                "value": 1,
+                "min": 0,
+                "max": 2
+            },
+            {
+                "type": "input_value",
+                "name": "TARGET",
+                "check": [
+                    "Player",
+                    "Entity"
+                ]
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#c92ec1"
+    },
+    "play_sound_at": {
+        "tooltip": "Play a sound at a specific location",
+        "helpUrl": "",
+        "message0": "Play sound %1 Volume: %2 Pitch: %3 at location %4",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "SOUND",
+                "text": "AMBIENT_CAVE"
+            },
+            {
+                "type": "field_number",
+                "name": "VOLUME",
+                "value": 1,
+                "min": 0,
+                "max": 2
+            },
+            {
+                "type": "field_number",
+                "name": "PITCH",
+                "value": 1,
+                "min": 0,
+                "max": 2
+            },
+            {
+                "type": "input_value",
+                "name": "LOCATION",
+                "check": "Location"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#c92ec1"
+    }
+}

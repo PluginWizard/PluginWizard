@@ -1,0 +1,189 @@
+{
+    "region_create": {
+        "message0": "Create region %1 from %2 to %3",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "REGION_NAME",
+                "text": "my_region"
+            },
+            {
+                "type": "input_value",
+                "name": "POS1",
+                "check": "Location"
+            },
+            {
+                "type": "input_value",
+                "name": "POS2",
+                "check": "Location"
+            }
+        ],
+        "inputsInline": true,
+        "colour": "#397c40",
+        "previousStatement": null,
+        "nextStatement": null,
+        "tooltip": "Creates a new region object",
+        "helpUrl": ""
+    },
+    "region_events": {
+        "message0": "Player %1 region %2\n%3",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "PLAYER_EVENT",
+                "options": [
+                    [
+                        "enter",
+                        "onRegionEnter"
+                    ],
+                    [
+                        "leave",
+                        "onRegionLeave"
+                    ]
+                ]
+            },
+            {
+                "type": "field_input",
+                "name": "REGION",
+                "text": "my_region"
+            },
+            {
+                "type": "input_statement",
+                "name": "DO"
+            }
+        ],
+        "inputsInline": true,
+        "colour": "#397c40"
+    },
+    "region_settings": {
+        "message0": "Region %1 setting %2 enabled %3",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "REGION",
+                "text": "my_region"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "SETTING",
+                "options": [
+                    [
+                        "pvp",
+                        "PVP"
+                    ],
+                    [
+                        "break blocks",
+                        "BREAK_BLOCKS"
+                    ],
+                    [
+                        "interact with blocks",
+                        "BLOCK_INTERACTION"
+                    ],
+                    [
+                        "drop items",
+                        "DROP_ITEMS"
+                    ],
+                    [
+                        "pickup items",
+                        "PICKUP_ITEMS"
+                    ],
+                    [
+                        "fire damage",
+                        "FIRE_DAMAGE"
+                    ],
+                    [
+                        "fall damage",
+                        "FALL_DAMAGE"
+                    ],
+                    [
+                        "fly",
+                        "FLIGHT"
+                    ],
+                    [
+                        "poison/withering",
+                        "POISON_WITHER_DAMAGE"
+                    ],
+                    [
+                        "suffocation",
+                        "SUFFOCATION_DAMAGE"
+                    ],
+                    [
+                        "drowning",
+                        "DROWNING_DAMAGE"
+                    ],
+                    [
+                        "hunger",
+                        "HUNGER"
+                    ],
+                    [
+                        "natural regeneration",
+                        "NATURAL_REGENERATION"
+                    ],
+                    [
+                        "kill/death messages",
+                        "KILL_DEATH_MESSAGES"
+                    ],
+                    [
+                        "instant respawn",
+                        "INSTANT_RESPAWN"
+                    ],
+                    [
+                        "keep inventory",
+                        "KEEP_INVENTORY"
+                    ]
+                ]
+            },
+            {
+                "type": "field_checkbox",
+                "name": "ENABLED",
+                "checked": true
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#397c40"
+    },
+    "in_region": {
+        "message0": "Player %1 in region %2",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "PLAYER",
+                "check": "Player"
+            },
+            {
+                "type": "field_input",
+                "name": "REGION",
+                "text": "my_region"
+            }
+        ],
+        "output": "Boolean",
+        "colour": "#397c40",
+        "tooltip": "Checks if a player is in a region",
+        "helpUrl": ""
+    },
+    "region_event_get": {
+        "message0": "region event %1",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "EVENT_VALUE",
+                "options": [
+                    [
+                        "player",
+                        "regionEvent.getPlayer()"
+                    ],
+                    [
+                        "region",
+                        "regionEvent.getRegion()"
+                    ]
+                ]
+            }
+        ],
+        "output": null,
+        "colour": "#397c40",
+        "tooltip": "Gets a value from a region event",
+        "helpUrl": ""
+    }
+}

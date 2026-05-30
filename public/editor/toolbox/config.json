@@ -1,0 +1,79 @@
+{
+  "kind": "category",
+  "name": "Config",
+  "colour": "#c04545",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "config"
+    },
+    {
+      "kind": "block",
+      "type": "config_category",
+      "inputs": {
+        "KEY": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "messages"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "config_line",
+      "inputs": {
+        "KEY": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "join"
+            }
+          }
+        },
+        "CONTENT": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "Welcome back %player%!"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "config_comment"
+    },
+    {
+      "kind": "block",
+      "type": "config_read",
+      "inputs": {
+        "KEY": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "messages.join"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "config_read_default",
+      "inputs": {
+        "KEY": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "messages.join"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+    "kind": "category",
+    "name": "World",
+    "colour": "#397c40",
+    "contents": [
+        {
+            "kind": "block",
+            "type": "get_world"
+        },
+        {
+            "kind": "block",
+            "type": "world_gamerule",
+            "inputs": {
+                "WORLD": {
+                    "shadow": {
+                        "type": "get_world"
+                    }
+                },
+                "GAMERULE": {
+                    "shadow": {
+                        "type": "gamerule",
+                        "fields": {
+                            "GAMERULE": "command_block_output"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "kind": "block",
+            "type": "world_time",
+            "inputs": {
+                "WORLD": {
+                    "shadow": {
+                        "type": "get_world"
+                    }
+                },
+                "TIME": {
+                    "shadow": {
+                        "type": "math_number",
+                        "fields": {
+                            "NUM": 1000
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "kind": "block",
+            "type": "get_world_time",
+            "inputs": {
+                "WORLD": {
+                    "shadow": {
+                        "type": "get_world"
+                    }
+                }
+            }
+        },
+        {
+            "kind": "block",
+            "type": "gamerule"
+        },
+        {
+            "kind": "block",
+            "type": "location_get_block"
+        },
+        {
+            "kind": "block",
+            "type": "set_block_type"
+        },
+        {
+            "kind": "block",
+            "type": "spawn_particle",
+            "inputs": {
+                "AMOUNT": {
+                    "shadow": {
+                        "type": "math_number",
+                        "fields": {
+                            "NUM": 1
+                        }
+                    }
+                }
+            }
+        },
+
+
+        {
+            "kind": "LABEL",
+            "text": "Regions",
+            "web-class": "ioLabel"
+        },
+        {
+            "kind": "block",
+            "type": "region_create"
+        },
+        {
+            "kind": "block",
+            "type": "region_events"
+        },
+        {
+            "kind": "block",
+            "type": "region_event_get"
+        },
+        {
+            "kind": "block",
+            "type": "region_settings"
+        },
+        {
+            "kind": "block",
+            "type": "in_region"
+        },
+        {
+            "kind": "LABEL",
+            "text": "Teleporting",
+            "web-class": "ioLabel"
+        },
+        {
+            "kind": "block",
+            "type": "teleport_player",
+            "inputs": {
+                "X": {
+                    "shadow": {
+                        "type": "math_number",
+                        "fields": {
+                            "NUM": 0
+                        }
+                    }
+                },
+                "Y": {
+                    "shadow": {
+                        "type": "math_number",
+                        "fields": {
+                            "NUM": 64
+                        }
+                    }
+                },
+                "Z": {
+                    "shadow": {
+                        "type": "math_number",
+                        "fields": {
+                            "NUM": 0
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "kind": "block",
+            "type": "teleport_player_location"
+        },
+        {
+            "kind": "block",
+            "type": "create_location",
+            "inputs": {
+                "WORLD": {
+                    "shadow": {
+                        "type": "text"
+                    }
+                },
+                "X": {
+                    "shadow": {
+                        "type": "math_number",
+                        "fields": {
+                            "NUM": 0
+                        }
+                    }
+                },
+                "Y": {
+                    "shadow": {
+                        "type": "math_number",
+                        "fields": {
+                            "NUM": 64
+                        }
+                    }
+                },
+                "Z": {
+                    "shadow": {
+                        "type": "math_number",
+                        "fields": {
+                            "NUM": 0
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

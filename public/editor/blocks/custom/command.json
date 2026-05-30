@@ -1,0 +1,226 @@
+{
+    "new_command": {
+        "message0": "Register command /%1",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "CMD_NAME",
+                "text": "myplugin"
+            }
+        ],
+        "message1": "Arguments %1",
+        "args1": [
+            {
+                "type": "input_statement",
+                "name": "ARGS"
+            }
+        ],
+        "message2": "When executed %1",
+        "args2": [
+            {
+                "type": "input_statement",
+                "name": "DO"
+            }
+        ],
+        "message3": "Subcommands %1",
+        "args3": [
+            {
+                "type": "input_statement",
+                "name": "SUBS"
+            }
+        ],
+        "colour": "#456bd6",
+        "tooltip": "Creates a new command"
+    },
+    "sub_command": {
+        "message0": "Subcommand %1",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "SUB_NAME",
+                "text": "help"
+            }
+        ],
+        "message1": "Arguments %1",
+        "args1": [
+            {
+                "type": "input_statement",
+                "name": "ARGS"
+            }
+        ],
+        "message2": "When executed %1",
+        "args2": [
+            {
+                "type": "input_statement",
+                "name": "DO"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#456bd6",
+        "tooltip": "A subcommand is a command withing a command. It can have it's own argument and execution methods."
+    },
+    "custom_command_argument" : {
+        "message0": "custom argument %1 of string list %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ARG_NAME",
+                "text": "x"
+            },
+            {
+                "type": "input_value",
+                "name": "CUSTOM_ARGS",
+                "check": [
+                    "List",
+                    "Array"
+                ]
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#456bd6",
+        "tooltip": "A command argument with a custom argument type"
+    },
+    "command_argument": {
+        "message0": "argument %1 of %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "ARG_NAME",
+                "text": "x"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "ARG_TYPE",
+                "options": [
+                    [
+                        "String",
+                        "stringArg"
+                    ],
+                    [
+                        "Integer",
+                        "intArg"
+                    ],
+                    [
+                        "Float",
+                        "floatArg"
+                    ],
+                    [
+                        "Boolean",
+                        "booleanArg"
+                    ],
+                
+                    [
+                        "Players",
+                        "playerArg"
+                    ],
+                    [
+                        "Entities",
+                        "entityArg"
+                    ],
+                    [
+                        "Items",
+                        "itemArg"
+                    ],
+                    [
+                        "Blocks",
+                        "blockArg"
+                    ],
+                    [
+                        "Gamemodes",
+                        "gameModeArg"
+                    ],
+                    [
+                        "Color codes",
+                        "colorCodeArg"
+                    ],
+                    [
+                        "Worlds",
+                        "worldArg"
+                    ]
+                ]
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#456bd6",
+        "tooltip": "A command argument with a custom argument type"
+    },
+    "command_argument_get": {
+        "message0": "get %1 argument %2",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "ARG_TYPE",
+                "options": [
+                    [
+                        "string",
+                        "getString"
+                    ],
+                    [
+                        "integer",
+                        "getInt"
+                    ],
+                    [
+                        "float",
+                        "getFloat"
+                    ],
+                    [
+                        "boolean",
+                        "getBoolean"
+                    ],
+                
+                    [
+                        "player",
+                        "getPlayer"
+                    ],
+                    [
+                        "entity",
+                        "getEntity"
+                    ],
+                    [
+                        "item",
+                        "getItem"
+                    ],
+                    [
+                        "block",
+                        "getBlock"
+                    ],
+                    [
+                        "gamemode",
+                        "getGameMode"
+                    ],
+                    [
+                        "color code",
+                        "getColorCode"
+                    ],
+                    [
+                        "worlds",
+                        "getWorld"
+                    ],
+                    [
+                        "custom",
+                        "getCustomArg"
+                    ]
+                ]
+            },
+            {
+                "type": "field_input",
+                "name": "ARG_NAME",
+                "text": "x"
+            }
+        ],
+        "output": null,
+        "tooltip": "Get the value of a command argument",
+        "colour": "#456bd6",
+        "helpUrl": ""
+    },
+    "command_sender_get": {
+        "message0": "command sender (player)",
+        "output": "Player",
+        "colour": "#456bd6",
+        "tooltip": "Get the command sender as a player. Only works if the command was executed by a player",
+        "helpUrl": ""
+    }
+}

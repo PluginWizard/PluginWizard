@@ -1,0 +1,84 @@
+{
+    "teleport_player": {
+        "message0": "Teleport player %1 to X%2 Y%3 Z%4",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "PLAYER",
+                "check": "Player"
+            },
+            {
+                "type": "input_value",
+                "name": "X",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "Y",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "Z",
+                "check": "Number"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#8b5cf6",
+        "tooltip": "Teleports the player to coordinates",
+        "helpUrl": ""
+    },
+    "teleport_player_location": {
+        "message0": "Teleport player %1 to %2",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "PLAYER",
+                "check": "Player"
+            },
+            {
+                "type": "input_value",
+                "name": "LOCATION",
+                "check": "Location"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#8b5cf6",
+        "tooltip": "Teleports the player to coordinates",
+        "helpUrl": ""
+    },
+    "create_location": {
+        "message0": "create location World%1 X%2 Y%3 Z%4",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "WORLD",
+                "check": ["World", "String"]
+            },
+            {
+                "type": "input_value",
+                "name": "X",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "Y",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "Z",
+                "check": "Number"
+            }
+        ],
+        "inputsInline": true,
+        "colour": "#8b5cf6",
+        "tooltip": "Creates a location object",
+        "helpUrl": "",
+        "output": "Location"
+    }
+}
