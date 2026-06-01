@@ -35,6 +35,7 @@ import { defaultWorkspcaeJson } from "../lib/config"
 import { getCustomBlocks } from "../../public/editor/blocks/CustomBlocks"
 import StartModal from "../components/modal/StartModal"
 import NewProjectModal from "../components/modal/NewProjectModal"
+import { ExportModal } from "../components/modal/ExportModal"
 
 
 interface ExportCode {
@@ -210,6 +211,36 @@ export default function EditorPage() {
         setIsExportModalOpen(true)
     }
 
+    const handleDownloadProject = () => {
+        if (!project) {
+            return
+        }
+
+        const activeWorkspace = Blockly.getMainWorkspace()
+        const workspaceJson = activeWorkspace
+            ? Blockly.serialization.workspaces.save(activeWorkspace)
+            : project.workspaceJson
+
+        const projectExport: Project = {
+            ...project,
+            workspaceJson,
+        }
+
+        const blob = new Blob([JSON.stringify(projectExport, null, 2)], {
+            type: "application/json",
+        })
+        const downloadUrl = URL.createObjectURL(blob)
+        const link = document.createElement("a")
+        const baseFileName = project.name.trim().length > 0 ? project.name.trim() : "pluginwizard-project"
+
+        link.href = downloadUrl
+        link.download = `${baseFileName}.mcwizard`
+        document.body.appendChild(link)
+        link.click()
+        link.remove()
+        URL.revokeObjectURL(downloadUrl)
+    }
+
     // Export blockly code to java code/classes and in the future a jar file
     // Returns generated code object containing java code and plugin.yml config as strings
     const handleExport = async () => {
@@ -363,6 +394,17 @@ export default function EditorPage() {
                     setLoadedWorkspaceJson(project.workspaceJson);
                     setIsNewProjectModalOpen(false);
                 }}
+            />
+
+            <ExportModal
+                open={isExportModalOpen}
+                project={project}
+                onClose={() => setIsExportModalOpen(false)}
+                onDownloadProject={handleDownloadProject}
+                onDownloadZip={() => {}}
+                onDownloadJar={() => {}}
+                code={null as any}
+                config={null as any}
             />
 
             {/* Workspace file import */}
