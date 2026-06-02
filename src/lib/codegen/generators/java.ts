@@ -1,7 +1,6 @@
 import * as Blockly from 'blockly';
 import { JavaGeneratorConfig } from './JavaGeneratorConfig.js';
 import { JavaGeneratorUtils } from './JavaGeneratorUtil.js';
-import userPluginTemplate from '../plugin/src/main/java/net/kalbskinder/plugin/UserPlugin.java?raw';
 
 export const JavaGenerator = new Blockly.CodeGenerator('Java');
 export let imports = new Set<string>();
@@ -75,16 +74,16 @@ export async function ensureJavaGeneratorsLoaded() {
   }
 
   console.info("Java block generators initialized.");
-  console.info("Initializig user plugin");
-
-  console.info("User plugin content loaded:", userPluginTemplate ? "Yes" : "No");
-  pluginCode = userPluginTemplate || "";
+  console.info("Initializing plugin main class template...");
+  pluginCode = await JavaGeneratorUtils.getPluginContent();
+  console.info("Plugin template content loaded:", pluginCode ? "Yes" : "No");
 
   generatorsLoaded = true;
 }
 
 export function generateJava(workspace: Blockly.Workspace): { code: string; config: string } {
-  const workspaceData = JavaGeneratorUtils.fixVariableSerialization(workspace);
+  const workspaceJson = Blockly.serialization.workspaces.save(workspace);
+  const workspaceData = JavaGeneratorUtils.fixVariableSerialization(workspaceJson);
   const tempWorkspace = new Blockly.Workspace();
   Blockly.serialization.workspaces.load(workspaceData, tempWorkspace);
 

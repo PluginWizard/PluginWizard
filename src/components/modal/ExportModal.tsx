@@ -21,14 +21,14 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
 
     return (
         <div
-            className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 p-4"
+            className="fixed inset-0 z-102 flex items-center justify-center bg-black/60 p-4"
             onMouseDown={(event) => {
                 if (event.target === event.currentTarget) {
                     onClose?.()
                 }
             }}
         >
-            <div className="relative w-full max-w-6xl max-h-[95vh] overflow-y-auto rounded-2xl border border-border/80 bg-card-darker p-6 shadow-2xl sm:p-8">
+            <div className="relative w-full max-w-6xl max-h-[95vh] overflow-y-scroll rounded-2xl border border-border/80 bg-card-darker p-6 shadow-2xl sm:p-8">
                 <button
                     type="button"
                     aria-label="Close modal"
@@ -73,7 +73,7 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                     {code && (
                         <div className="space-y-2">
                             <span className="block font-bold">Plugin.java</span>
-                            <div className="overflow-hidden rounded-xl border border-border/80">
+                            <div className="rounded-xl border border-border/80 max-h-100 overflow-y-scroll">
                                 <SyntaxHighlighter language="java" style={railscasts} showLineNumbers={true} wrapLongLines={false}>
                                     {code}
                                 </SyntaxHighlighter>
@@ -84,7 +84,7 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                     {config && (
                         <div className="space-y-2">
                             <span className="block font-bold">config.yml</span>
-                            <div className="overflow-hidden rounded-xl border border-border/80">
+                            <div className="rounded-xl border border-border/80 max-h-100 overflow-y-scroll">
                                 <SyntaxHighlighter language="yaml" style={railscasts} showLineNumbers={true} wrapLongLines={false}>
                                     {config}
                                 </SyntaxHighlighter>

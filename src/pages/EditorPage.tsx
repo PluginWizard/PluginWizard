@@ -27,7 +27,6 @@ import {
     Upload,
 } from "lucide-react"
 
-//import { ExportModal } from "@/components/export-modal"
 import { getEditorConfig, toolboxCss } from "../lib/editor/editorConfig"
 import { Project } from "../types/types"
 import { Link } from "react-router-dom"
@@ -36,7 +35,7 @@ import { getCustomBlocks } from "../lib/editor/blocks/CustomBlocks"
 import StartModal from "../components/modal/StartModal"
 import NewProjectModal from "../components/modal/NewProjectModal"
 import { ExportModal } from "../components/modal/ExportModal"
-
+import { ensureJavaGeneratorsLoaded, generateJava } from "../lib/codegen/generators/java"
 
 interface ExportCode {
     code: string
@@ -61,7 +60,6 @@ export default function EditorPage() {
 
     // Modals
     const [isExportModalOpen, setIsExportModalOpen] = useState(false)
-    const [isStartModalOpen, setIsStartModalOpen] = useState(true)
     const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false)
 
     // Refs
@@ -205,8 +203,8 @@ export default function EditorPage() {
 
     async function openExportModal() {
         setIsExporting(true)
-        const code = await handleExport()
-        setExportCode(null as any)
+        const generated = await handleExport()
+        setExportCode(generated)
         setIsExporting(false)
         setIsExportModalOpen(true)
     }
@@ -243,12 +241,20 @@ export default function EditorPage() {
 
     // Export blockly code to java code/classes and in the future a jar file
     // Returns generated code object containing java code and plugin.yml config as strings
-    const handleExport = async () => {
+    const handleExport = async (): Promise<ExportCode | undefined> => {
         setIsExporting(true)
         const workspace = Blockly.getMainWorkspace()
-
-        // TODO
+        if (!workspace) {
+            setIsExporting(false)
+            return undefined
+        }
+        console.log("Exporting workspace: ", workspace) 
+        await ensureJavaGeneratorsLoaded();
+        const generated = generateJava(workspace)
+        setIsExporting(false)
+        return generated
     }
+
     /*
         Undo/Redo/Zoom Actions
     */
@@ -403,8 +409,8 @@ export default function EditorPage() {
                 onDownloadProject={handleDownloadProject}
                 onDownloadZip={() => {}}
                 onDownloadJar={() => {}}
-                code={null as any}
-                config={null as any}
+                code={exportCode?.code || ""}
+                config={exportCode?.config || ""}
             />
 
             {/* Workspace file import */}

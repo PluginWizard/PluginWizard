@@ -2,6 +2,14 @@ import { indent } from './java.js';
 
 export class JavaGeneratorUtils {
 
+    private static async fetchText(path: string): Promise<string> {
+        const response = await fetch(path);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${path}: ${response.status} ${response.statusText}`);
+        }
+        return response.text();
+    }
+
     /**
      * Blockly V12 has changed how variables are serialized in the workspace JSON. However the workspace structure of Blockly V12 has not yet implemented this change.
      * This function fixes the variable serialization in the given JSON representation of a Blockly workspace.
@@ -62,9 +70,28 @@ export class JavaGeneratorUtils {
         return json;
     }
 
-    static getUserPluginContent(_pluginPath: string): string {
-        // Filesystem access is not available in the browser runtime.
-        return '';
+    static async getPluginContent(): Promise<string> {
+        try {
+            const pluginYml = await this.fetchText('/plugin/src/main/resources/plugin.yml');
+            const mainLine = pluginYml
+                .split('\n')
+                .map((line) => line.trim())
+                .find((line) => line.toLowerCase().startsWith('main:'));
+
+            const mainClass = mainLine
+                ? mainLine.slice('main:'.length).trim().replace(/^['"]|['"]$/g, '')
+                : 'net.kalbskinder.plugin.Plugin';
+
+            const mainClassPath = `/plugin/src/main/java/${mainClass.replace(/\./g, '/')}.java`;
+            return await this.fetchText(mainClassPath);
+        } catch {
+            // Fallback to the default main class file when plugin.yml is unavailable.
+            return this.fetchText('/plugin/src/main/java/net/kalbskinder/plugin/Plugin.java');
+        }
+    }
+
+    static async getUserPluginContent(_pluginPath: string): Promise<string> {
+        return this.getPluginContent();
     }
 
     /**
