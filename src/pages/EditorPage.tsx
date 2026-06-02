@@ -14,7 +14,7 @@ import { registerContinuousToolbox } from '@blockly/continuous-toolbox';
 import '@blockly/field-colour-hsv-sliders';
 import { FieldColourHsvSliders } from "@blockly/field-colour-hsv-sliders"
 
-import { toolbox } from "../../public/editor/toolbox"
+import { toolbox } from "../lib/editor/toolbox"
 
 // Icons
 import {
@@ -28,11 +28,11 @@ import {
 } from "lucide-react"
 
 //import { ExportModal } from "@/components/export-modal"
-import { getEditorConfig, toolboxCss } from "../../public/editor/editorConfig"
+import { getEditorConfig, toolboxCss } from "../lib/editor/editorConfig"
 import { Project } from "../types/types"
 import { Link } from "react-router-dom"
 import { defaultWorkspcaeJson } from "../lib/config"
-import { getCustomBlocks } from "../../public/editor/blocks/CustomBlocks"
+import { getCustomBlocks } from "../lib/editor/blocks/CustomBlocks"
 import StartModal from "../components/modal/StartModal"
 import NewProjectModal from "../components/modal/NewProjectModal"
 import { ExportModal } from "../components/modal/ExportModal"
