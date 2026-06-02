@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, indent } from '../../java.js';
+import { JavaGenerator, Order } from '../../java.js';
 
 export default {
   block: 'math_number_property',
@@ -17,6 +17,7 @@ export default {
             break;
         case 'PRIME':
             code = 'isPrime(' + number + ')'; // TODO: Implement isPrime function
+            break;
         case 'WHOLE':
             code = number + ' >= 0 && Math.floor(' + number + ') == ' + number;
             break;

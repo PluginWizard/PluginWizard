@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, indent } from '../../java.js';
+import { JavaGenerator, Order } from '../../java.js';
 // TODO: Check for this as well
 export default {
   block: 'lists_isEmpty',

@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, indent } from '../../java.js';
+import { JavaGenerator } from '../../java.js';
 
 export default {
     block: 'sub_command',

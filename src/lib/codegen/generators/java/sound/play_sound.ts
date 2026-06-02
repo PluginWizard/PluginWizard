@@ -1,5 +1,5 @@
-import { JavaGenerator, Order, indent, imports } from '../../java.js';
 import * as Blockly from 'blockly';
+import { JavaGenerator, Order, imports } from '../../java.js';
 
 export default {
     block: 'play_sound',

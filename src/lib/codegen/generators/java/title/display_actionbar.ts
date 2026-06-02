@@ -1,5 +1,5 @@
-import { JavaGenerator, Order, indent } from '../../java.js';
 import * as Blockly from 'blockly';
+import { JavaGenerator, Order } from '../../java.js';
 
 export default {
     block: 'display_actionbar',

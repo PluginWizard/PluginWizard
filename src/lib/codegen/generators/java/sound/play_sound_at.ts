@@ -1,4 +1,4 @@
-import { JavaGenerator, Order, indent, imports } from '../../java.js';
+import { JavaGenerator, Order, imports } from '../../java.js';
 import * as Blockly from 'blockly';
 
 export default {

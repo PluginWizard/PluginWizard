@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, configYamlLines } from '../../java.js';
+import { JavaGenerator } from '../../java.js';
 
 export default {
     block: 'config',

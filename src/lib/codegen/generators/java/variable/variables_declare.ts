@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, indent, getDefaultValueForType } from '../../java.js';
+import { JavaGenerator, Order, getDefaultValueForType } from '../../java.js';
 
 export default {
   block: 'variables_declare',

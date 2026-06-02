@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, indent, imports } from '../../java.js';
+import { JavaGenerator, Order, imports } from '../../java.js';
 
 export default {
     block: 'set_block_type',

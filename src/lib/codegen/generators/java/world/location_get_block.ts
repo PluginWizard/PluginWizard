@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, getWorldFromLocation, indent } from '../../java.js';
+import { JavaGenerator, Order, getWorldFromLocation } from '../../java.js';
 
 export default {
     block: 'location_get_block',

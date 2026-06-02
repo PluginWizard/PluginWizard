@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, indent, imports, getWorldFromLocation } from '../../java.js';
+import { JavaGenerator, Order, imports, getWorldFromLocation } from '../../java.js';
 
 export default {
     block: 'spawn_particle',

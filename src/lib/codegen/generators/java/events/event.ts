@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, indent } from '../../java.js';
+import { JavaGenerator, indent } from '../../java.js';
 
 export default {
     block: 'minecraft_event',

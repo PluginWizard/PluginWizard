@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, indent } from '../../java.js';
+import { Order } from '../../java.js';
 
 export default {
     block: 'command_argument_get',

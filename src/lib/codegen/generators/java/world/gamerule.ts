@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, imports, indent } from '../../java.js';
+import { Order, imports } from '../../java.js';
 
 export default {
     block: 'gamerule',

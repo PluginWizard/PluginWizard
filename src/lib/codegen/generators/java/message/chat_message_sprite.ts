@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order } from '../../java.js';
+import { Order } from '../../java.js';
 
 export default {
   block: 'chat_message_sprite',

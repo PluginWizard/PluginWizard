@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, indent } from '../../java.js';
+import { JavaGenerator, Order } from '../../java.js';
 
 export default {
   block: 'math_float_utils',
