@@ -142,9 +142,3 @@ export function indent(code: string, spaces: number = 2) {
     .map(line => (line.trim() ? indentation + line : line))
     .join('\n');
 }
-
-export function getWorldFromLocation(location: string) {
-  const loc = location.split('"')[1] || '';
-  const world = loc.split(',')[0];
-  return world;
-}
