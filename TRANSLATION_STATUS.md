@@ -105,26 +105,6 @@ Should generate `(int)(Math.random() * (TO - FROM + 1)) + FROM` or use `ThreadLo
 
 ---
 
-## 2. Generators with Bugs
-
-These files exist but produce incorrect or broken output.
-
-### 2.9 Fragile world extraction — `spawn_particle.ts` / `location_get_block.ts`
-
-**Files:** `java/world/spawn_particle.ts`, `java/world/location_get_block.ts`
-
-```ts
-const world = getWorldFromLocation(location);
-// …
-`Bukkit.getWorld("${world}").spawnParticle(…)`
-```
-
-`getWorldFromLocation()` parses the world name by splitting the location string on `"` and `,`. This only works if the location was produced by `create_location`, which encodes location as `Helpers.locationHelper.stringToLocation("worldName,x,y,z")`. If the location comes from any other source (e.g., `event.getLocation()`, `player.getLocation()`), the extraction fails silently and generates `Bukkit.getWorld("").spawnParticle(…)`.
-
-**This approach needs rethinking** — see §3.4.
-
----
-
 ## 3. Design Issues That Need Rethinking
 
 These are structural problems in the block definitions or generator architecture that can't be fixed with a one-line change.
