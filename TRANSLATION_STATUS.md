@@ -95,17 +95,11 @@ No generator directory exists.
 | `player_methods` | `java/player/player_methods.ts` | |
 | `player_location` | `java/player/player_location.ts` | Dropdown labels show Java syntax — see §3 |
 
-### Math — 1 block
-
-| Block | File needed |
-|---|---|
-| `math_random_range` | `java/math/math_random_range.ts` |
-
-Should generate `(int)(Math.random() * (TO - FROM + 1)) + FROM` or use `ThreadLocalRandom.current().nextInt(FROM, TO + 1)`.
-
 ---
 
 ## 3. Design Issues That Need Rethinking
+
+**An issue has been created for this task**
 
 These are structural problems in the block definitions or generator architecture that can't be fixed with a one-line change.
 
@@ -116,26 +110,6 @@ These are structural problems in the block definitions or generator architecture
 All 10 checkboxes share the field name `"CHECKBOX"`. Blockly only stores one value per field name, so `block.getFieldValue('CHECKBOX')` would only return the value of the last checkbox. A generator for this block currently cannot read individual flag states.
 
 **Fix:** Give each checkbox a unique name matching the flag it controls, e.g., `HIDE_ARMOR_TRIMS`, `HIDE_ATTRIBUTES`, `HIDE_DESTROYS`, `HIDE_DYE`, `HIDE_ENCHANTS`, `HIDE_UNBREAKABLE`, `HIDE_DAMAGE`, `HIDE_LORE`, `HIDE_DURABILITY`, `UNBREAKABLE`.
-
----
-
-## 5. Standard Blockly Block Generators
-
-The project also ships custom generators for standard Blockly blocks (logic, loops, math, lists, text). These are implemented but several are partial:
-
-| Block | Status |
-|---|---|
-| `controls_if` | Implemented — handles `if`, multiple `else if`, and `else` |
-| `controls_ifelse` | Separate file handles `if/else` only, not `else if` chains |
-| `controls_for` | Implemented |
-| `controls_forEach` | Implemented |
-| `controls_repeat_ext` | Implemented |
-| `controls_whileUntil` | Implemented |
-| `controls_flow_statements` | Implemented (`break`/`continue`) |
-| `logic_*` | All implemented |
-| `math_*` | All implemented (many cover advanced operations unlikely to be needed) |
-| `lists_*` | All implemented |
-| `text_*` | All implemented |
 
 ---
 
