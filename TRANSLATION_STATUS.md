@@ -148,14 +148,6 @@ The root cause is that Java `Location` objects cannot be passed as an expression
 - **Option A:** Emit a `Location loc_N = new Location(...)` declaration before the block that uses the location, and pass the variable name as the expression. This requires the generator to emit statements from a value block, which is non-standard.
 - **Option B:** Keep the current `stringToLocation` helper but also add a `getWorldFromLocation(Location)` Java helper, so the world extraction happens at runtime in Java, not at code-generation time.
 
-### 3.5 `variables_declare` / `variables_set` / `variables_get` — nameDB used with `field_input`
-
-**Files:** `java/variable/variables_declare.ts`, `java/variable/variables_set.ts`, `java/variable/variables_get.ts`
-
-The blocks use `field_input` for the variable name (free-text), but the generators call `JavaGenerator.nameDB_?.getName(block.getFieldValue('VAR'), Blockly.VARIABLE_CATEGORY_NAME)`. The name database is populated from Blockly's `field_variable` fields only — `field_input` values are never registered. This means `nameDB_.getName()` may mangle the name or return an unexpected result.
-
-If the intent is to use Blockly's built-in variable system, the blocks should use `field_variable`. If the intent is to use free-text names (current UX), the generators should just use `block.getFieldValue('VAR')` directly, without going through `nameDB_`.
-
 ### 3.6 `controls_if` — multi-branch `if/else if/else` not handled
 
 **File:** `java/logic/controls_if.ts`

@@ -65,7 +65,7 @@
                 ]
             },
             {
-                "type": "field_input",
+                "type": "field_variable",
                 "name": "VAR",
                 "text": "x"
             },
@@ -85,7 +85,7 @@
         "message0": "set %1 = %2",
         "args0": [
             {
-                "type": "field_input",
+                "type": "field_variable",
                 "name": "VAR",
                 "text": "x"
             },
@@ -105,7 +105,7 @@
         "message0": "variable %1",
         "args0": [
             {
-                "type": "field_input",
+                "type": "field_variable",
                 "name": "VAR",
                 "text": "x"
             }
