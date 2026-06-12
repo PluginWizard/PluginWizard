@@ -82,19 +82,6 @@ No generator directory exists.
 
 `item_flags` cannot be correctly generated until its block definition is fixed (§3.1).
 
-### Player — 6 blocks (entire category)
-
-No generator directory exists.
-
-| Block | File needed | Notes |
-|---|---|---|
-| `player` | `java/player/player.ts` | Returns the event player variable |
-| `player_get` | `java/player/player_get.ts` | Appends the selected getter to the player expression |
-| `player_set` | `java/player/player_set.ts` | The dropdown values embed partial method calls — see §3 |
-| `player_game_modes` | `java/player/player_game_modes.ts` | Returns `GameMode.SURVIVAL` etc. |
-| `player_methods` | `java/player/player_methods.ts` | |
-| `player_location` | `java/player/player_location.ts` | Dropdown labels show Java syntax — see §3 |
-
 ---
 
 ## 3. Design Issues That Need Rethinking

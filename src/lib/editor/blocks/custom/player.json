@@ -7,18 +7,18 @@
         "helpUrl": ""
     },
     "player_get": {
-        "message0": "Get %1 from player %2",
+        "message0": "get %1 of player %2",
         "args0": [
             {
                 "type": "field_dropdown",
                 "name": "GET",
                 "options": [
                     [
-                        "Name",
+                        "name",
                         "getName"
                     ],
                     [
-                        "Display Name",
+                        "display name",
                         "getDisplayName"
                     ],
                     [
@@ -26,55 +26,51 @@
                         "getUniqueId"
                     ],
                     [
-                        "World",
+                        "world",
                         "getWorld"
                     ],
                     [
-                        "Location",
+                        "location",
                         "getLocation"
                     ],
                     [
-                        "Health",
+                        "health",
                         "getHealth"
                     ],
                     [
-                        "Max Health",
+                        "max health",
                         "getMaxHealth"
                     ],
                     [
-                        "Food Level",
+                        "food level",
                         "getFoodLevel"
                     ],
                     [
-                        "Saturation Level",
+                        "saturation level",
                         "getSaturationLevel"
                     ],
                     [
-                        "Game Mode",
+                        "game mode",
                         "getGameMode"
                     ],
                     [
-                        "Pose",
-                        "getPose"
-                    ],
-                    [
-                        "Ping",
+                        "ping",
                         "getPing"
                     ],
                     [
-                        "Exp",
+                        "xp",
                         "getExperience"
                     ],
                     [
-                        "Exp Level",
+                        "xp level",
                         "getExperienceLevel"
                     ],
                     [
-                        "Killer",
+                        "killer",
                         "getKiller"
                     ],
                     [
-                        "Last death location",
+                        "last death location",
                         "getLastDeathLocation"
                     ],
                     [
@@ -96,50 +92,46 @@
         "helpUrl": ""
     },
     "player_set": {
-        "message0": "Set %1 of player %2 to %3",
+        "message0": "set %1 of player %2 to %3",
         "args0": [
             {
                 "type": "field_dropdown",
                 "name": "SET",
                 "options": [
                     [
-                        "Health",
+                        "health",
                         "setHealth"
                     ],
                     [
-                        "Max Health",
+                        "max health",
                         "setMaxHealth"
                     ],
                     [
-                        "Food Level",
+                        "food level",
                         "setFoodLevel"
                     ],
                     [
-                        "Saturation Level",
+                        "saturation level",
                         "setSaturationLevel"
                     ],
                     [
-                        "Game Mode",
+                        "game mode",
                         "setGameMode"
                     ],
                     [
-                        "Pose",
-                        "setPose"
-                    ],
-                    [
-                        "Exp",
+                        "xp",
                         "setExperience"
                     ],
                     [
-                        "Exp Level",
+                        "xp level",
                         "setExperienceLevel"
                     ],
                     [
-                        "Velocity",
+                        "velocity",
                         "setVelocity"
                     ],
                     [
-                        "set allow flight",
+                        "allow flight",
                         "setAllowFlight"
                     ]
                 ]
