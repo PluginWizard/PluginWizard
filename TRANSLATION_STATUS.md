@@ -109,32 +109,6 @@ Should generate `(int)(Math.random() * (TO - FROM + 1)) + FROM` or use `ThreadLo
 
 These files exist but produce incorrect or broken output.
 
-
-### 2.2 Wrong field name — `set_block_type.ts`
-
-**File:** `java/world/set_block_type.ts:8`
-
-```ts
-const material = block.getFieldValue('MATERIAL') || 'grass_block';
-```
-
-The block definition (`world.json`) names the field `TYPE`, not `MATERIAL`. Always falls back to `'grass_block'`.
-
-**Fix:** Change `'MATERIAL'` to `'TYPE'`.
-
-### 2.3 Wrong field names — `display_title.ts` and `display_subtitle.ts`
-
-**Files:** `java/title/display_title.ts:8-10`, `java/title/display_subtitle.ts:9-11`
-
-```ts
-const fadeIn  = block.getFieldValue('FADE_IN')  || '0';
-const fadeOut = block.getFieldValue('FADE_OUT') || '0';
-```
-
-The block definition (`title.json`) uses `FADEIN` and `FADEOUT` (no underscore). Both generators always use `0` for fade-in and fade-out.
-
-**Fix:** Change `'FADE_IN'` → `'FADEIN'` and `'FADE_OUT'` → `'FADEOUT'` in both files.
-
 ### 2.4 Wrong method call — `display_subtitle.ts`
 
 **File:** `java/title/display_subtitle.ts:14`
