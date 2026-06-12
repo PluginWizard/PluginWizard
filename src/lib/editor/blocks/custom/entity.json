@@ -154,7 +154,7 @@
                 "check": null
             }
         ],
-        "inpitsInline": true,
+        "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
         "colour": "#edb940",
