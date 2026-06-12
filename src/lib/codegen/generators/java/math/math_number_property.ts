@@ -16,7 +16,7 @@ export default {
             code = number + ' % 2 != 0';
             break;
         case 'PRIME':
-            code = 'isPrime(' + number + ')'; // TODO: Implement isPrime function
+            code = `Helpers.mathHelper.isPrime(${number})`;
             break;
         case 'WHOLE':
             code = number + ' >= 0 && Math.floor(' + number + ') == ' + number;
