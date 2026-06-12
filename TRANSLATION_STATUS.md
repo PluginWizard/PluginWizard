@@ -110,18 +110,6 @@ Should generate `(int)(Math.random() * (TO - FROM + 1)) + FROM` or use `ThreadLo
 These files exist but produce incorrect or broken output.
 
 
-### 2.7 Missing `Helpers.` prefix — `teleport_player.ts` / `teleport_player_location.ts`
-
-**Files:** `java/teleport/teleport_player.ts:11`, `java/teleport/teleport_player_location.ts:9`
-
-```ts
-return `teleportPlayerHelper.teleportEntity(...);\n`;
-```
-
-All other helpers follow the `Helpers.xHelper.method()` pattern (e.g., `Helpers.soundHelper`, `Helpers.regionHelper`). `teleportPlayerHelper` is a bare identifier that is not imported or declared. At runtime this will fail with a compilation error unless `teleportPlayerHelper` happens to be a field that's already in scope.
-
-**Fix:** Change to `Helpers.teleportHelper.teleportEntity(...)` (or whatever the correct helper name is in `Helpers.java`).
-
 ### 2.8 Float values truncated — `play_sound.ts` / `play_sound_at.ts`
 
 **Files:** `java/sound/play_sound.ts:14`, `java/sound/play_sound_at.ts:14`

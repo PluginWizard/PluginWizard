@@ -8,7 +8,7 @@ export default {
     const x = JavaGenerator.valueToCode(block, 'X', Order.ATOMIC) || '0';
     const y = JavaGenerator.valueToCode(block, 'Y', Order.ATOMIC) || '64';
     const z = JavaGenerator.valueToCode(block, 'Z', Order.ATOMIC) || '0';
-    const code = `teleportPlayerHelper.teleportEntity(${player}, ${x}, ${y}, ${z});\n`;
+    const code = `Helpers.teleportHelper.teleportEntity(${player}, ${x}, ${y}, ${z});\n`;
     return code;
   },
 };
