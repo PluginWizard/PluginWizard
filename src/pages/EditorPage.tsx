@@ -248,10 +248,11 @@ export default function EditorPage() {
             setIsExporting(false)
             return undefined
         }
-        console.log("Exporting workspace: ", workspace) 
+        console.log("Exporting workspace: ", Blockly.serialization.workspaces.save(workspace)) 
+
+        setIsExporting(false)
         await ensureJavaGeneratorsLoaded();
         const generated = generateJava(workspace)
-        setIsExporting(false)
         return generated
     }
 
