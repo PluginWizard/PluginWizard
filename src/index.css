@@ -127,3 +127,8 @@ body, #root {
     height: calc(100vh - 64px);
     width: 100%;
 }
+
+#discord-logo {
+  filter: brightness(0) saturate(100%) invert(49%) sepia(13%) saturate(20%) hue-rotate(54deg) brightness(98%) contrast(87%);
+}
+

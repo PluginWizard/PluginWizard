@@ -1,15 +1,20 @@
 // App.tsx
-import { Outlet, Route, Routes } from 'react-router-dom'
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import { Navbar } from './components/Navbar'
 import AboutPage from './pages/AboutPage'
 import EditorPage from './pages/EditorPage'
+import { Footer } from './components/Footer'
 
 function Layout() {
+  const location = useLocation()
+  const isEditorPage = location.pathname === '/editor' // Hide footer on editor page for more space
+
   return (
     <>
       <Navbar />
       <Outlet />
+      {!isEditorPage && <Footer />}
     </>
   )
 }
