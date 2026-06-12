@@ -137,25 +137,6 @@ All 10 checkboxes share the field name `"CHECKBOX"`. Blockly only stores one val
 
 **Fix:** Give each checkbox a unique name matching the flag it controls, e.g., `HIDE_ARMOR_TRIMS`, `HIDE_ATTRIBUTES`, `HIDE_DESTROYS`, `HIDE_DYE`, `HIDE_ENCHANTS`, `HIDE_UNBREAKABLE`, `HIDE_DAMAGE`, `HIDE_LORE`, `HIDE_DURABILITY`, `UNBREAKABLE`.
 
-### 3.4 Location encoding — fragile string serialisation
-
-**Files:** `java/teleport/create_loaction.ts` (note: filename typo — should be `create_location.ts`), `java/world/spawn_particle.ts`, `java/world/location_get_block.ts`
-
-The `create_location` generator encodes a `Location` as a single string literal by embedding the world and coordinates into a call to `Helpers.locationHelper.stringToLocation("world,x,y,z")`. Generators that need the world separately (spawn particle, get block) then try to reverse-engineer the world name by string-splitting this literal. This only works for statically-known locations.
-
-The root cause is that Java `Location` objects cannot be passed as an expression — they must be assigned to a variable. Two possible approaches:
-
-- **Option A:** Emit a `Location loc_N = new Location(...)` declaration before the block that uses the location, and pass the variable name as the expression. This requires the generator to emit statements from a value block, which is non-standard.
-- **Option B:** Keep the current `stringToLocation` helper but also add a `getWorldFromLocation(Location)` Java helper, so the world extraction happens at runtime in Java, not at code-generation time.
-
-### 3.6 `controls_if` — multi-branch `if/else if/else` not handled
-
-**File:** `java/logic/controls_if.ts`
-
-The standard Blockly `controls_if` block supports adding multiple `elseif` and `else` branches via the block's mutator. The current generator only handles `IF0` / `DO0` — the first condition and body. Any additional `elseif` or `else` branches are silently dropped.
-
-**Fix:** Iterate over `block.elseifCount_` and `block.elseCount_` (or inspect `block.inputList`) and emit the corresponding `else if (...) {}` and `else {}` clauses.
-
 ---
 
 ## 5. Standard Blockly Block Generators
@@ -164,7 +145,7 @@ The project also ships custom generators for standard Blockly blocks (logic, loo
 
 | Block | Status |
 |---|---|
-| `controls_if` | Partial — only handles single `if`, not `else if` / `else` (see §3.6) |
+| `controls_if` | Implemented — handles `if`, multiple `else if`, and `else` |
 | `controls_ifelse` | Separate file handles `if/else` only, not `else if` chains |
 | `controls_for` | Implemented |
 | `controls_forEach` | Implemented |
