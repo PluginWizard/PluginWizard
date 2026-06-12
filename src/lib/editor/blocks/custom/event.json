@@ -115,7 +115,7 @@
         "args0": [
             {
                 "type": "field_dropdown",
-                "name": "GET",
+                "name": "VALUE",
                 "options": [
                     [
                         "Player",

@@ -170,17 +170,6 @@ The block definition (`region.json`) names the field `PLAYER_EVENT`, not `EVENT_
 
 **Fix:** Change `'EVENT_TYPE'` to `'PLAYER_EVENT'`.
 
-### 2.6 Wrong import — `gamerule.ts`
-
-**File:** `java/world/gamerule.ts:8`
-
-```ts
-imports.add('import org.bukkit.GameRules;');
-```
-
-The Bukkit API class is `GameRule` (singular), not `GameRules`. The generated Java file will fail to compile.
-
-**Fix:** Change to `'import org.bukkit.GameRule;'`.
 
 ### 2.7 Missing `Helpers.` prefix — `teleport_player.ts` / `teleport_player_location.ts`
 
