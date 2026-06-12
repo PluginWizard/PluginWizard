@@ -10,28 +10,28 @@ export default {
 
     switch (mode) {
         case 'SUM':
-            code = 'sum(' + list + ')'; // TODO: Implement sum function
+            code = `Helpers.mathHelper.listSum(${list})`;
             break;
         case 'AVERAGE':
-            code = 'average(' + list + ')'; // TODO: Implement average function
+            code = `Helpers.mathHelper.listAverage(${list})`;
             break;
         case 'MIN':
-            code = 'min(' + list + ')'; // TODO: Implement min function
+            code = `Helpers.mathHelper.listMin(${list})`;
             break;
         case 'MAX':
-            code = 'max(' + list + ')'; // TODO: Implement max function
+            code = `Helpers.mathHelper.listMax(${list})`;
             break;
         case 'MEDIAN':
-            code = 'median(' + list + ')'; // TODO: Implement median function
+            code = `Helpers.mathHelper.listMedian(${list})`;
             break;
         case 'MODE':
-            code = 'mode(' + list + ')'; // TODO: Implement mode function
+            code = `Helpers.mathHelper.listModes(${list})`;
             break;
         case 'STD_DEV':
-            code = 'stdDev(' + list + ')'; // TODO: Implement stdDev function
+            code = `Helpers.mathHelper.listStandardDeviation(${list})`;
             break;
         case 'RANDOM':
-            code = 'random(' + list + ')'; // TODO: Implement random function
+            code = `Helpers.mathHelper.listRandomItem(${list})`;
             break;
         default:
             throw new Error('Unknown operation: ' + mode);
