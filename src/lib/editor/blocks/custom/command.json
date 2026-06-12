@@ -145,7 +145,7 @@
         "previousStatement": null,
         "nextStatement": null,
         "colour": "#456bd6",
-        "tooltip": "A command argument with a custom argument type"
+        "tooltip": "A command argument with a specific type"
     },
     "command_argument_get": {
         "message0": "get %1 argument %2",
