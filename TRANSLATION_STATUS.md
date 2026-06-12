@@ -156,19 +156,6 @@ The standard Blockly `controls_if` block supports adding multiple `elseif` and `
 
 **Fix:** Iterate over `block.elseifCount_` and `block.elseCount_` (or inspect `block.inputList`) and emit the corresponding `else if (...) {}` and `else {}` clauses.
 
-### 3.7 `region_settings` — `ENABLED` checkbox returns string, not boolean
-
-**File:** `java/regions/region_settings.ts:8`
-
-```ts
-const enabled = block.getFieldValue('ENABLED');
-if (enabled) { … }
-```
-
-`getFieldValue` on a `field_checkbox` returns the string `"TRUE"` or `"FALSE"`, not a JS boolean. The `if (enabled)` check is always truthy (a non-empty string), so `removeRegionFlag` is never called.
-
-**Fix:** Change to `if (enabled === 'TRUE')`.
-
 ---
 
 ## 4. Minor / Cosmetic Issues in Block Definitions
