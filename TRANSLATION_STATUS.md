@@ -137,14 +137,6 @@ All 10 checkboxes share the field name `"CHECKBOX"`. Blockly only stores one val
 
 **Fix:** Give each checkbox a unique name matching the flag it controls, e.g., `HIDE_ARMOR_TRIMS`, `HIDE_ATTRIBUTES`, `HIDE_DESTROYS`, `HIDE_DYE`, `HIDE_ENCHANTS`, `HIDE_UNBREAKABLE`, `HIDE_DAMAGE`, `HIDE_LORE`, `HIDE_DURABILITY`, `UNBREAKABLE`.
 
-### 3.2 `player_set` — partial method calls embedded in dropdown values
-
-**File:** `src/lib/editor/blocks/custom/player.json` — `player_set` block
-
-Dropdown values include raw partial Java code with a trailing open parenthesis, e.g., `".setHealth("`. This encoding makes the block definition fragile (tied to exactly one code generation style) and unusable for anything other than simple string concatenation.
-
-**Recommended approach:** Use clean semantic values like `"health"`, `"maxHealth"`, etc., and let the generator map them to the correct method calls. This matches how `entity.json` already handles `set_entity`.
-
 ### 3.3 `player_location` — Java method syntax as display labels
 
 **File:** `src/lib/editor/blocks/custom/player.json` — `player_location` block

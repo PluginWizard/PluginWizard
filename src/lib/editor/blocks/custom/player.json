@@ -15,71 +15,71 @@
                 "options": [
                     [
                         "Name",
-                        ".getName()"
+                        "getName"
                     ],
                     [
                         "Display Name",
-                        ".getDisplayName()"
+                        "getDisplayName"
                     ],
                     [
                         "UUID",
-                        ".getUniqueId()"
+                        "getUniqueId"
                     ],
                     [
                         "World",
-                        ".getWorld()"
+                        "getWorld"
                     ],
                     [
                         "Location",
-                        ".getLocation()"
+                        "getLocation"
                     ],
                     [
                         "Health",
-                        ".getHealth()"
+                        "getHealth"
                     ],
                     [
                         "Max Health",
-                        ".getMaxHealth()"
+                        "getMaxHealth"
                     ],
                     [
                         "Food Level",
-                        ".getFoodLevel()"
+                        "getFoodLevel"
                     ],
                     [
                         "Saturation Level",
-                        ".getSaturationLevel()"
+                        "getSaturationLevel"
                     ],
                     [
                         "Game Mode",
-                        ".getGameMode()"
+                        "getGameMode"
                     ],
                     [
                         "Pose",
-                        ".getPose()"
+                        "getPose"
                     ],
                     [
                         "Ping",
-                        ".getPing()"
+                        "getPing"
                     ],
                     [
                         "Exp",
-                        ".getExperience()"
+                        "getExperience"
                     ],
                     [
                         "Exp Level",
-                        ".getExperienceLevel()"
+                        "getExperienceLevel"
                     ],
                     [
                         "Killer",
-                        ".getKiller()"
+                        "getKiller"
                     ],
                     [
                         "Last death location",
-                        ".getLastDeathLocation()"
+                        "getLastDeathLocation"
                     ],
                     [
                         "allow flight",
-                        ".getAllowFlight()"
+                        "getAllowFlight"
                     ]
                 ]
             },
@@ -104,43 +104,43 @@
                 "options": [
                     [
                         "Health",
-                        ".setHealth("
+                        "setHealth"
                     ],
                     [
                         "Max Health",
-                        ".setMaxHealth("
+                        "setMaxHealth"
                     ],
                     [
                         "Food Level",
-                        ".setFoodLevel("
+                        "setFoodLevel"
                     ],
                     [
                         "Saturation Level",
-                        ".setSaturationLevel("
+                        "setSaturationLevel"
                     ],
                     [
                         "Game Mode",
-                        ".setGameMode("
+                        "setGameMode"
                     ],
                     [
                         "Pose",
-                        ".setPose("
+                        "setPose"
                     ],
                     [
                         "Exp",
-                        ".setExperience("
+                        "setExperience"
                     ],
                     [
                         "Exp Level",
-                        ".setExperienceLevel("
+                        "setExperienceLevel"
                     ],
                     [
                         "Velocity",
-                        ".setVelocity("
+                        "setVelocity"
                     ],
                     [
                         "set allow flight",
-                        ".setAllowFlight("
+                        "setAllowFlight"
                     ]
                 ]
             },
