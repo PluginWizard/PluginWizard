@@ -109,17 +109,6 @@ Should generate `(int)(Math.random() * (TO - FROM + 1)) + FROM` or use `ThreadLo
 
 These files exist but produce incorrect or broken output.
 
-### 2.1 Wrong field name — `event_get.ts`
-
-**File:** `java/events/event_get.ts:7`
-
-```ts
-const value = block.getFieldValue('VALUE') || 'event.getEventName()';
-```
-
-The block definition (`event.json`) names the dropdown field `GET`, not `VALUE`. `getFieldValue('VALUE')` always returns `null`, so the generator always falls back to `'event.getEventName()'` regardless of what the user selected.
-
-**Fix:** Change `'VALUE'` to `'GET'`.
 
 ### 2.2 Wrong field name — `set_block_type.ts`
 
