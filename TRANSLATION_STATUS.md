@@ -109,30 +109,6 @@ Should generate `(int)(Math.random() * (TO - FROM + 1)) + FROM` or use `ThreadLo
 
 These files exist but produce incorrect or broken output.
 
-### 2.4 Wrong method call — `display_subtitle.ts`
-
-**File:** `java/title/display_subtitle.ts:14`
-
-```ts
-return `Helpers.titleHelper.displayTitle(${target}, "", ${text}, ...);\n`;
-```
-
-`display_subtitle` calls `displayTitle()` with an empty string as the title argument. It should call `displaySubtitle()` (or whatever the correct helper method is). The current output sets a blank title alongside the subtitle, and may cause unexpected results if the helper signatures differ.
-
-**Fix:** Change to call the correct subtitle method, e.g., `Helpers.titleHelper.displaySubtitle(...)`.
-
-### 2.5 Wrong field name — `region_events.ts`
-
-**File:** `java/regions/region_events.ts:8`
-
-```ts
-const eventType = block.getFieldValue('EVENT_TYPE') || 'onRegionEnter';
-```
-
-The block definition (`region.json`) names the field `PLAYER_EVENT`, not `EVENT_TYPE`. Always generates `onRegionEnter` regardless of user selection.
-
-**Fix:** Change `'EVENT_TYPE'` to `'PLAYER_EVENT'`.
-
 
 ### 2.7 Missing `Helpers.` prefix — `teleport_player.ts` / `teleport_player_location.ts`
 
