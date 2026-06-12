@@ -130,5 +130,10 @@ body, #root {
 
 #discord-logo {
   filter: brightness(0) saturate(100%) invert(49%) sepia(13%) saturate(20%) hue-rotate(54deg) brightness(98%) contrast(87%);
+  transition: filter 200ms ease-in-out;
+}
+
+#discord-logo:hover {
+  filter: brightness(0) saturate(100%) invert(92%) sepia(3%) saturate(79%) hue-rotate(203deg) brightness(110%) contrast(100%);
 }
 
