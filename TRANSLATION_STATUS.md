@@ -158,22 +158,6 @@ The standard Blockly `controls_if` block supports adding multiple `elseif` and `
 
 ---
 
-## 4. Minor / Cosmetic Issues in Block Definitions
-
-These do not affect code generation correctness but should be cleaned up.
-
-| File | Issue |
-|---|---|
-| `entity.json` (line 157) | `"inpitsInline": true` — typo, should be `"inputsInline"`. The property is silently ignored. |
-| `entity.json` | `"allways show name"` — typo in two places, should be `"always show name"`. |
-| `player.json` | `"helpkUrl": ""` — typo on `player` block, should be `"helpUrl"`. |
-| `command.json` | `command_argument` tooltip says "custom argument type" but describes a standard typed argument, not a custom one. |
-| `teleport/create_loaction.ts` | Filename typo — should be `create_location.ts`. |
-| `toolbox/entities.json` | Category label `"Entitys"` — should be `"Entities"`. |
-| `play_sound.ts` tooltip | `"Play a sound a sound"` — duplicated word. |
-
----
-
 ## 5. Standard Blockly Block Generators
 
 The project also ships custom generators for standard Blockly blocks (logic, loops, math, lists, text). These are implemented but several are partial:
