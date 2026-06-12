@@ -373,16 +373,6 @@ export default function EditorPage() {
                 <div ref={blocklyDiv} className="w-full h-[calc(100vh-198px)]" />
             </div>
 
-            {/* <ExportModal 
-        open={isExportModalOpen} 
-        project={project} 
-        onOpenChange={setIsExportModalOpen} 
-        onDownload={() =>
-        code={exportCode?.code}
-        config={exportCode?.config}
-      /> */}
-
-
             <StartModal
                 onNewProject={() => setIsNewProjectModalOpen(true)}
                 onOpenProject={(project) => {
