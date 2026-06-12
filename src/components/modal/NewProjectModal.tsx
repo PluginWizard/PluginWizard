@@ -20,7 +20,6 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
     const [authorName, setAuthorName] = useState("");
     const [groupId, setGroupId] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [project, setProject] = useState<Project | null>(null);
 
     const handleSubmit = () => {
         setErrors({})
