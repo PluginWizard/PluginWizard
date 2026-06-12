@@ -4,7 +4,7 @@
         "output": "Player",
         "colour": "#22c55e",
         "tooltip": "The player object",
-        "helpkUrl": ""
+        "helpUrl": ""
     },
     "player_get": {
         "message0": "Get %1 from player %2",
@@ -204,11 +204,11 @@
                 "options": [
                     [
                         "can see (Entity/Player)",
-                        ".canSee("
+                        "canSee"
                     ],
                     [
                         "has permission",
-                        ".hasPermission("
+                        "hasPermission"
                     ]
                 ]
             },
@@ -253,15 +253,15 @@
                         "getWorld"
                     ],
                     [
-                        "Block X",
+                        "block X",
                         "getBlockX"
                     ],
                     [
-                        "Block Y",
+                        "block Y",
                         "getBlockY"
                     ],
                     [
-                        "Block Z",
+                        "block Z",
                         "getBlockZ"
                     ]
                 ]
