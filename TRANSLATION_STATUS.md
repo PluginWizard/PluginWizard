@@ -109,19 +109,6 @@ Should generate `(int)(Math.random() * (TO - FROM + 1)) + FROM` or use `ThreadLo
 
 These files exist but produce incorrect or broken output.
 
-
-### 2.8 Float values truncated — `play_sound.ts` / `play_sound_at.ts`
-
-**Files:** `java/sound/play_sound.ts:14`, `java/sound/play_sound_at.ts:14`
-
-```ts
-return `Helpers.soundHelper.playSound(${target}, Sound.${sound}, ${parseInt(volume)}, ${parseInt(pitch)});\n`;
-```
-
-The block allows volume and pitch between 0 and 2 (floats). `parseInt` truncates `0.5` to `0`, making it impossible to set any value below 1. The Bukkit `playSound` API accepts floats.
-
-**Fix:** Use `parseFloat(volume)` and `parseFloat(pitch)`, or just pass the raw field value directly.
-
 ### 2.9 Fragile world extraction — `spawn_particle.ts` / `location_get_block.ts`
 
 **Files:** `java/world/spawn_particle.ts`, `java/world/location_get_block.ts`

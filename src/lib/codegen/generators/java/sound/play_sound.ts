@@ -11,6 +11,6 @@ export default {
         
         imports.add('import org.bukkit.Sound;');
 
-        return `Helpers.soundHelper.playSound(${target}, Sound.${sound}, ${parseInt(volume)}, ${parseInt(pitch)});\n`;
+        return `Helpers.soundHelper.playSound(${target}, Sound.${sound}, ${volume}f, ${pitch}f);\n`;
     }
 }
