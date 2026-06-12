@@ -137,14 +137,6 @@ All 10 checkboxes share the field name `"CHECKBOX"`. Blockly only stores one val
 
 **Fix:** Give each checkbox a unique name matching the flag it controls, e.g., `HIDE_ARMOR_TRIMS`, `HIDE_ATTRIBUTES`, `HIDE_DESTROYS`, `HIDE_DYE`, `HIDE_ENCHANTS`, `HIDE_UNBREAKABLE`, `HIDE_DAMAGE`, `HIDE_LORE`, `HIDE_DURABILITY`, `UNBREAKABLE`.
 
-### 3.3 `player_location` — Java method syntax as display labels
-
-**File:** `src/lib/editor/blocks/custom/player.json` — `player_location` block
-
-The dropdown option display labels are Java method signatures: `".getX()"`, `".getBlockX()"`, etc. Users see raw Java instead of plain labels like "X", "Y", "Z", "World", "Block X", "Block Y", "Block Z".
-
-**Fix:** Separate the user-visible label from the code value, the same way `player_get` does it (e.g., `["X", ".getX()"]`).
-
 ### 3.4 Location encoding — fragile string serialisation
 
 **Files:** `java/teleport/create_loaction.ts` (note: filename typo — should be `create_location.ts`), `java/world/spawn_particle.ts`, `java/world/location_get_block.ts`

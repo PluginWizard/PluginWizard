@@ -225,7 +225,7 @@
         "helpUrl": ""
     },
     "player_location": {
-        "message0": "%1 location%2",
+        "message0": "%1 location %2",
         "args0": [
             {
                 "type": "input_value",
@@ -237,32 +237,32 @@
                 "name": "METHOD",
                 "options": [
                     [
-                        ".getX()",
-                        ".getX()"
+                        "X",
+                        "getX"
                     ],
                     [
-                        ".getY()",
-                        ".getY()"
+                        "Y",
+                        "getY"
                     ],
                     [
-                        ".getZ()",
-                        ".getZ()"
+                        "Z",
+                        "getZ"
                     ],
                     [
-                        ".getWorld()",
-                        ".getWorld()"
+                        "World",
+                        "getWorld"
                     ],
                     [
-                        ".getBlockX()",
-                        ".getBlockX()"
+                        "Block X",
+                        "getBlockX"
                     ],
                     [
-                        ".getBlockY()",
-                        ".getBlockY()"
+                        "Block Y",
+                        "getBlockY"
                     ],
                     [
-                        ".getBlockZ()",
-                        ".getBlockZ()"
+                        "Block Z",
+                        "getBlockZ"
                     ]
                 ]
             }
