@@ -51,22 +51,6 @@ No generator directory exists. All display entity blocks are silent.
 
 Display entities are tracked by string ID. The generator needs to manage a `Map<String, Entity>` (or similar) in the plugin class to store them, and produce the right Bukkit Display API calls.
 
-### Entity — 7 blocks (entire category)
-
-No generator directory exists. All entity blocks are silent.
-
-| Block | File needed |
-|---|---|
-| `create_entity` | `java/entity/create_entity.ts` |
-| `teleport_entity` | `java/entity/teleport_entity.ts` |
-| `entity_events` | `java/entity/entity_events.ts` |
-| `entity_event_player` | `java/entity/entity_event_player.ts` |
-| `set_entity` | `java/entity/set_entity.ts` |
-| `get_entity` | `java/entity/get_entity.ts` |
-| `entity_pose` | `java/entity/entity_pose.ts` |
-
-Like display entities, `create_entity` / `teleport_entity` / `set_entity` / `get_entity` all track entities by string ID and will need a shared map.
-
 ### Item — 6 blocks (entire category)
 
 No generator directory exists.
