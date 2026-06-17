@@ -15,6 +15,7 @@ import java.sql.SQLException;
 public final class Plugin extends JavaPlugin {
     private PluginDatabase database;
     private Query query;
+    private UserPlugin userPlugin;
     private final RegionManager regionManager = new RegionManager();
 
     private void setupDatabase() {
@@ -51,7 +52,8 @@ public final class Plugin extends JavaPlugin {
         // register helpers
         Helpers.initialize(this);
 
-        UserPlugin userPlugin = new UserPlugin(commandManager, getConfig());
+        userPlugin = new UserPlugin(commandManager, this);
+        userPlugin.setConfig(getConfig());
         userPlugin.initialize();
     }
 
@@ -61,6 +63,14 @@ public final class Plugin extends JavaPlugin {
             database.close();
         } catch (SQLException sqlException) {
             getLogger().severe("Failed to close database: " + sqlException.getMessage());
+        }
+    }
+
+    @Override
+    public void reloadConfig() {
+        super.reloadConfig();
+        if (userPlugin != null) {
+            userPlugin.setConfig(getConfig());
         }
     }
 }
