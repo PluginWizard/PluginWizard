@@ -10,7 +10,7 @@
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "1"
+                "text": "my_entity"
             },
             {
                 "type": "input_value",
@@ -29,7 +29,7 @@
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "1"
+                "text": "my_entity"
             },
             {
                 "type": "input_value",
@@ -62,20 +62,12 @@
                         "EntitySpawnEvent"
                     ],
                     [
-                        "despawn",
-                        "EntityDespawnEvent"
-                    ],
-                    [
                         "player interact",
                         "EntityInteractEvent"
                     ],
                     [
                         "move",
                         "EntityMoveEvent"
-                    ],
-                    [
-                        "teleport",
-                        "EntityTeleportEvent"
                     ],
                     [
                         "pickup item",
@@ -86,7 +78,7 @@
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "1"
+                "text": "my_entity"
             },
             {
                 "type": "input_statement",
@@ -94,8 +86,6 @@
             }
         ],
         "inputsInline": true,
-        "previousStatement": null,
-        "nextStatement": null,
         "colour": "#edb940",
         "tooltip": "Triggers when an entity event occurs",
         "helpUrl": ""
@@ -106,7 +96,7 @@
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "1"
+                "text": "my_entity"
             },
             {
                 "type": "field_dropdown",
@@ -165,7 +155,7 @@
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "1"
+                "text": "my_entity"
             },
             {
                 "type": "field_dropdown",

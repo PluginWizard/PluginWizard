@@ -7,6 +7,6 @@ export default {
         const customId = block.getFieldValue('ID') || '1';
         const stringLocation = JavaGenerator.valueToCode(block, 'LOCATION', Order.ATOMIC) || 'null';
 
-        return `customEntity${customId}.teleport(Helpers.locationHelper.stringToLocation(${stringLocation}));\n`;
+        return `customEntity${customId}.teleport(${stringLocation});\n`;
     },
 };
