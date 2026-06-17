@@ -1,6 +1,6 @@
 {
     "create_entity": {
-        "message0": "Create entity type %1 with ID %2",
+        "message0": "Summon entity %1 with ID %2 in world %3",
         "args0": [
             {
                 "type": "field_input",
@@ -10,7 +10,12 @@
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "myEntity"
+                "text": "1"
+            },
+            {
+                "type": "input_value",
+                "name": "WORLD",
+                "check": "World"
             }
         ],
         "inputsInline": true,
@@ -19,12 +24,12 @@
         "colour": "#edb940"
     },
     "teleport_entity": {
-        "message0": "Teleport entity with ID %1 to location %2",
+        "message0": "Teleport entity %1 to location %2",
         "args0": [
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "myEntity"
+                "text": "1"
             },
             {
                 "type": "input_value",
@@ -81,7 +86,7 @@
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "myEntity"
+                "text": "1"
             },
             {
                 "type": "input_statement",
@@ -108,7 +113,7 @@
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "myEntity"
+                "text": "1"
             },
             {
                 "type": "field_dropdown",
@@ -167,7 +172,7 @@
             {
                 "type": "field_input",
                 "name": "ID",
-                "text": "myEntity"
+                "text": "1"
             },
             {
                 "type": "field_dropdown",
