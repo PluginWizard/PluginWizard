@@ -58,7 +58,7 @@
         "nextStatement": null
     },
     "config_read": {
-        "message0": "%1 from config with key %2",
+        "message0": "get %1 from config with key %2",
         "colour": "#c04545",
         "output": null,
         "args0": [
@@ -67,27 +67,27 @@
                 "name": "METHOD",
                 "options": [
                     [
-                        "get String",
+                        "String",
                         "getString"
                     ],
                     [
-                        "get Boolean",
+                        "Boolean",
                         "getBoolean"
                     ],
                     [
-                        "get Int",
+                        "Int",
                         "getInt"
                     ],
                     [
-                        "get Double",
+                        "Double",
                         "getDouble"
                     ],
                     [
-                        "get Float",
+                        "Float",
                         "getFloat"
                     ],
                     [
-                        "get Color",
+                        "Color",
                         "getColor"
                     ],
                     [
@@ -95,35 +95,35 @@
                         "contains"
                     ],
                     [
-                        "get list",
+                        "list",
                         "getList"
                     ],
                     [
-                        "get string list",
+                        "string list",
                         "getStringList"
                     ],
                     [
-                        "get integer list",
+                        "integer list",
                         "getIntegerList"
                     ],
                     [
-                        "get character list",
+                        "character list",
                         "getCharacterList"
                     ],
                     [
-                        "get boolean list",
+                        "boolean list",
                         "getBooleanList"
                     ],
                     [
-                        "get byte list",
+                        "byte list",
                         "getByteList"
                     ],
                     [
-                        "get double list",
+                        "double list",
                         "getDoubleList"
                     ],
                     [
-                        "get float list",
+                        "float list",
                         "getFloatList"
                     ]
                 ]
@@ -136,7 +136,7 @@
         ]
     },
     "config_read_default": {
-        "message0": "%1 from config with key %2 and default value %3",
+        "message0": "get %1 from config with key %2 and default value %3",
         "colour": "#c04545",
         "output": null,
         "args0": [
@@ -145,27 +145,27 @@
                 "name": "METHOD",
                 "options": [
                     [
-                        "get String",
+                        "String",
                         "getString"
                     ],
                     [
-                        "get Boolean",
+                        "Boolean",
                         "getBoolean"
                     ],
                     [
-                        "get Int",
+                        "Int",
                         "getInt"
                     ],
                     [
-                        "get Double",
+                        "Double",
                         "getDouble"
                     ],
                     [
-                        "get Float",
+                        "Float",
                         "getFloat"
                     ],
                     [
-                        "get Color",
+                        "Color",
                         "getColor"
                     ],
                     [
@@ -173,35 +173,35 @@
                         "contains"
                     ],
                     [
-                        "get list",
+                        "list",
                         "getList"
                     ],
                     [
-                        "get string list",
+                        "string list",
                         "getStringList"
                     ],
                     [
-                        "get integer list",
+                        "integer list",
                         "getIntegerList"
                     ],
                     [
-                        "get character list",
+                        "character list",
                         "getCharacterList"
                     ],
                     [
-                        "get boolean list",
+                        "boolean list",
                         "getBooleanList"
                     ],
                     [
-                        "get byte list",
+                        "byte list",
                         "getByteList"
                     ],
                     [
-                        "get double list",
+                        "double list",
                         "getDoubleList"
                     ],
                     [
-                        "get float list",
+                        "float list",
                         "getFloatList"
                     ]
                 ]
