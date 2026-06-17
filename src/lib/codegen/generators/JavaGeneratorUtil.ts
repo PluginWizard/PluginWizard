@@ -7,6 +7,10 @@ export class JavaGeneratorUtils {
         if (!response.ok) {
             throw new Error(`Failed to load ${path}: ${response.status} ${response.statusText}`);
         }
+        const contentType = response.headers.get('Content-Type') ?? '';
+        if (contentType.includes('text/html')) {
+            throw new Error(`Failed to load ${path}: server returned HTML (resource not found)`);
+        }
         return response.text();
     }
 
