@@ -217,7 +217,7 @@
         "helpUrl": ""
     },
     "command_sender_get": {
-        "message0": "command sender (player)",
+        "message0": "command sender",
         "output": "Player",
         "colour": "#456bd6",
         "tooltip": "Get the command sender as a player. Only works if the command was executed by a player",
