@@ -100,13 +100,6 @@
         "tooltip": "Triggers when an entity event occurs",
         "helpUrl": ""
     },
-    "entity_event_player": {
-        "message0": "event player",
-        "output": "Player",
-        "colour": "#edb940",
-        "tooltip": "Get the player that triggered the entity event",
-        "helpUrl": ""
-    },
     "set_entity": {
         "message0": "Set entity %1 %2 to %3",
         "args0": [

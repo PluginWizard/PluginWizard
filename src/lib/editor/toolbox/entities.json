@@ -17,10 +17,6 @@
     },
     {
       "kind": "block",
-      "type": "entity_event_player"
-    },
-    {
-      "kind": "block",
       "type": "set_entity"
     },
     {
