@@ -8,7 +8,7 @@ export default {
         const customId = block.getFieldValue('ID') || '1';
         const world = JavaGenerator.valueToCode(block, 'WORLD', Order.ATOMIC);
 
-        imports.add('org.bukkit.entity.Entity;');
+        imports.add('import org.bukkit.entity.Entity;');
 
         return `Entity customEntity${customId} = Helpers.entityHelper.summonEntity("${entity}", "${customId}", ${world});\n`;
     },
