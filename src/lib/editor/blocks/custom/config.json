@@ -76,7 +76,7 @@
     },
     "config_comment": {
         "message0": "comment %1",
-        "colour": "#ce5252",
+        "colour": "#c04545",
         "args0": [
             {
                 "type": "input_value",
@@ -85,6 +85,14 @@
         ],
         "previousStatement": null,
         "nextStatement": null
+    },
+    "reload_config": {
+        "message0": "reload config",
+        "colour": "#c04545",
+        "previousStatement": null,
+        "nextStatement": null,
+        "tooltip": "Reloads the config.yml file",
+        "helpUrl": ""
     },
     "config_read": {
         "message0": "get %1 from config with key %2",

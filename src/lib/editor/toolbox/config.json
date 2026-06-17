@@ -72,8 +72,9 @@
       }
     },
     {
-      "kind": "block",
-      "type": "config_comment"
+      "kind": "label",
+      "text": "Reading from config",
+      "web-class": "ioLabel"
     },
     {
       "kind": "block",
@@ -102,6 +103,19 @@
           }
         }
       }
+    },
+    {
+      "kind": "label",
+      "text": "Other",
+      "web-class": "ioLabel"
+    },
+    {
+      "kind": "block",
+      "type": "config_comment"
+    },
+    {
+      "kind": "block",
+      "type": "reload_config"
     }
   ]
 }
