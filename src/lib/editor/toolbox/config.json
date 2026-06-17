@@ -45,6 +45,34 @@
     },
     {
       "kind": "block",
+      "type": "config_list",
+      "inputs": {
+        "KEY": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "blocked_worlds"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "config_list_item",
+      "inputs": {
+        "CONTENT": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "world_nether"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
       "type": "config_comment"
     },
     {

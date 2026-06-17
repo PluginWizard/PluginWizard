@@ -45,6 +45,35 @@
         "previousStatement": null,
         "nextStatement": null
     },
+    "config_list": {
+        "message0": "list key %1\n%2",
+        "colour": "#c04545",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "KEY",
+                "check": "String"
+            },
+            {
+                "type": "input_statement",
+                "name": "ITEMS"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null
+    },
+    "config_list_item": {
+        "message0": "item %1",
+        "colour": "#c04545",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "CONTENT"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null
+    },
     "config_comment": {
         "message0": "comment %1",
         "colour": "#ce5252",
