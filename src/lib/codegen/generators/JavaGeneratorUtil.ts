@@ -75,23 +75,7 @@ export class JavaGeneratorUtils {
     }
 
     static async getPluginContent(): Promise<string> {
-        try {
-            const pluginYml = await this.fetchText('/plugin/src/main/resources/plugin.yml');
-            const mainLine = pluginYml
-                .split('\n')
-                .map((line) => line.trim())
-                .find((line) => line.toLowerCase().startsWith('main:'));
-
-            const mainClass = mainLine
-                ? mainLine.slice('main:'.length).trim().replace(/^['"]|['"]$/g, '')
-                : 'net.kalbskinder.plugin.Plugin';
-
-            const mainClassPath = `/plugin/src/main/java/${mainClass.replace(/\./g, '/')}.java`;
-            return await this.fetchText(mainClassPath);
-        } catch {
-            // Fallback to the default main class file when plugin.yml is unavailable.
-            return this.fetchText('/plugin/src/main/java/net/kalbskinder/plugin/Plugin.java');
-        }
+        return await this.fetchText('/plugin/src/main/java/net/kalbskinder/plugin/UserPlugin.java');
     }
 
     static async getUserPluginContent(_pluginPath: string): Promise<string> {
