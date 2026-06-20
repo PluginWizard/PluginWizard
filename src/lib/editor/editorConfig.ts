@@ -32,6 +32,9 @@ export const toolboxCss = `
         border-bottom: solid #7e7e7eff 2.3px;
         margin: 0px 5px 12px 5px
       }
+      .blocklyMainBackground {
+        stroke: none;
+      }
 `;
 
 export const getEditorConfig = (toolbox: any) => {

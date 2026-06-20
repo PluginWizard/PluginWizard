@@ -23,13 +23,11 @@ import {
     Redo,
     ZoomIn,
     ZoomOut,
-    ArrowLeft,
     Upload,
 } from "lucide-react"
 
 import { getEditorConfig, toolboxCss } from "../lib/editor/editorConfig"
 import { Project } from "../types/types"
-import { Link } from "react-router-dom"
 import { defaultWorkspcaeJson } from "../lib/config"
 import { getCustomBlocks } from "../lib/editor/blocks/CustomBlocks"
 import StartModal from "../components/modal/StartModal"
@@ -288,7 +286,6 @@ export default function EditorPage() {
             {/* Toolbar */}
             <div className="border-b border-border bg-card-darker">
                 <div className="flex items-center justify-between px-6 py-2">
-                    
                     {/* Undo/Redo/Zoom buttons */}
                     <div className="flex items-center space-x-2">
                         <Button variant="ghost" size="sm" onClick={handleUndo} className="rounded-lg cursor-pointer">
@@ -343,7 +340,7 @@ export default function EditorPage() {
                         </div>
                     </div>
                 )}
-                <div ref={blocklyDiv} className="w-full h-[calc(100vh-198px)]" />
+                <div ref={blocklyDiv} className="w-full h-[calc(100vh-117px)]" />
             </div>
 
             <StartModal
