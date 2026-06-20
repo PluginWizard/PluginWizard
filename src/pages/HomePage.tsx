@@ -51,43 +51,56 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-[#0b0b0d]/80" />
 
-        <div className="relative w-full max-w-4xl">
-          <div className="space-y-8 lg:space-y-10">
-            <div className="space-y-4">
-              <h1 className="max-w-4xl text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl xl:text-8xl">
-                Create Minecraft
-                <span className="block text-green-400">Plugins Visually</span>
-              </h1>
+        <div className="w-full flex flex-row items-center justify-between">
+          {/* Left text */}
+          <div className="relative w-full max-w-4xl">
+            <div className="space-y-8 lg:space-y-10">
+              <div className="space-y-4">
+                <h1 className="max-w-4xl text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl xl:text-8xl">
+                  Create Minecraft
+                  <span className="block text-green-400">Plugins Visually</span>
+                </h1>
 
-              <p className="max-w-2xl text-lg text-card-muted-foreground sm:text-xl md:text-2xl">
-                Build Paper plugins using visual blocks, no programming knowledge needed.
-                Drag, drop, and create amazing plugins in minutes.
-              </p>
-            </div>
+                <p className="max-w-2xl text-lg text-card-muted-foreground sm:text-xl md:text-2xl">
+                  Build Paper plugins using visual blocks, no programming knowledge needed.
+                  Drag, drop, and create amazing plugins in minutes.
+                </p>
+              </div>
 
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-xl bg-green-600 text-white transition-all duration-300 hover:bg-green-700"
-              >
-                <Link to="/editor">
-                  Get Started
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <Button
+                  asChild
+                  size="lg"
+                  className="rounded-xl bg-green-600 text-white transition-all duration-300 hover:bg-green-700"
+                >
+                  <Link to="/editor">
+                    Get Started
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
 
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-xl border-muted-foreground/20! bg-card-lighter transition-all duration-300 hover:border-muted-foreground/80! hover:bg-card-lighter/80"
-              >
-                <Link to="/about">Learn More</Link>
-              </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="rounded-xl border-muted-foreground/20! bg-card-lighter transition-all duration-300 hover:border-muted-foreground/80! hover:bg-card-lighter/80"
+                >
+                  <Link to="/about">Learn More</Link>
+                </Button>
+              </div>
             </div>
           </div>
+
+          {/* Right image */}
+          <div className="relative w-full max-w-4xl">
+            <img
+              src="/images/showcase.png"
+              alt="PluginWizard showcase"
+              className="w-full h-auto"
+            />
+          </div>
         </div>
+        
       </section>
 
       <section className="border-t border-white/5 bg-[#0b0b0d] px-4 py-16 sm:px-8 lg:px-12 xl:px-16">
