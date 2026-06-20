@@ -285,33 +285,27 @@ export default function EditorPage() {
 
     return (
         <div className="bg-card-darker mt-16">
-            {/* Header */}
-            <div className="border-b border-border bg-muted/30">
-                <div className="flex items-center justify-between px-6 py-4">
-                    <div className="flex items-center space-x-4">
-                        <Button asChild variant="ghost" size="sm" className="rounded-xl">
-                            <Link to="/dashboard">
-                                <ArrowLeft className="h-4 w-4 mr-2" />
-                                Back to Dashboard
-                            </Link>
+            {/* Toolbar */}
+            <div className="border-b border-border bg-card-darker">
+                <div className="flex items-center justify-between px-6 py-2">
+                    
+                    {/* Undo/Redo/Zoom buttons */}
+                    <div className="flex items-center space-x-2">
+                        <Button variant="ghost" size="sm" onClick={handleUndo} className="rounded-lg cursor-pointer">
+                            <Undo className="h-4 w-4" />
                         </Button>
-                        <Separator orientation="vertical" className="h-6" />
-                        {project ? (
-                            <div className="flex items-center space-x-3">
-                                <div className="w-9 h-9 rounded-lg flex items-center justify-center">
-                                    <img
-                                        src="/images/icons/pluginwizard-256x256.png"
-                                        alt={project.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="hidden"></div>
-                        )}
+                        <Button variant="ghost" size="sm" onClick={handleRedo} className="rounded-lg cursor-pointer">
+                            <Redo className="h-4 w-4" />
+                        </Button>
+                        <Separator orientation="vertical" className="h-4" />
+                        <Button variant="ghost" size="sm" onClick={handleZoomIn} className="rounded-lg cursor-pointer">
+                            <ZoomIn className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={handleZoomOut} className="rounded-lg cursor-pointer">
+                            <ZoomOut className="h-4 w-4" />
+                        </Button>
                     </div>
-
-
+                    
                     {/* Import/Export buttons */}
                     <div className="flex flex-row gap-3 justify-items-center">
                         <div className="flex items-center space-x-2">
@@ -335,28 +329,6 @@ export default function EditorPage() {
                                 {isExporting ? "Exporting..." : "Export"}
                             </Button>
                         </div>
-
-                    </div>
-                </div>
-            </div>
-
-            {/* Toolbar */}
-            <div className="border-b border-border bg-card-darker">
-                <div className="flex items-center justify-between px-6 py-2">
-                    <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm" onClick={handleUndo} className="rounded-lg cursor-pointer">
-                            <Undo className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={handleRedo} className="rounded-lg cursor-pointer">
-                            <Redo className="h-4 w-4" />
-                        </Button>
-                        <Separator orientation="vertical" className="h-4" />
-                        <Button variant="ghost" size="sm" onClick={handleZoomIn} className="rounded-lg cursor-pointer">
-                            <ZoomIn className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={handleZoomOut} className="rounded-lg cursor-pointer">
-                            <ZoomOut className="h-4 w-4" />
-                        </Button>
                     </div>
                 </div>
             </div>
