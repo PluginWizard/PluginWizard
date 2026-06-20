@@ -3,7 +3,7 @@ import { Order } from '../../java.js';
 
 export default {
   block: 'math_random_float',
-  generator: function(block: Blockly.Block) {
+  generator: function(_block: Blockly.Block) {
     return ['Math.random()', Order.ATOMIC];
   },
 };
