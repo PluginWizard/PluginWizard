@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react"
 import SyntaxHighlighter from "react-syntax-highlighter"
 import { railscasts } from "react-syntax-highlighter/dist/esm/styles/hljs"
-import { Download, FileArchive, Package, X } from "lucide-react"
+import { Check, Copy, Download, FileArchive, Package, X } from "lucide-react"
 import { Project } from "../../types/types"
 import { Button } from "../ui/button"
 
@@ -17,6 +18,27 @@ interface ExportModalProps {
 }
 
 export function ExportModal({ open, project, onClose, onDownloadProject, onDownloadZip, onDownloadJar, code, config }: ExportModalProps) {
+    const [copiedField, setCopiedField] = useState<"code" | "config" | null>(null)
+
+    useEffect(() => {
+        if (!copiedField) return
+
+        const timeoutId = window.setTimeout(() => {
+            setCopiedField(null)
+        }, 1800)
+
+        return () => window.clearTimeout(timeoutId)
+    }, [copiedField])
+
+    const handleCopy = async (field: "code" | "config", text: string) => {
+        try {
+            await navigator.clipboard.writeText(text)
+            setCopiedField(field)
+        } catch {
+            setCopiedField(null)
+        }
+    }
+
     if (!open || !project) return null
 
     return (
@@ -72,7 +94,17 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                 <div className="space-y-4">
                     {code && (
                         <div className="space-y-2">
-                            <span className="block font-bold">Plugin.java</span>
+                            <div className="flex items-center justify-between gap-3">
+                                <span className="block font-bold">Plugin.java</span>
+                                <button
+                                    type="button"
+                                    onClick={() => handleCopy("code", code)}
+                                    className="inline-flex items-center gap-2 rounded-lg border border-border/80 bg-card-darker px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-card-lighter cursor-pointer"
+                                >
+                                    {copiedField === "code" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                                    {copiedField === "code" ? "Copied!" : "Copy"}
+                                </button>
+                            </div>
                             <div className="rounded-xl border border-border/80 max-h-100 overflow-y-scroll">
                                 <SyntaxHighlighter language="java" style={railscasts} showLineNumbers={true} wrapLongLines={false}>
                                     {code}
@@ -83,7 +115,17 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
 
                     {config && (
                         <div className="space-y-2">
-                            <span className="block font-bold">config.yml</span>
+                            <div className="flex items-center justify-between gap-3">
+                                <span className="block font-bold">config.yml</span>
+                                <button
+                                    type="button"
+                                    onClick={() => handleCopy("config", config)}
+                                    className="inline-flex items-center gap-2 rounded-lg border border-border/80 bg-card-darker px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-card-lighter cursor-pointer"
+                                >
+                                    {copiedField === "config" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                                    {copiedField === "config" ? "Copied!" : "Copy"}
+                                </button>
+                            </div>
                             <div className="rounded-xl border border-border/80 max-h-100 overflow-y-scroll">
                                 <SyntaxHighlighter language="yaml" style={railscasts} showLineNumbers={true} wrapLongLines={false}>
                                     {config}
