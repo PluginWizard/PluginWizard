@@ -179,7 +179,6 @@ function Avatar({ member }: { member: TeamMember }) {
 /* -------------------------------------------------------------------------- */
 /*  Interactive 3D tilt for the polaroid team photo                           */
 /* -------------------------------------------------------------------------- */
-
 function TiltPhoto() {
   const ref = useRef<HTMLDivElement>(null)
   const rest = "perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)"

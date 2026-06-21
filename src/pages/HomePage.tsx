@@ -43,25 +43,25 @@ const features = [
 
 const reviews = [
   {
-    username: "skpulli1",
-    role: "Community Member",
-    avatar: "/images/reviewers/skpulli1.png",
+    username: "Minikloon",
+    role: "Ex Hypixel Developer",
+    avatar: "/images/reviewers/minikloon.jpg",
     review:
       "I went from a blank workspace to a working prototype in one evening. The block workflow is fast and the generated output is easy to follow.",
     rating: 4.9,
   },
   {
-    username: "ZetMine",
-    role: "Developer",
-    avatar: "/images/team/zetmine.png",
+    username: "KasaiSora",
+    role: "Minecraft Content Creator",
+    avatar: "/images/reviewers/kasaisora.webp",
     review:
       "Exporting to .jar directly saves a lot of setup time. For small server ideas, PluginWizard removes most of the friction.",
     rating: 4.7,
   },
   {
-    username: "pjma",
-    role: "Designer & Developer",
-    avatar: "/images/team/pjma.png",
+    username: "Moulberry",
+    role: "Creator of Axiom and Flashback",
+    avatar: "/images/reviewers/moulberry.png",
     review:
       "The visual editor keeps logic approachable, and being able to inspect the generated Java helped me understand Paper plugin structure much faster.",
     rating: 5,
@@ -228,6 +228,7 @@ export default function HomePage() {
         </div>
       </section>
 
+{/*
       <section className="relative overflow-hidden border-t border-white/5 bg-[#0b0b0d] px-4 py-16 sm:px-8 lg:px-12 xl:px-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.07)_1px,transparent_1px)] bg-size-[20px_20px] opacity-60" />
         <div className="pointer-events-none absolute -top-28 left-1/2 h-72 w-120 -translate-x-1/2 rounded-full bg-green-500/10 blur-[110px]" />
@@ -274,6 +275,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+*/}
     </main>
   )
 }
