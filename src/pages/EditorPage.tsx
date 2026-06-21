@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Button } from "../components/ui/button"
 import { Separator } from "../components/ui/separator"
 import * as Blockly from "blockly"
@@ -23,26 +23,48 @@ import {
     Redo,
     ZoomIn,
     ZoomOut,
-    Upload,
+    FolderOpen,
 } from "lucide-react"
 
 import { getEditorConfig, toolboxCss } from "../lib/editor/editorConfig"
 import { Project } from "../types/types"
 import { defaultWorkspcaeJson } from "../lib/config"
 import { getCustomBlocks } from "../lib/editor/blocks/CustomBlocks"
-import StartModal from "../components/modal/StartModal"
+import ProjectsModal from "../components/modal/ProjectsModal"
 import NewProjectModal from "../components/modal/NewProjectModal"
+import StorageConsentModal from "../components/modal/StorageConsentModal"
 import { ExportModal } from "../components/modal/ExportModal"
 import { ensureJavaGeneratorsLoaded, generateJava } from "../lib/codegen/generators/java"
+import {
+    ProjectStore,
+    createProjectStore,
+    getStoragePreference,
+    isPersistentStorageGranted,
+    requestPersistentStorage,
+    setStoragePreference,
+} from "../lib/storage/projectStore"
 
 interface ExportCode {
     code: string
     config: string
 }
 
+const AUTO_SAVE_DELAY_MS = 800
+
+/** Insert or replace a project in a list by id, returning a new array. */
+function upsertProject(projects: Project[], project: Project): Project[] {
+    const index = projects.findIndex((existing) => existing.id === project.id)
+    if (index >= 0) {
+        const next = [...projects]
+        next[index] = project
+        return next
+    }
+    return [...projects, project]
+}
+
 export default function EditorPage() {
     // Project & workspace
-    const [project, setProject] = useState<Project>(null as any)
+    const [project, setProject] = useState<Project | null>(null)
     const [workspace, setWorkspace] = useState<any>(null)
     const [blocks, setBlocks] = useState<any>(null)
     const [blocksConfig, setBlocksConfig] = useState<any>(null)
@@ -56,6 +78,12 @@ export default function EditorPage() {
     const [isExporting, setIsExporting] = useState(false)
     const [isBlocklyLoaded, setIsBlocklyLoaded] = useState(false)
 
+    // Persistence
+    const [store, setStore] = useState<ProjectStore | null>(null)
+    const [savedProjects, setSavedProjects] = useState<Project[]>([])
+    const [needsStorageConsent, setNeedsStorageConsent] = useState(false)
+    const [isResolvingConsent, setIsResolvingConsent] = useState(false)
+
     // Modals
     const [isExportModalOpen, setIsExportModalOpen] = useState(false)
     const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false)
@@ -63,10 +91,140 @@ export default function EditorPage() {
     // Refs
     const blocklyDiv = useRef<HTMLDivElement>(null)
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const projectRef = useRef<Project | null>(null)
+    const storeRef = useRef<ProjectStore | null>(null)
+    const saveTimerRef = useRef<number | null>(null)
+    const suppressSaveRef = useRef(false)
 
-    // Call fetchProjects when signed in
+    // Keep refs in sync so the workspace change listener always sees current values
+    useEffect(() => { projectRef.current = project }, [project])
+    useEffect(() => { storeRef.current = store }, [store])
+
+    // Start with an empty workspace until a project is opened
     useEffect(() => {
         setLoadedWorkspaceJson(defaultWorkspcaeJson)
+    }, [])
+
+    // Resolve which storage backend to use when the editor opens
+    useEffect(() => {
+        let cancelled = false
+
+        const resolveStorage = async () => {
+            const preference = getStoragePreference()
+
+            // The user already made a choice on a previous visit
+            if (preference) {
+                const resolved = await createProjectStore(preference)
+                if (cancelled) return
+                setStoragePreference(resolved.mode)
+                setStore(resolved)
+                return
+            }
+
+            // No explicit choice yet, but the browser already grants persistent storage
+            if (await isPersistentStorageGranted()) {
+                const resolved = await createProjectStore("indexeddb")
+                if (cancelled) return
+                setStoragePreference(resolved.mode)
+                setStore(resolved)
+                return
+            }
+
+            // Ask the user how they want their projects stored
+            if (!cancelled) setNeedsStorageConsent(true)
+        }
+
+        void resolveStorage()
+        return () => { cancelled = true }
+    }, [])
+
+    // Load saved projects once a store is available
+    useEffect(() => {
+        if (!store) return
+        let cancelled = false
+        store
+            .getAll()
+            .then((projects) => { if (!cancelled) setSavedProjects(projects) })
+            .catch((error) => console.error("Failed to load saved projects:", error))
+        return () => { cancelled = true }
+    }, [store])
+
+    const acceptStorageConsent = async () => {
+        setIsResolvingConsent(true)
+        await requestPersistentStorage()
+        const resolved = await createProjectStore("indexeddb")
+        setStoragePreference(resolved.mode)
+        setStore(resolved)
+        setNeedsStorageConsent(false)
+        setIsResolvingConsent(false)
+    }
+
+    const declineStorageConsent = async () => {
+        setIsResolvingConsent(true)
+        const resolved = await createProjectStore("localstorage")
+        setStoragePreference(resolved.mode)
+        setStore(resolved)
+        setNeedsStorageConsent(false)
+        setIsResolvingConsent(false)
+    }
+
+    /* ======================================
+       Project lifecycle
+       ====================================== */
+
+    const openProject = (projectToOpen: Project) => {
+        setProject(projectToOpen)
+        projectRef.current = projectToOpen
+        setLoadedWorkspaceJson(projectToOpen.workspaceJson ?? {})
+    }
+
+    const persistProject = async (projectToSave: Project) => {
+        setSavedProjects((prev) => upsertProject(prev, projectToSave))
+        try {
+            await storeRef.current?.save(projectToSave)
+        } catch (error) {
+            console.error("Failed to save project:", error)
+        }
+    }
+
+    const importProject = async (imported: Project) => {
+        await persistProject(imported)
+        openProject(imported)
+    }
+
+    const handleDeleteProject = async (id: string) => {
+        setSavedProjects((prev) => prev.filter((existing) => existing.id !== id))
+        try {
+            await storeRef.current?.remove(id)
+        } catch (error) {
+            console.error("Failed to delete project:", error)
+        }
+    }
+
+    // Debounced auto-save of the current workspace into the active project
+    const scheduleSave = useCallback(() => {
+        if (saveTimerRef.current !== null) {
+            window.clearTimeout(saveTimerRef.current)
+        }
+        saveTimerRef.current = window.setTimeout(async () => {
+            const currentProject = projectRef.current
+            const currentStore = storeRef.current
+            if (!currentProject || !currentStore) return
+
+            const activeWorkspace = Blockly.getMainWorkspace()
+            if (!activeWorkspace) return
+
+            const workspaceJson = Blockly.serialization.workspaces.save(activeWorkspace)
+            const updated: Project = { ...currentProject, workspaceJson, updatedAt: Date.now() }
+            projectRef.current = updated
+
+            try {
+                await currentStore.save(updated)
+                setSavedProjects((prev) => upsertProject(prev, updated))
+            } catch (error) {
+                console.error("Auto-save failed:", error)
+            }
+        }, AUTO_SAVE_DELAY_MS)
     }, [])
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,9 +239,8 @@ export default function EditorPage() {
         const reader = new FileReader();
         reader.onload = (e) => {
             try {
-                const project = JSON.parse(e.target?.result as string) as Project;
-                setProject(project);
-                setLoadedWorkspaceJson(project.workspaceJson);
+                const imported = JSON.parse(e.target?.result as string) as Project;
+                void importProject(imported);
             } catch {
                 console.error("Failed to load project file. Make sure it is a valid .mcwizard file.");
             }
@@ -100,9 +257,13 @@ export default function EditorPage() {
             }
 
             try {
+                // Suppress auto-save for the events fired while programmatically loading
+                suppressSaveRef.current = true
                 Blockly.serialization.workspaces.load(loadedWorkspaceJson, workspace)
+                window.setTimeout(() => { suppressSaveRef.current = false }, 500)
                 console.log("Workspace loaded successfully")
             } catch (e) {
+                suppressSaveRef.current = false
                 console.error("Error loading workspace:", e)
             }
         }
@@ -143,6 +304,9 @@ export default function EditorPage() {
     // Dispose workspace when component unmounts
     useEffect(() => {
         return () => {
+            if (saveTimerRef.current !== null) {
+                window.clearTimeout(saveTimerRef.current)
+            }
             if (workspace) {
                 workspace.dispose()
             }
@@ -188,6 +352,18 @@ export default function EditorPage() {
             const code = generator.quote_(block.getFieldValue('COLOUR'));
             return [code, Order.ATOMIC];
         };
+
+        // Persist workspace edits automatically
+        ws.addChangeListener((event: any) => {
+            if (suppressSaveRef.current) {
+                if (event.type === Blockly.Events.FINISHED_LOADING) {
+                    suppressSaveRef.current = false
+                }
+                return
+            }
+            if (event.isUiEvent) return
+            scheduleSave()
+        })
 
         setWorkspace(ws)
         setIsBlocklyLoaded(true)
@@ -246,7 +422,7 @@ export default function EditorPage() {
             setIsExporting(false)
             return undefined
         }
-        console.log("Exporting workspace: ", Blockly.serialization.workspaces.save(workspace)) 
+        console.log("Exporting workspace: ", Blockly.serialization.workspaces.save(workspace))
 
         setIsExporting(false)
         await ensureJavaGeneratorsLoaded();
@@ -302,17 +478,17 @@ export default function EditorPage() {
                             <ZoomOut className="h-4 w-4" />
                         </Button>
                     </div>
-                    
-                    {/* Import/Export buttons */}
+
+                    {/* Right buttons */}
                     <div className="flex flex-row gap-3 justify-items-center">
                         <div className="flex items-center space-x-2">
                             <Button
-                                onClick={() => fileInputRef.current?.click()}
+                                onClick={() => setProject(null)}
                                 variant="outline"
                                 className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
                             >
-                                <Upload className="h-4 w-4 mr-2" />
-                                Import
+                                <FolderOpen className="h-4 w-4 mr-2" />
+                                Open project
                             </Button>
                         </div>
                         <div className="flex items-center space-x-2">
@@ -343,21 +519,31 @@ export default function EditorPage() {
                 <div ref={blocklyDiv} className="w-full h-[calc(100vh-117px)]" />
             </div>
 
-            <StartModal
-                onNewProject={() => setIsNewProjectModalOpen(true)}
-                onOpenProject={(project) => {
-                    setProject(project);
-                    setLoadedWorkspaceJson(project.workspaceJson);
-                }}
-                isOpen={project === null}
+            <StorageConsentModal
+                isOpen={needsStorageConsent}
+                isProcessing={isResolvingConsent}
+                onAccept={() => void acceptStorageConsent()}
+                onDecline={() => void declineStorageConsent()}
             />
+
+            {store && (
+                <ProjectsModal
+                    isOpen={project === null && !needsStorageConsent && !isNewProjectModalOpen}
+                    projects={savedProjects}
+                    storageMode={store.mode}
+                    onOpenProject={openProject}
+                    onDeleteProject={(id) => void handleDeleteProject(id)}
+                    onNewProject={() => setIsNewProjectModalOpen(true)}
+                    onImportProject={(imported) => void importProject(imported)}
+                />
+            )}
 
             <NewProjectModal
                 isOpen={isNewProjectModalOpen}
                 onClose={() => setIsNewProjectModalOpen(false)}
-                onNewProject={(project) => {
-                    setProject(project);
-                    setLoadedWorkspaceJson(project.workspaceJson);
+                onNewProject={(created) => {
+                    openProject(created);
+                    void persistProject(created);
                     setIsNewProjectModalOpen(false);
                 }}
             />

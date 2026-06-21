@@ -42,6 +42,7 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
             return
         }
 
+        const now = Date.now()
         const newProject: Project = {
             id: uuidv4(),
             name: projectName,
@@ -49,7 +50,9 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
             author: authorName,
             groupId: groupId,
             version: "1.0.0",
-            workspaceJson: defaultWorkspcaeJson
+            workspaceJson: defaultWorkspcaeJson,
+            createdAt: now,
+            updatedAt: now
         }
 
         setIsLoading(false)

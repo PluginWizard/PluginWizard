@@ -6,4 +6,6 @@ export interface Project {
     author: string;
     version: string | null;
     workspaceJson: any;
+    createdAt?: number;
+    updatedAt?: number;
 }
