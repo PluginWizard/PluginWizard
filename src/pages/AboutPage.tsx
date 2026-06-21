@@ -37,8 +37,8 @@ const team: TeamMember[] = [
     pfp: "/images/team/kalbskinder.png",
     socials: [
       { type: "github", url: "https://github.com/Kalbskinder" },
-      { type: "youtube", url: "https://youtube.com/@kalbskinder" },
       { type: "website", url: "https://kalbskinder.github.io" },
+      { type: "youtube", url: "https://youtube.com/@kalbskinder" },
     ],
   },
   {
@@ -316,7 +316,7 @@ export default function AboutPage() {
 
                   <div className="mb-4 flex items-center">
                     <div className="inline-flex rounded-xl border border-green-500/20 bg-green-500/10 p-2.5">
-                      <step.icon className="h-5 w-5 text-lime-300" />
+                      <step.icon className="h-5 w-5 text-green-300" />
                     </div>
                   </div>
 
