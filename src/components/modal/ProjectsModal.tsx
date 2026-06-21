@@ -123,7 +123,7 @@ export default function ProjectsModal({
                                 onClick={onNewProject}
                                 className="mt-5 rounded-xl bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                             >
-                                <Plus className="h-4 w-4 mr-2" />
+                                <Plus className="h-4 w-4" />
                                 Create new project
                             </Button>
                         </div>
@@ -162,7 +162,7 @@ export default function ProjectsModal({
                                             onClick={() => onOpenProject(project)}
                                             className="rounded-xl bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                                         >
-                                            <FolderOpen className="h-4 w-4 mr-2" />
+                                            <FolderOpen className="h-4 w-4 mr-1" />
                                             Open
                                         </Button>
                                         <button

@@ -508,7 +508,7 @@ export default function EditorPage() {
                                 variant="outline"
                                 className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
                             >
-                                <FolderOpen className="h-4 w-4 mr-2" />
+                                <FolderOpen className="h-4 w-4 mr-1" />
                                 Open project
                             </Button>
                         </div>
@@ -519,7 +519,7 @@ export default function EditorPage() {
                                 variant="outline"
                                 className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
                             >
-                                <Download className="h-4 w-4 mr-2" />
+                                <Download className="h-4 w-4 mr-1" />
                                 {isExporting ? "Exporting..." : "Export"}
                             </Button>
                         </div>
