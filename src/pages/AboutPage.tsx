@@ -179,11 +179,6 @@ function Avatar({ member }: { member: TeamMember }) {
 /* -------------------------------------------------------------------------- */
 /*  Interactive 3D tilt for the polaroid team photo                           */
 /* -------------------------------------------------------------------------- */
-/* Caption rendered on the polaroid's white area.
-   Tweak CAPTION_ANGLE_DEG until the text lines up with the photo's tilt. */
-const CAPTION_ANGLE_DEG = 1.6
-const CAPTION_TITLE = "The PluginWizard Team"
-const CAPTION_DATE = "10.08.2026"
 
 function TiltPhoto() {
   const ref = useRef<HTMLDivElement>(null)
@@ -226,24 +221,11 @@ function TiltPhoto() {
         className="relative z-10 w-full will-change-transform"
       >
         <img
-          src="/images/polarzoid_crumb.png"
+          src="/images/polarzoid.png"
           alt="The PluginWizard team's Minecraft characters hanging out"
           className="block w-full select-none drop-shadow-2xl"
           draggable={false}
         />
-
-        {/* Caption on the polaroid's white area, rotated to match the tilt */}
-        <div
-          className="pointer-events-none absolute left-1/2 top-[64%] flex w-[62%] flex-col items-center text-center leading-tight select-none"
-          style={{ transform: `translate(-50%, -50%) rotate(${CAPTION_ANGLE_DEG}deg)` }}
-        >
-          <span className="text-base font-semibold text-[#1f1f1f] sm:text-xl font-averia">
-            {CAPTION_TITLE}
-          </span>
-          <span className="mt-0.5 text-xs text-[#5a5a5a] sm:text-sm font-courier">
-            {CAPTION_DATE}
-          </span>
-        </div>
       </div>
     </div>
   )
