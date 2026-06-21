@@ -4,12 +4,12 @@ const customTheme = Blockly.Theme.defineTheme("pluginwizard", {
     name: "pluginwizard",
     base: Blockly.Themes.Classic,
     componentStyles: {
-        workspaceBackgroundColour: "#1a1a1f",
-        toolboxBackgroundColour: "#282c30",
+        workspaceBackgroundColour: "#171717",
+        toolboxBackgroundColour: "#1d1d1d",
         toolboxForegroundColour: "#f5f5f5",
-        flyoutBackgroundColour: "#0e0e17",
+        flyoutBackgroundColour: "#151515",
         flyoutForegroundColour: "#f5f5f5",
-        scrollbarColour: "#646464ff"
+        scrollbarColour: "#4b5563cc"
     },
     blockStyles: {
         colour_blocks: {
