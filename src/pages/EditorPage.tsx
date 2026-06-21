@@ -479,6 +479,24 @@ export default function EditorPage() {
                         </Button>
                     </div>
 
+                    <div>
+                        {/* Current project info */}
+                        {project && (
+                            <>
+                                <div className="flex flex-row gap-2 items-center">
+                                    <span className="text-sm font-medium text-foreground leading-tight">
+                                        {project.name}
+                                    </span>
+                                    <span className="text-xs text-muted-foreground leading-tight">
+                                        {project.version ? `v${project.version}` : ""}
+                                        {project.author ? ` · ${project.author}` : ""}
+                                    </span>
+                                </div>
+                                <Separator orientation="vertical" className="h-8" />
+                            </>
+                        )}
+                    </div>
+
                     {/* Right buttons */}
                     <div className="flex flex-row gap-3 justify-items-center">
                         <div className="flex items-center space-x-2">
