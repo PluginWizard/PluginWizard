@@ -69,8 +69,7 @@ const team: TeamMember[] = [
     quote: "The best part of this project is watching someone ship their first plugin.",
     pfp: "/images/team/flip.png",
     socials: [
-      { type: "discord", url: "https://discord.gg/tJ67vmyW7f" },
-      { type: "youtube", url: "https://youtube.com/" },
+      { type: "discord", url: "https://discord.com/users/1282774431080382534" },
     ],
   },
 ]
@@ -340,13 +339,13 @@ export default function AboutPage() {
       {/* ---------------------------------------------------------------- */}
       <section className="border-t border-white/5 px-4 py-20 sm:px-8 lg:px-16 xl:px-24">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 max-w-3xl">
+          <div className="mb-6 max-w-4xl">
             <h2 className="text-3xl font-black uppercase tracking-[0.28em] sm:text-4xl">
               Meet The Team
             </h2>
-            <p className="mt-4 text-lg leading-8 text-card-muted-foreground">
-              Four people, one shared goal: make plugin development feel as
-              approachable as building with blocks.
+            <p className="mt-4 text-lg leading-6 text-card-muted-foreground flex flex-col gap-2">
+              <span>With <span className="text-green-400 font-semibold">{team.length}</span> members across development, design, and community, we're a small but passionate group.</span>
+              <span> We're always looking to expand our team and welcome contributors who share our vision of making plugin development accessible to everyone. If that sounds like you, don't hesitate to reach out!</span>
             </p>
           </div>
 
