@@ -85,7 +85,7 @@ const story = [
   {
     icon: Compass,
     title: "The gap",
-    text: "Tutorials assumed too much, and the blank editor was intimidating. There was no friendly, visual way to learn the basics — the kind of tool we genuinely wished existed.",
+    text: "Tutorials assumed too much, and the blank editor was intimidating. There was no friendly, visual way to learn the basics.",
   },
   {
     icon: Wand2,
