@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Averia+Gruesa+Libre&family=Mea+Culpa&display=swap');
 @plugin "@tailwindcss/typography";
 
 :root {
@@ -42,6 +43,8 @@
 }
 
 @theme inline {
+  --font-averia: 'Averia Gruesa Libre', cursive;
+  --font-courier: 'Courier New', monospace;
   --color-background: var(--background);
   --color-background-over: var(--background-over);
   --color-foreground: var(--foreground);
