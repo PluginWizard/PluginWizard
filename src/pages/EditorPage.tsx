@@ -252,14 +252,17 @@ export default function EditorPage() {
     // Load workspace when Blockly is ready
     useEffect(() => {
         if (isBlocklyLoaded && loadedWorkspaceJson && workspace) {
-            if (Object.keys(loadedWorkspaceJson).length === 0) {
-                return
-            }
-
             try {
                 // Suppress auto-save for the events fired while programmatically loading
                 suppressSaveRef.current = true
-                Blockly.serialization.workspaces.load(loadedWorkspaceJson, workspace)
+                workspace.clear()
+
+                // New projects may intentionally have an empty workspace JSON.
+                // In that case, keep the workspace blank after clearing.
+                if (Object.keys(loadedWorkspaceJson).length > 0) {
+                    Blockly.serialization.workspaces.load(loadedWorkspaceJson, workspace)
+                }
+
                 window.setTimeout(() => { suppressSaveRef.current = false }, 500)
                 console.log("Workspace loaded successfully")
             } catch (e) {
