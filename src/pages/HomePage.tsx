@@ -44,6 +44,7 @@ const features = [
 const reviews = [
   {
     username: "skpulli1",
+    role: "Community Member",
     avatar: "/images/reviewers/skpulli1.png",
     review:
       "I went from a blank workspace to a working prototype in one evening. The block workflow is fast and the generated output is easy to follow.",
@@ -51,6 +52,7 @@ const reviews = [
   },
   {
     username: "ZetMine",
+    role: "Developer",
     avatar: "/images/team/zetmine.png",
     review:
       "Exporting to .jar directly saves a lot of setup time. For small server ideas, PluginWizard removes most of the friction.",
@@ -58,6 +60,7 @@ const reviews = [
   },
   {
     username: "pjma",
+    role: "Designer & Developer",
     avatar: "/images/team/pjma.png",
     review:
       "The visual editor keeps logic approachable, and being able to inspect the generated Java helped me understand Paper plugin structure much faster.",
@@ -251,9 +254,12 @@ export default function HomePage() {
                         alt={`${review.username} profile picture`}
                         className="h-12 w-12 rounded-full border border-white/15 object-cover"
                       />
-                      <CardTitle className="text-xl font-semibold text-white">
-                        {review.username}
-                      </CardTitle>
+                      <div className="space-y-0.5">
+                        <CardTitle className="text-xl font-semibold text-white">
+                          {review.username}
+                        </CardTitle>
+                        <p className="text-sm text-card-muted-foreground">{review.role}</p>
+                      </div>
                     </div>
 
                     <StarRating rating={review.rating} />
