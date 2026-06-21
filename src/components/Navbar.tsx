@@ -52,7 +52,7 @@ export function Navbar() {
 
                     {/* Desktop Social Links */}
                     <div className="ml-auto hidden items-center space-x-4 md:flex">
-                        <Link to="https://discord.gg/tJ67vmyW7f" className="text-muted-foreground transition-colors" target="_blank">
+                        <Link to="https://discord.gg/wGKncuKFAw" className="text-muted-foreground transition-colors" target="_blank">
                             <img src="/images/icons/discord.svg" alt="discord" className="w-5 h-5 transition-all duration-200 hover:brightness-125" id="discord-logo" />
                             <span className="sr-only">Discord</span>
                         </Link>

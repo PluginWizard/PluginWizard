@@ -12,7 +12,7 @@ Please, consider <a href="">sponsor this project</a> ❤️
 <p align="center">Build Minecraft plugins using visual blocks.</p>
 
 <p align="center">
-    <a href="https://discord.gg/SPC9Tf3YTm">
+    <a href="https://discord.gg/wGKncuKFAw">
         <img alt="Discord" src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" />
     </a>
       <a href="">

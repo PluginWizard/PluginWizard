@@ -19,7 +19,7 @@ export function Footer() {
               Create powerful Minecraft plugins without writing code. Visual programming made simple.
             </p>
             <div className="flex space-x-4 flex-row items-center">
-              <Link to="https://discord.gg/tJ67vmyW7f" className="text-muted-foreground transition-colors" target="_blank">
+              <Link to="https://discord.gg/wGKncuKFAw" className="text-muted-foreground transition-colors" target="_blank">
                 <img src="/images/icons/discord.svg" alt="discord" className="w-5 h-5" id="discord-logo" />
                 <span className="sr-only">Discord</span>
               </Link>

@@ -268,7 +268,7 @@ export default function AboutPage() {
                 size="lg"
                 className="rounded-xl border-muted-foreground/20! bg-card-lighter transition-all duration-300 hover:border-muted-foreground/80! hover:bg-card-lighter/80"
               >
-                <Link to="https://discord.gg/tJ67vmyW7f" target="_blank">
+                <Link to="https://discord.gg/wGKncuKFAw" target="_blank">
                   Join the Community
                 </Link>
               </Button>
