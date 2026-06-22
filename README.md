@@ -19,6 +19,6 @@ Please, consider <a href="">sponsor this project</a> ❤️
         <img alt="Sponsor" src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white" />
     </a>
     <a href="LICENSE.md">
-        <img alt="License" src="https://img.shields.io/badge/FCL--1.0--ALv2-red?style=for-the-badge" />
+        <img alt="License" src="https://img.shields.io/badge/Apache--2.0-red?style=for-the-badge" />
     </a>
 </p>
