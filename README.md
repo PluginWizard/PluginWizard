@@ -1,13 +1,8 @@
-<h1 align="center">
+<p align="center">
     <img src="public/images/icons/pluginwizard-256x256.png" />
-</h1>
-
-<p align='center'>
-Please, consider <a href="">sponsor this project</a> ❤️
 </p>
 
 <h1 align="center">PluginWizard</h1>
-
 
 <p align="center">Build Minecraft plugins using visual blocks.</p>
 
