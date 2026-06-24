@@ -24,6 +24,7 @@ import {
     ZoomIn,
     ZoomOut,
     FolderOpen,
+    Settings,
 } from "lucide-react"
 
 import { getEditorConfig, toolboxCss } from "../lib/editor/editorConfig"
@@ -34,6 +35,7 @@ import ProjectsModal from "../components/modal/ProjectsModal"
 import NewProjectModal from "../components/modal/NewProjectModal"
 import StorageConsentModal from "../components/modal/StorageConsentModal"
 import { ExportModal } from "../components/modal/ExportModal"
+import ProjectSettingsModal from "../components/modal/ProjectSettingsModal"
 import { ensureJavaGeneratorsLoaded, generateJava } from "../lib/codegen/generators/java"
 import {
     ProjectStore,
@@ -87,6 +89,7 @@ export default function EditorPage() {
     // Modals
     const [isExportModalOpen, setIsExportModalOpen] = useState(false)
     const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false)
+    const [isProjectSettingsModalOpen, setIsProjectSettingsModalOpen] = useState(false)
 
     // Refs
     const blocklyDiv = useRef<HTMLDivElement>(null)
@@ -460,6 +463,21 @@ export default function EditorPage() {
         }
     }
 
+    const handleSaveProjectSettings = async (updates: Pick<Project, "name" | "description" | "author" | "groupId">) => {
+        if (!project) return
+
+        const updatedProject: Project = {
+            ...project,
+            ...updates,
+            updatedAt: Date.now(),
+        }
+
+        setProject(updatedProject)
+        projectRef.current = updatedProject
+        await persistProject(updatedProject)
+        setIsProjectSettingsModalOpen(false)
+    }
+
     return (
         <div className="bg-card-darker mt-16">
             {/* Toolbar */}
@@ -523,6 +541,17 @@ export default function EditorPage() {
                                 {isExporting ? "Exporting..." : "Export"}
                             </Button>
                         </div>
+                        <div className="flex items-center space-x-2">
+                            <Button
+                                onClick={() => setIsProjectSettingsModalOpen(true)}
+                                disabled={!project}
+                                variant="outline"
+                                className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
+                            >
+                                <Settings className="h-4 w-4 mr-1" />
+                                Settings
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -567,6 +596,13 @@ export default function EditorPage() {
                     void persistProject(created);
                     setIsNewProjectModalOpen(false);
                 }}
+            />
+
+            <ProjectSettingsModal
+                isOpen={isProjectSettingsModalOpen}
+                project={project}
+                onClose={() => setIsProjectSettingsModalOpen(false)}
+                onSave={(updates) => void handleSaveProjectSettings(updates)}
             />
 
             <ExportModal
