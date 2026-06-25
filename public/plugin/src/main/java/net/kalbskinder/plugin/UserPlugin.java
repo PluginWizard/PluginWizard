@@ -21,10 +21,11 @@ public class UserPlugin {
     private final List<CommandHelper> commands = new ArrayList<>();
 
     public void initialize() {
-// {userPluginMethods}
 // {userPluginCode}
 // {userPluginRegionEvents}
 // {userPluginCommands}
         commandManager.registerCommands(commands);
     }
+
+// {userPluginMethods}
 }

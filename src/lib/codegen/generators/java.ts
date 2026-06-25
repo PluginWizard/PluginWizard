@@ -98,7 +98,7 @@ export function generateJava(workspace: Blockly.Workspace): { code: string; conf
   // Replace plugin placeholders with values
   let code = JavaGenerator.finish(generatorCode);
   code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginImports}", Array.from(imports).join('\n'), 0);
-  code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginMethods}", pluginMethods.join('\n'), 8);
+  code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginMethods}", pluginMethods.join('\n'), 4);
   code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginRegionEvents}", pluginRegionEvents.join('\n'), 8);
   code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginCommands}", pluginCommands.join('\n'), 8);
 
