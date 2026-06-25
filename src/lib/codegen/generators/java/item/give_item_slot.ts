@@ -9,7 +9,7 @@ export default {
     const amount = JavaGenerator.valueToCode(block, 'AMOUNT', Order.ATOMIC) || '1';
     const receiver = JavaGenerator.valueToCode(block, 'RECEIVER', Order.ATOMIC) || 'null';
 
-    const code = `Helpers.playerItemHelper.setItem(${item} ${slot}, ${amount}, ${receiver});\n`;
+    const code = `Helpers.playerItemHelper.setItem(${item}, ${slot}, ${amount}, ${receiver});\n`;
 
     imports.add('import org.bukkit.Material;');
 

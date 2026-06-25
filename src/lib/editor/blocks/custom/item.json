@@ -33,55 +33,34 @@
             {
                 "type": "input_value",
                 "name": "FLAGS",
-                "check": "ItemFlags"
+                "check": [
+                    "ItemFlags",
+                    "Array",
+                    "List"
+                ]
             }
         ]
     },
-    "item_flags": {
-        "message0": "Item Flags\n",
+    "item_flag": {
+        "message0": "item flag %1",
         "output": "ItemFlags",
         "colour": "#06b6d4",
-        "message1": "Hide armor trims %1\n Hide Attributes %2\n Hide destroys %3\n Hide dye %4\n Hide enchants %5\n Hide unbreakable %6\n Hide damage %7\n Hide lore %8\n Hide durability %9\n Unbreakable %10",
-        "args1": [
+        "tooltip": "A single item flag. Combine several inside a list to apply more than one.",
+        "helpUrl": "",
+        "args0": [
             {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
-            },
-            {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
-            },
-            {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
-            },
-            {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
-            },
-            {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
-            },
-            {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
-            },
-            {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
-            },
-            {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
-            },
-            {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
-            },
-            {
-                "type": "field_checkbox",
-                "name": "CHECKBOX"
+                "type": "field_dropdown",
+                "name": "FLAG",
+                "options": [
+                    ["hide armor trims", "HIDE_ARMOR_TRIM"],
+                    ["hide attributes", "HIDE_ATTRIBUTES"],
+                    ["hide destroys", "HIDE_DESTROYS"],
+                    ["hide dye", "HIDE_DYE"],
+                    ["hide enchants", "HIDE_ENCHANTS"],
+                    ["hide unbreakable", "HIDE_UNBREAKABLE"],
+                    ["hide lore (deprecated)", "HIDE_ADDITIONAL_TOOLTIP"],
+                    ["unbreakable", "UNBREAKABLE"]
+                ]
             }
         ]
     },
