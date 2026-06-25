@@ -15,8 +15,8 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 1 | 🔴 Critical | function | User functions emitted **inside** `initialize()` → nested methods, never compiles |
-| 2 | 🔴 Critical | teleport | `teleport_player_location` calls undefined `teleportPlayerHelper` |
+| 1 | 🟢 Fixed | function | User functions emitted **inside** `initialize()` → nested methods, never compiles |
+| 2 | 🟢 Fixed | teleport | `teleport_player_location` calls undefined `teleportPlayerHelper` |
 | 3 | 🔴 Critical | world | `gamerule` emits `GameRules.X` + imports `org.bukkit.GameRules` (class doesn't exist; it's `GameRule`) |
 | 4 | 🔴 Critical | region | `region_events` "leave" option maps to `onRegionLeave`; Core API method is `onRegionExit` |
 | 5 | 🔴 Critical | event | `minecraft_event` never imports the event class |
