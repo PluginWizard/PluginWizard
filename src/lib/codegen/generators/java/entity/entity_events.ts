@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { indent, JavaGenerator } from '../../java';
+import { indent, JavaGenerator, imports } from '../../java';
 
 export default {
     block: 'entity_events',
@@ -7,6 +7,8 @@ export default {
         const eventType = block.getFieldValue('EVENT') || 'null';
         const entityId = block.getFieldValue('ID') || '1';
         const executionCode = JavaGenerator.statementToCode(block, 'DO');
+
+        imports.add(`import org.bukkit.event.entity.${eventType.replace('.class', '')};`);
 
         return `Helpers.eventHelper.forEntity("${entityId}").on(\n${indent(`${eventType}.class,\n${eventType}::getEntity,\nevent -> {\n${executionCode}}\n`, 4)});\n`;
     },
