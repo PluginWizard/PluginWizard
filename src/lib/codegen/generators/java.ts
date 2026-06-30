@@ -115,16 +115,12 @@ export function getDefaultValueForType(type: string) {
         case 'double': return '0.0';
         case 'String': return '""';
         case 'boolean': return 'false';
-        case 'Player':
-        case 'World':
-        case 'Entity':
-        case 'Location':
         case 'Component': return 'Component.empty()';
         case 'List<String>':
         case 'List<Integer>':
         case 'List<Player>':
         case 'List<Location>':
-            return 'null';
+            return 'List.of()';
         default:
             return 'null';
     }
