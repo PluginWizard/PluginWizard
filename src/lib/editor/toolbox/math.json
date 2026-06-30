@@ -49,10 +49,6 @@
     },
     {
       "kind": "block",
-      "type": "math_random_range"
-    },
-    {
-      "kind": "block",
       "type": "math_minmax"
     }
   ]
