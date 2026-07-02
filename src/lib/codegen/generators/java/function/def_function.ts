@@ -1,5 +1,6 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, pluginMethods, indent, getDefaultValueForType } from '../../java.js';
+import { JavaGenerator, pluginMethods, indent, getDefaultValueForType, imports } from '../../java.js';
+import { JavaGeneratorUtils } from '../../JavaGeneratorUtil.js';
 
 export default {
   block: 'def_function',
@@ -12,8 +13,13 @@ export default {
     if (returnType !== 'void' && !body.includes('return')) {
         fixedBody += `return ${getDefaultValueForType(returnType)};\n`;
     }
+
+    const importStatement = JavaGeneratorUtils.getImport(returnType);
+    if (importStatement) {
+        imports.add(importStatement);
+    }
     
-    const code = `${returnType} ${name}() {\n${indent(fixedBody, 4)}}\n`;
+    const code = `private ${returnType} ${name}() {\n${indent(fixedBody, 4)}}\n`;
     pluginMethods.push(code);
     return '';
   },

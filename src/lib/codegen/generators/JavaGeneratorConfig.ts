@@ -1,3 +1,11 @@
 export class JavaGeneratorConfig {
     static RESERVED_WORDS = 'abstract,assert,boolean,break,byte,case,catch,char,class,const,continue,default,do,double,else,enum,extends,final,finally,float,for,goto,if,implements,import,instanceof,int,interface,long,native,new,package,private,protected,public,return,short,static,strictfp,super,switch,synchronized,this,throw,throws,transient,try,void,volatile,while,true,false,null,var,record,sealed,permits,non-sealed'
+
+    static IMPORT_LOOKUP: Record<string, string> = {
+        "List": "java.util.List",
+        "Component": "net.kyori.adventure.text.Component",
+        "Player": "org.bukkit.entity.Player",
+        "Location": "org.bukkit.Location",
+    }
 }
+

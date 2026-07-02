@@ -1,4 +1,5 @@
 import { indent } from './java.js';
+import { JavaGeneratorConfig } from './JavaGeneratorConfig.js';
 
 export class JavaGeneratorUtils {
 
@@ -93,5 +94,13 @@ export class JavaGeneratorUtils {
     static replacePlaceholderWithCode(originalCode: string, placeholder: string, code: string, indentCount: number): string {
         // Placeholder will statrt with "// "
         return originalCode.replace(`// ${placeholder}`, indent(code, indentCount));
+    }
+
+    static getImport(className: string): string {
+        const importPath = JavaGeneratorConfig.IMPORT_LOOKUP[className];
+        if (importPath) {
+            return `import ${importPath};`;
+        }
+        return '';
     }
 }

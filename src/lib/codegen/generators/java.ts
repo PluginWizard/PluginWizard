@@ -115,12 +115,17 @@ export function getDefaultValueForType(type: string) {
         case 'double': return '0.0';
         case 'String': return '""';
         case 'boolean': return 'false';
-        case 'Component': return 'Component.empty()';
+        case 'Component': {
+          imports.add(JavaGeneratorUtils.getImport('Component'));
+          return 'Component.empty()';
+        }
         case 'List<String>':
         case 'List<Integer>':
         case 'List<Player>':
-        case 'List<Location>':
+        case 'List<Location>': {
+            imports.add(JavaGeneratorUtils.getImport('List'));
             return 'List.of()';
+        }
         default:
             return 'null';
     }
