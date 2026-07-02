@@ -24,9 +24,9 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 | 7 | 🟢 Fixed | region | `region_settings` uses `RegionFlag` without importing it |
 | 8 | 🟢 Not an issue | item/display | `drop_item` + all 10 `display.*` blocks have **no generator** |
 | 9 | 🟠 High | math | `math_arithmetic` POWER emits `a ** b` (not valid Java) |
-| 10 | 🟠 High | math | `math_random_range` block defined but **no generator** |
-| 11 | 🟠 High | function/var | `getDefaultValueForType` returns `Component.empty()` for `Player`/`World`/`Entity`/`Location` |
-| 12 | 🟠 High | function/var | Object types (`Player`, `Entity`, `Location`, `Component`) emitted without imports |
+| 10 | 🟢 Fixed | math | `math_random_range` block defined but **no generator** |
+| 11 | 🟢 Fixed | function/var | `getDefaultValueForType` returns `Component.empty()` for `Player`/`World`/`Entity`/`Location` |
+| 12 | 🟢 Fixed | function/var | Object types (`Player`, `Entity`, `Location`, `Component`) emitted without imports |
 | 13 | 🟠 High | title | `display_subtitle` calls `displayTitle(...)` with 6 args (API takes 5) |
 | 14 | 🟠 High | player | `player_game_modes` returns `GameMode.X` without importing it |
 | 15 | 🟠 High | entity | `get_entity`/`set_entity` build lowercase getters (`gethealth()`) → won't compile |
