@@ -104,35 +104,35 @@
                 "options": [
                     [
                         "health",
-                        "health"
+                        "Health"
                     ],
                     [
                         "max health",
-                        "maxHealth"
+                        "MaxHealth"
                     ],
                     [
                         "display name",
-                        "displayName"
+                        "DisplayName"
                     ],
                     [
                         "always show name",
-                        "alwaysShowName"
+                        "AlwaysShowName"
                     ],
                     [
                         "glowing",
-                        "glowing"
+                        "Glowing"
                     ],
                     [
                         "glowing color",
-                        "glowingColor"
+                        "GlowingColor"
                     ],
                     [
                         "invulnerable",
-                        "invulnerable"
+                        "Invulnerable"
                     ],
                     [
                         "pose",
-                        "pose"
+                        "Pose"
                     ]
                 ]
             },
@@ -163,35 +163,35 @@
                 "options": [
                     [
                         "health",
-                        "health"
+                        "Health"
                     ],
                     [
                         "max health",
-                        "maxHealth"
+                        "MaxHealth"
                     ],
                     [
                         "display name",
-                        "displayName"
+                        "DisplayName"
                     ],
                     [
                         "always show name",
-                        "alwaysShowName"
+                        "AlwaysShowName"
                     ],
                     [
                         "glowing",
-                        "glowing"
+                        "Glowing"
                     ],
                     [
                         "glowing color",
-                        "glowingColor"
+                        "GlowingColor"
                     ],
                     [
                         "invulnerable",
-                        "invulnerable"
+                        "Invulnerable"
                     ],
                     [
                         "pose",
-                        "pose"
+                        "Pose"
                     ]
                 ]
             }
