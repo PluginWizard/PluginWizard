@@ -8,8 +8,6 @@ export default {
         const gamerule = JavaGenerator.valueToCode(block, 'GAMERULE', Order.ATOMIC) || 'null';
         const value = JavaGenerator.valueToCode(block, 'VALUE', Order.ATOMIC) || 'false';
 
-        const boolValue = value === 'true' ? 'true' : 'false';
-
-        return `${world}.setGameRule(${gamerule}, ${boolValue});\n`;
+        return `${world}.setGameRule(${gamerule}, ${value});\n`;
     }
 }

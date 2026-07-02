@@ -29,8 +29,8 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 | 12 | 🟢 Fixed | function/var | Object types (`Player`, `Entity`, `Location`, `Component`) emitted without imports |
 | 13 | 🟢 Ai is wrong | title | `display_subtitle` calls `displayTitle(...)` with 6 args (API takes 5) |
 | 14 | 🟢 Fixed | player | `player_game_modes` returns `GameMode.X` without importing it |
-| 15 | 🟠 High | entity | `get_entity`/`set_entity` build lowercase getters (`gethealth()`) → won't compile |
-| 16 | 🟠 High | world | `world_gamerule` coerces non‑literal boolean inputs to `false` |
+| 15 | 🟢 Fixed | entity | `get_entity`/`set_entity` build lowercase getters (`gethealth()`) → won't compile |
+| 16 | 🟢 Fixed | world | `world_gamerule` coerces non‑literal boolean inputs to `false` |
 | 17 | 🟠 High | region | `in_region` / `region_settings` pass region name as a bare (unquoted) identifier |
 | 18 | 🟠 High | region | `region_events` registers the region twice + references a possibly‑wrong variable |
 | 19 | 🟠 High | teleport | `create_location` strips quotes with fragile `substring`, breaks on `World` inputs |
