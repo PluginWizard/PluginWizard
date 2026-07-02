@@ -6,6 +6,10 @@ export class JavaGeneratorConfig {
         "Component": "net.kyori.adventure.text.Component",
         "Player": "org.bukkit.entity.Player",
         "Location": "org.bukkit.Location",
+        "Entity": "org.bukkit.entity.Entity",
+        "Block": "org.bukkit.block.Block",
+        "Material": "org.bukkit.Material",
+        "World": "org.bukkit.World",
     }
 }
 
