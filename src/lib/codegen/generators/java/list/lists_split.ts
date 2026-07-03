@@ -1,9 +1,10 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order } from '../../java.js';
+import { imports, JavaGenerator, Order } from '../../java.js';
 
 export default {
   block: 'lists_split',
   generator: function(block: Blockly.Block) {
+    imports.add('import java.util.Arrays;');
     const input = JavaGenerator.valueToCode(block, 'INPUT', Order.ATOMIC) || '""';
     const delim = JavaGenerator.valueToCode(block, 'DELIM', Order.ATOMIC) || '","';
     const mode = block.getFieldValue('MODE');

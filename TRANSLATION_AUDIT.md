@@ -34,7 +34,7 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 | 17 | 🟢 Fixed | region | `in_region` / `region_settings` pass region name as a bare (unquoted) identifier |
 | 18 | 🟢 Ai is wrong | region | `region_events` registers the region twice + references a possibly‑wrong variable |
 | 19 | 🟢 Fixed | teleport | `create_location` strips quotes with fragile `substring`, breaks on `World` inputs |
-| 20 | 🟠 High | list | `Collections` / `Arrays` used in 5 list generators without imports |
+| 20 | 🟢 Fixed | list | `Collections` / `Arrays` used in 5 list generators without imports |
 | 21 | 🟠 High | list | `lists_create_with` builds an **immutable** `List.of(...)` + fragile input iteration |
 | 22 | 🟠 High | list | `lists_getIndex` REMOVE mode returns a string from a value generator |
 | 23 | 🟠 High | loop | `controls_whileUntil` UNTIL emits a `do/while` (wrong semantics) |
