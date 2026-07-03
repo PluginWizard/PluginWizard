@@ -32,8 +32,8 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 | 15 | 🟢 Fixed | entity | `get_entity`/`set_entity` build lowercase getters (`gethealth()`) → won't compile |
 | 16 | 🟢 Fixed | world | `world_gamerule` coerces non‑literal boolean inputs to `false` |
 | 17 | 🟢 Fixed | region | `in_region` / `region_settings` pass region name as a bare (unquoted) identifier |
-| 18 | 🟠 High | region | `region_events` registers the region twice + references a possibly‑wrong variable |
-| 19 | 🟠 High | teleport | `create_location` strips quotes with fragile `substring`, breaks on `World` inputs |
+| 18 | 🟢 Ai is wrong | region | `region_events` registers the region twice + references a possibly‑wrong variable |
+| 19 | 🟢 Fixed | teleport | `create_location` strips quotes with fragile `substring`, breaks on `World` inputs |
 | 20 | 🟠 High | list | `Collections` / `Arrays` used in 5 list generators without imports |
 | 21 | 🟠 High | list | `lists_create_with` builds an **immutable** `List.of(...)` + fragile input iteration |
 | 22 | 🟠 High | list | `lists_getIndex` REMOVE mode returns a string from a value generator |
