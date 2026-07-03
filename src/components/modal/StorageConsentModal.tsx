@@ -36,7 +36,7 @@ export default function StorageConsentModal({ isOpen, isProcessing = false, onAc
                 <ul className="mt-5 space-y-3">
                     <li className="flex items-start gap-3 text-sm">
                         <Zap className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
-                        <span>Your changes are saved as you build — reload the page and pick up where you left off.</span>
+                        <span>Your changes are saved as you build - reload the page and pick up where you left off.</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
                         <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />

@@ -89,7 +89,7 @@ const story = [
   {
     icon: Wand2,
     title: "The result",
-    text: "So we made it ourselves. PluginWizard turns plugin development into drag-and-drop blocks that compile to real, readable Paper code — so the next person doesn't have to start from zero.",
+    text: "So we made it ourselves. PluginWizard turns plugin development into drag-and-drop blocks that compile to real, readable Paper code - so the next person doesn't have to start from zero.",
   },
 ]
 
