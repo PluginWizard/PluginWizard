@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order } from '../../java.js';
+import { imports, JavaGenerator, Order } from '../../java.js';
 
 export default {
   block: 'text_changeCase',
@@ -16,8 +16,9 @@ export default {
             code = text + '.toLowerCase()';
             break;
         case 'TITLECASE':
-            // Capitalize first letter of each word
-            code = `${text}.replaceAll("([A-Za-z])([A-Za-z]*)", m -> m.group(1).toUpperCase() + m.group(2).toLowerCase())`;
+            // Use Pattern/Matcher to capitalize first letter of each word
+            imports.add('import java.util.regex.Pattern;');
+            code = `java.util.regex.Pattern.compile("\\\\b(\\\\w)(\\\\w*)").matcher(${text}.toLowerCase()).replaceAll(m -> m.group(1).toUpperCase() + m.group(2))`;
             break;
         default:
             throw new Error('Unknown case: ' + mode);
