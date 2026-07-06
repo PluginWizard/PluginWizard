@@ -12,7 +12,7 @@ export default {
       if (mode === 'WHILE') {
           code = 'while (' + condition + ') {\n' + indent(doCode) + '}\n';
       } else {
-          code = 'do {\n' + indent(doCode) + '} while (!' + condition + ');\n';
+          code = 'while (!(' + condition + ')) {\n' + indent(doCode) + '}\n';
       }
       return code;
   },

@@ -37,7 +37,7 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 | 20 | 🟢 Fixed | list | `Collections` / `Arrays` used in 5 list generators without imports |
 | 21 | 🟢 Fixed | list | `lists_create_with` builds an **immutable** `List.of(...)` + fragile input iteration |
 | 22 | 🟢 Fixed | list | `lists_getIndex` REMOVE mode returns a string from a value generator |
-| 23 | 🟠 High | loop | `controls_whileUntil` UNTIL emits a `do/while` (wrong semantics) |
+| 23 | � Fixed | loop | `controls_whileUntil` UNTIL emits a `do/while` (wrong semantics) |
 | 24 | 🟠 High | text | `text_changeCase` Title Case emits a lambda into `String.replaceAll` (invalid) |
 | 25 | 🟠 High | text | `text_count` uses regex `split` → wrong counts / crashes on metacharacters |
 | 26 | 🟠 High | math | No operator‑precedence system: nested binary expressions lose parentheses |
@@ -266,10 +266,10 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 - **Issue:** `POWER: '**'` → `a ** b`, which is not a Java operator (compile error).
 - **Fix:** Special‑case POWER → `Math.pow(left, right)`.
 
-### `controls_whileUntil` UNTIL generates a `do/while`
-- **Severity:** High · **Location:** `loop/controls_whileUntil.ts:15`
-- **Issue:** UNTIL emits `do {…} while (!cond);`. Blockly's UNTIL is a *pre‑test* loop (`while (!cond) {…}`, may run zero times); `do/while` always runs once.
-- **Fix:** `while (!(${cond})) { … }`.
+### `controls_whileUntil` UNTIL generates a `while` (fixed)
+- **Severity:** 🟢 Fixed · **Location:** `loop/controls_whileUntil.ts:15`
+- **Issue (was):** UNTIL emitted `do {…} while (!cond);`. Blockly's UNTIL is a *pre‑test* loop (`while (!cond) {…}`, may run zero times); `do/while` always runs once.
+- **Fix applied:** Now emits `while (!(cond)) { … }` for UNTIL mode, maintaining proper pre-test semantics.
 
 ### `Collections` / `Arrays` used without imports
 - **Severity:** High · **Location:** `list/lists_reverse.ts:8`, `lists_sort.ts:8-9`, `lists_shuffle.ts:8`, `lists_repeat.ts:9` (`Collections`); `list/lists_split.ts:12` (`Arrays`)
