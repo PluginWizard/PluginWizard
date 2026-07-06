@@ -36,7 +36,7 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 | 19 | 🟢 Fixed | teleport | `create_location` strips quotes with fragile `substring`, breaks on `World` inputs |
 | 20 | 🟢 Fixed | list | `Collections` / `Arrays` used in 5 list generators without imports |
 | 21 | 🟢 Fixed | list | `lists_create_with` builds an **immutable** `List.of(...)` + fragile input iteration |
-| 22 | 🟠 High | list | `lists_getIndex` REMOVE mode returns a string from a value generator |
+| 22 | 🟢 Fixed | list | `lists_getIndex` REMOVE mode returns a string from a value generator |
 | 23 | 🟠 High | loop | `controls_whileUntil` UNTIL emits a `do/while` (wrong semantics) |
 | 24 | 🟠 High | text | `text_changeCase` Title Case emits a lambda into `String.replaceAll` (invalid) |
 | 25 | 🟠 High | text | `text_count` uses regex `split` → wrong counts / crashes on metacharacters |
