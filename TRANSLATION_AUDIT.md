@@ -17,7 +17,6 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 3 | 🟡 Low | item | Empty/invalid material yields `Material.` (uncompilable) |
 | 4 | 🟠 Medium | item | `give_item`/`give_item_slot` add an unused `Material` import; `SLOT` defaults to `null` |
 | 5 | 🟠 Medium | entity | `get_entity`/`set_entity` map several dropdown properties to non‑existent Bukkit methods |
 | 6 | 🟠 Medium | entity | `create_entity` `WORLD` input has no `|| 'null'` fallback |
