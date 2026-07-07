@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, Order, imports } from '../../java.js';
+import { JavaGenerator, Order } from '../../java.js';
 
 export default {
   block: 'give_item',
@@ -7,11 +7,6 @@ export default {
     const item = JavaGenerator.valueToCode(block, 'ITEM', Order.ATOMIC) || 'null';
     const amount = JavaGenerator.valueToCode(block, 'AMOUNT', Order.ATOMIC) || '1';
     const receiver = JavaGenerator.valueToCode(block, 'RECEIVER', Order.ATOMIC) || 'null';
-
-    const code = `Helpers.playerItemHelper.giveItem(${item}, ${amount}, ${receiver});\n`;
-
-    imports.add('import org.bukkit.Material;');
-
-    return code;
+    return `Helpers.playerItemHelper.giveItem(${item}, ${amount}, ${receiver});\n`;
   },
 };
