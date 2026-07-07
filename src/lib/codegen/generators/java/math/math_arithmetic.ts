@@ -13,13 +13,14 @@ export default {
     };
     const op = block.getFieldValue('OP') as keyof typeof OPERATORS;
     const operator = OPERATORS[op];
-    const left = JavaGenerator.valueToCode(block, 'A', Order.ATOMIC);
-    const right = JavaGenerator.valueToCode(block, 'B', Order.ATOMIC);
+    const order = op === 'MULTIPLY' || op === 'DIVIDE' ? Order.MULTIPLICATIVE : Order.ADDITIVE;
+    const left = JavaGenerator.valueToCode(block, 'A', order);
+    const right = JavaGenerator.valueToCode(block, 'B', order);
 
     if (op === 'POWER') {
       return [`Math.pow(${left}, ${right})`, Order.ATOMIC];
     } else {
-      return [`${left} ${operator} ${right}`, Order.ATOMIC];
+      return [`${left} ${operator} ${right}`, order];
     }
   },
 };

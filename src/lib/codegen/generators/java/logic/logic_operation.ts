@@ -5,9 +5,10 @@ export default {
   block: 'logic_operation',
   generator: function(block: Blockly.Block) {
     const operator = block.getFieldValue('OP');
-    const argument0 = JavaGenerator.valueToCode(block, 'A', Order.ATOMIC) || 'false';
-    const argument1 = JavaGenerator.valueToCode(block, 'B', Order.ATOMIC) || 'false';
+    const order = operator === 'AND' ? Order.LOGICAL_AND : Order.LOGICAL_OR;
+    const argument0 = JavaGenerator.valueToCode(block, 'A', order) || 'false';
+    const argument1 = JavaGenerator.valueToCode(block, 'B', order) || 'false';
     const code = `${argument0} ${operator === 'AND' ? '&&' : '||'} ${argument1}`;
-    return [code, Order.ATOMIC];
+    return [code, order];
   },
 };

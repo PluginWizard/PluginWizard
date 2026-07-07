@@ -133,6 +133,14 @@ export function getDefaultValueForType(type: string) {
 
 export const Order = {
   ATOMIC: 0,
+  UNARY: 2,
+  MULTIPLICATIVE: 3,
+  ADDITIVE: 4,
+  RELATIONAL: 5,
+  EQUALITY: 6,
+  LOGICAL_AND: 7,
+  LOGICAL_OR: 8,
+  NONE: 99,
 };
 
 // Indentation of code

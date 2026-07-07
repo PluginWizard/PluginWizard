@@ -40,7 +40,7 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 | 23 | 🟢 Fixed | loop | `controls_whileUntil` UNTIL emits a `do/while` (wrong semantics) |
 | 24 | 🟢 Fixed | text | `text_changeCase` Title Case emits a lambda into `String.replaceAll` (invalid) |
 | 25 | 🟢 Fixed | text | `text_count` now uses literal replace-based counting and guards empty needles |
-| 26 | 🟠 High | math | No operator‑precedence system: nested binary expressions lose parentheses |
+| 26 | 🟢 Fixed | math | Java generator now has a real precedence ladder for nested math/logic expressions |
 | — | 🟡 Medium / 🟢 Low | various | See per‑domain sections below |
 
 ---
@@ -254,12 +254,10 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 (See §1.8 `math_random_range` missing generator.)
 
-### No operator‑precedence system (systemic)
-- **Severity:** High · **Location:** `java.ts:133-135` + every binary value generator
-- **Issue:** `Order = { ATOMIC: 0 }` only. Every generator requests and returns `Order.ATOMIC` (the strongest), so Blockly **never** inserts protective parentheses. Bare binary expressions corrupt precedence when nested:
-  - `math_arithmetic.ts:18` — `multiply(add(1,2),3)` → `1 + 2 * 3` = 7, not 9.
-  - `math_modulo.ts:9`, `math_number_property` (`DIVISIBLE_BY`, `WHOLE`), `logic_compare.ts:19`, `logic_operation.ts:10` (`a && b || c`), `logic_negate.ts:8` (`!a == b`), `math_single` NEG.
-- **Fix:** Introduce a real precedence ladder (ADDITIVE / MULTIPLICATIVE / RELATIONAL / EQUALITY / LOGICAL_AND / LOGICAL_OR / UNARY …), request the correct inner order, and return each expression's true order. Minimum stop‑gap: wrap emitted binary expressions in parentheses.
+### Operator precedence for nested expressions (fixed)
+- **Severity:** Fixed · **Location:** `java.ts` + precedence-sensitive generators in `math/*` and `logic/*`
+- **Fix applied:** Added a real `Order` ladder (`UNARY`, `MULTIPLICATIVE`, `ADDITIVE`, `RELATIONAL`, `EQUALITY`, `LOGICAL_AND`, `LOGICAL_OR`, `NONE`) and updated the affected generators to request inner operands with the correct outer order and return each expression's true order.
+- **Effect:** Nested expressions such as `multiply(add(1,2),3)`, `a && (b || c)`, and `!(a == b)` now emit with the parentheses Blockly expects instead of flattening into precedence-changing Java.
 
 ### `math_arithmetic` POWER emits `**`
 - **Severity:** High · **Location:** `math/math_arithmetic.ts:12,18`

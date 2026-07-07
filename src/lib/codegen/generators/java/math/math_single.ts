@@ -14,7 +14,11 @@ export default {
         POW10: 'Math.pow'
     };
     const op = block.getFieldValue('OP') as keyof typeof OPERATORS;
-    const argument0 = JavaGenerator.valueToCode(block, 'NUM', Order.ATOMIC);
+    const argument0 = JavaGenerator.valueToCode(
+      block,
+      'NUM',
+      op === 'NEG' ? Order.UNARY : Order.NONE,
+    );
 
     let code: string;
     if (op === 'NEG') {
@@ -24,6 +28,6 @@ export default {
     } else {
         code = OPERATORS[op] + '(' + argument0 + ')';
     }
-    return [code, Order.ATOMIC];
+    return [code, op === 'NEG' ? Order.UNARY : Order.ATOMIC];
   },
 };
