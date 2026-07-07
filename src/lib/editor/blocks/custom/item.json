@@ -12,15 +12,23 @@
         ]
     },
     "create_item": {
-        "message0": "create item %1 Lore: %2 Flags: %3",
+        "message0": "create item %1 Name: %2 Lore: %3 Flags: %4",
         "output": null,
         "colour": "#06b6d4",
         "inputsInline": true,
         "args0": [
             {
                 "type": "field_input",
-                "name": "ITEM_NAME",
+                "name": "ITEM_MATERIAL",
                 "text": "minecraft:diamond"
+            },
+            {
+                "type": "input_value",
+                "name": "ITEM_NAME",
+                "check": [
+                    "String",
+                    "Text"
+                ]
             },
             {
                 "type": "input_value",

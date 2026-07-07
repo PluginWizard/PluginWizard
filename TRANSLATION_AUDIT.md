@@ -17,8 +17,6 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 1 | 🔴 High | world | `gamerule` still emits `GameRules.X` + imports `org.bukkit.GameRules` — the Bukkit class is `GameRule` (singular). *(Previously marked "Ai is wrong", but the code still won't compile — re‑check.)* |
-| 2 | 🟠 Medium | item | `create_item` field `ITEM_NAME` is parsed as a material; `.name(...)` is never called |
 | 3 | 🟡 Low | item | Empty/invalid material yields `Material.` (uncompilable) |
 | 4 | 🟠 Medium | item | `give_item`/`give_item_slot` add an unused `Material` import; `SLOT` defaults to `null` |
 | 5 | 🟠 Medium | entity | `get_entity`/`set_entity` map several dropdown properties to non‑existent Bukkit methods |
