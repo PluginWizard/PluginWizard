@@ -23,7 +23,7 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 | 6 | 🟢 Fixed | entity | `entity_events` never imports the event class |
 | 7 | 🟢 Fixed | region | `region_settings` uses `RegionFlag` without importing it |
 | 8 | 🟢 Not an issue | item/display | `drop_item` + all 10 `display.*` blocks have **no generator** |
-| 9 | 🟠 High | math | `math_arithmetic` POWER emits `a ** b` (not valid Java) |
+| 9 | 🟢 Fixed | math | `math_arithmetic` POWER emits `a ** b` (not valid Java) |
 | 10 | 🟢 Fixed | math | `math_random_range` block defined but **no generator** |
 | 11 | 🟢 Fixed | function/var | `getDefaultValueForType` returns `Component.empty()` for `Player`/`World`/`Entity`/`Location` |
 | 12 | 🟢 Fixed | function/var | Object types (`Player`, `Entity`, `Location`, `Component`) emitted without imports |
@@ -39,7 +39,7 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 | 22 | 🟢 Fixed | list | `lists_getIndex` REMOVE mode returns a string from a value generator |
 | 23 | 🟢 Fixed | loop | `controls_whileUntil` UNTIL emits a `do/while` (wrong semantics) |
 | 24 | 🟢 Fixed | text | `text_changeCase` Title Case emits a lambda into `String.replaceAll` (invalid) |
-| 25 | 🟠 High | text | `text_count` uses regex `split` → wrong counts / crashes on metacharacters |
+| 25 | 🟢 Fixed | text | `text_count` now uses literal replace-based counting and guards empty needles |
 | 26 | 🟠 High | math | No operator‑precedence system: nested binary expressions lose parentheses |
 | — | 🟡 Medium / 🟢 Low | various | See per‑domain sections below |
 

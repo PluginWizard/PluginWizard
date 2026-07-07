@@ -6,7 +6,7 @@ export default {
   generator: function(block: Blockly.Block) {
     const text = JavaGenerator.valueToCode(block, 'TEXT', Order.ATOMIC);
     const sub = JavaGenerator.valueToCode(block, 'SUB', Order.ATOMIC);
-    const code = `${text}.split(${sub}).length - 1`;
+    const code = `(${sub}.isEmpty() ? 0 : ((${text}).length() - (${text}).replace(${sub}, "").length()) / (${sub}).length())`;
     return [code, Order.ATOMIC];
   },
 };

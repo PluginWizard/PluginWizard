@@ -9,13 +9,17 @@ export default {
         MINUS: '-',
         MULTIPLY: '*',
         DIVIDE: '/',
-        POWER: '**'
+        POWER: ''
     };
     const op = block.getFieldValue('OP') as keyof typeof OPERATORS;
     const operator = OPERATORS[op];
     const left = JavaGenerator.valueToCode(block, 'A', Order.ATOMIC);
     const right = JavaGenerator.valueToCode(block, 'B', Order.ATOMIC);
-    const code = left + ' ' + operator + ' ' + right;
-    return [code, Order.ATOMIC];
+
+    if (op === 'POWER') {
+      return [`Math.pow(${left}, ${right})`, Order.ATOMIC];
+    } else {
+      return [`${left} ${operator} ${right}`, Order.ATOMIC];
+    }
   },
 };
