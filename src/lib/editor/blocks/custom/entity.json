@@ -107,16 +107,12 @@
                         "Health"
                     ],
                     [
-                        "max health",
-                        "MaxHealth"
-                    ],
-                    [
                         "display name",
                         "DisplayName"
                     ],
                     [
-                        "always show name",
-                        "AlwaysShowName"
+                        "show custom name",
+                        "CustomNameVisible"
                     ],
                     [
                         "glowing",
@@ -174,8 +170,8 @@
                         "DisplayName"
                     ],
                     [
-                        "always show name",
-                        "AlwaysShowName"
+                        "custom name visible",
+                        "isCustomNameVisible"
                     ],
                     [
                         "glowing",

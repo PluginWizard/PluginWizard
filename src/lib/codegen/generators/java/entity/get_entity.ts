@@ -7,6 +7,13 @@ export default {
         const entityId = block.getFieldValue('ID') || '1';
         const property = block.getFieldValue('PROPERTY') || 'null';
 
-        return [`customEntity${entityId}.get${property}()`, Order.ATOMIC];
+        if (property === 'isCustomNameVisible') {
+            return [`customEntity${entityId}.${property}()`, Order.ATOMIC];
+        } else if (property === 'MaxHealth') {
+            return [`customEntity${entityId}.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()`, Order.ATOMIC];
+        } else {
+            return [`customEntity${entityId}.get${property}()`, Order.ATOMIC];
+        }
+
     },
 };
