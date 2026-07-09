@@ -17,8 +17,6 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 9 | 🟡 Low | region | `region_create` region name has no fallback / used as identifier unsanitized |
-| 10 | 🟠 Medium | message | `chat_message` returns unparsed MiniMessage `String` despite `Component` output |
 | 11 | 🟡 Low (info) | title | `display_actionbar` — confirm `displayActionbar(...)` exists in the library |
 | 12 | 🟠 Medium | command | Multiple subcommands produce `..` (double dot) in the command chain |
 | 13 | 🟠 Medium | command | Inconsistent indentation across `new_command` branches (cosmetic) |
