@@ -17,7 +17,6 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 8 | 🟡 Low | world | `spawn_particle` fallback enum `EXPLOSION_NORMAL` may be outdated |
 | 9 | 🟡 Low | region | `region_create` region name has no fallback / used as identifier unsanitized |
 | 10 | 🟠 Medium | message | `chat_message` returns unparsed MiniMessage `String` despite `Component` output |
 | 11 | 🟡 Low (info) | title | `display_actionbar` — confirm `displayActionbar(...)` exists in the library |
