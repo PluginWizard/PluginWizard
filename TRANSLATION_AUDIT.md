@@ -17,8 +17,6 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 6 | 🟠 Medium | entity | `create_entity` `WORLD` input has no `|| 'null'` fallback |
-| 7 | 🟠 Medium | entity | Entity `ID` free‑text field is interpolated into a Java variable name unsanitized |
 | 8 | 🟡 Low | world | `spawn_particle` fallback enum `EXPLOSION_NORMAL` may be outdated |
 | 9 | 🟡 Low | region | `region_create` region name has no fallback / used as identifier unsanitized |
 | 10 | 🟠 Medium | message | `chat_message` returns unparsed MiniMessage `String` despite `Component` output |
