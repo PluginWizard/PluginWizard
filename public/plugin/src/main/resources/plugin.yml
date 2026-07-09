@@ -1,6 +1,6 @@
 name: Plugin
-version: '1.0.0'
+version: '{{version}}'
 main: net.kalbskinder.plugin.Plugin
-description: "A collection of helper methods for PluginWizard"
-author: "PluginWizard Development Team"
-api-version: '1.21'
+description: "{{description}}. Built using PluginWizard (editor.kalbskinder.net)"
+author: "{{author}} and PluginWizard Development Team"
+api-version: '26.2'
