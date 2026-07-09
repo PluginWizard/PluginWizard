@@ -17,8 +17,6 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 15 | 🟡 Low | text | `text_getSubstring` has dead/unreachable branches |
-| 16 | 🟡 Low | text | `text_join` breaks with zero items (reads non‑existent `ADD0`) |
 | 17 | 🟠 Medium | list | `lists_setIndex` can emit `undefined` for an unknown mode |
 | 18 | 🟠 Medium | list | `lists_sort` ignores `TYPE`; `lists_getSublist` ignores `WHERE1`/`WHERE2` |
 | 19 | 🟠 Medium | loop | `controls_repeat_ext` hard‑codes counter `i`; `controls_for` ignores `BY` |

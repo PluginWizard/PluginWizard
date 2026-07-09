@@ -33,7 +33,7 @@ export default {
     }
 
     // Code erzeugen
-    let code;
+    let code = '';
     if (mode === 'SET') {
         code = `${list}.set(${indexCode}, ${value});`;
     } else if (mode === 'INSERT') {
