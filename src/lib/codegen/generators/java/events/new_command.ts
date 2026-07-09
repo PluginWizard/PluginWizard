@@ -37,7 +37,7 @@ export default {
         }
 
         function commandWithArgsAndSubs() {
-            return `commands.add(CommandHelper.create("${commandName}").${commandArguments}${subCommands}\n${indent(`.executes(ctx -> {\n${commandExecutes}})`)}\n);\n`;
+            return `commands.add(CommandHelper.create("${commandName}").${commandArguments}${subCommands}\n${indent(`.executes(ctx -> {\n${commandExecutes}})`, 4)}\n);\n`;
         }
 
         return '';

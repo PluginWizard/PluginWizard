@@ -17,8 +17,6 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 13 | 🟠 Medium | command | Inconsistent indentation across `new_command` branches (cosmetic) |
-| 14 | 🟡 Low | command | `command_sender_get` output typed `Player` but returns `CommandSender` |
 | 15 | 🟡 Low | text | `text_getSubstring` has dead/unreachable branches |
 | 16 | 🟡 Low | text | `text_join` breaks with zero items (reads non‑existent `ADD0`) |
 | 17 | 🟠 Medium | list | `lists_setIndex` can emit `undefined` for an unknown mode |
