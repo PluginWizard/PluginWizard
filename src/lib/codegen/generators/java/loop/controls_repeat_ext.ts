@@ -6,7 +6,8 @@ export default {
   generator: function(block: Blockly.Block) {
     const times = JavaGenerator.valueToCode(block, 'TIMES', Order.ATOMIC);
     const doCode = JavaGenerator.statementToCode(block, 'DO');
-    const code = 'for (int i = 0; i < ' + times + '; i++) {\n' + indent(doCode) + '}';
+    const loopVar = JavaGenerator.nameDB_?.getDistinctName('i', Blockly.Names.NameType.VARIABLE);
+    const code = 'for (int ' + loopVar + ' = 0; ' + loopVar + ' < ' + times + '; ' + loopVar + '++) {\n' + indent(doCode) + '}';
     return code;
   },
 };
