@@ -10,7 +10,7 @@ export default {
         commandArguments = commandArguments.split('|').filter(line => line.trim() !== '').join('.').trim();
 
         let subCommands = JavaGenerator.statementToCode(block, 'SUBS') || '';
-        subCommands = subCommands.split('|').filter(line => line.trim() !== '').join('.').trim();
+        subCommands = subCommands.split('|').filter(line => line.trim() !== '').join('').trim();
 
         const commandExecutes = JavaGenerator.statementToCode(block, 'DO') || '';
 

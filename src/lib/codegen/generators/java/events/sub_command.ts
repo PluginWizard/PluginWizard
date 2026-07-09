@@ -7,7 +7,7 @@ export default {
         const subCommandName = block.getFieldValue('SUB_NAME') || 'subcommand';
 
         let subCommandArguments = JavaGenerator.statementToCode(block, 'ARGS') || '';
-        subCommandArguments = subCommandArguments.split('|').filter(line => line.trim() !== '').join('.').trim();
+        subCommandArguments = subCommandArguments.split('|').filter(line => line.trim() !== '').join('').trim();
 
         const subCommandExecutes = JavaGenerator.statementToCode(block, 'DO') || '';
 

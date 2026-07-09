@@ -17,8 +17,6 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 11 | 🟡 Low (info) | title | `display_actionbar` — confirm `displayActionbar(...)` exists in the library |
-| 12 | 🟠 Medium | command | Multiple subcommands produce `..` (double dot) in the command chain |
 | 13 | 🟠 Medium | command | Inconsistent indentation across `new_command` branches (cosmetic) |
 | 14 | 🟡 Low | command | `command_sender_get` output typed `Player` but returns `CommandSender` |
 | 15 | 🟡 Low | text | `text_getSubstring` has dead/unreachable branches |
