@@ -17,7 +17,6 @@ Audit of `src/lib/editor/blocks/` (block definitions) against `src/lib/codegen/g
 
 | # | Severity | Area | Issue |
 |---|----------|------|-------|
-| 19 | 🟠 Medium | loop | `controls_repeat_ext` hard‑codes counter `i`; `controls_for` ignores `BY` |
 | 20 | 🟡 Low | math | `math_number_property` WHOLE excludes negatives |
 | 21 | 🟡 Low | logic | `controls_if` reads private mutator fields (`elseifCount_`/`elseCount_`) |
 

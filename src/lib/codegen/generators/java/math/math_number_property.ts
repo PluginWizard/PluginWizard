@@ -19,7 +19,7 @@ export default {
             code = `Helpers.mathHelper.isPrime(${number})`;
             break;
         case 'WHOLE':
-            code = number + ' >= 0 && Math.floor(' + number + ') == ' + number;
+            code = 'Math.floor(' + number + ') == ' + number;
             break;
         case 'POSITIVE':
             code = number + ' > 0';
