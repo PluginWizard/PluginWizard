@@ -1,0 +1,20 @@
+FROM eclipse-temurin:21-jdk-alpine AS builder
+
+WORKDIR /workspace
+
+COPY backend ./backend
+
+WORKDIR /workspace/backend
+RUN chmod +x gradlew
+RUN ./gradlew --no-daemon clean buildFatJar
+RUN cp build/libs/*-all.jar build/libs/app.jar
+
+FROM eclipse-temurin:21-jre-alpine AS runner
+
+WORKDIR /app
+
+COPY --from=builder /workspace/backend/build/libs/app.jar /app/app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

@@ -1,7 +1,12 @@
 {
   "name": "pluginwizard",
+  "description": "A tool that lets you create minecraft plugins without any coding experience",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": {
+    "name": "PluginWizard Team"
+  },
+  "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
