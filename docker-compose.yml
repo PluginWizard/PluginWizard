@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile.frontend
     container_name: pluginwizard-frontend
     ports:
-      - "3000:80"
+      - "80:80"
     depends_on:
       - backend
     restart: unless-stopped
