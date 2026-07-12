@@ -19,6 +19,7 @@ interface ExportModalProps {
 
 export function ExportModal({ open, project, onClose, onDownloadProject, onDownloadZip, onDownloadJar, code, config }: ExportModalProps) {
     const [copiedField, setCopiedField] = useState<"code" | "config" | null>(null)
+    const hasGeneratedOutput = Boolean(code?.trim() || config?.trim())
 
     useEffect(() => {
         if (!copiedField) return
@@ -76,7 +77,12 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
 
                     <Button
                         onClick={onDownloadZip}
-                        className="flex h-auto flex-1 items-center justify-center gap-2 rounded-xl bg-card-lighter px-4 py-4 text-foreground hover:bg-foreground/15 cursor-pointer"
+                        disabled={!hasGeneratedOutput}
+                        className={`flex h-auto flex-1 items-center justify-center gap-2 rounded-xl px-4 py-4 ${
+                            hasGeneratedOutput
+                                ? "bg-card-lighter text-foreground hover:bg-foreground/15 cursor-pointer"
+                                : "bg-card-lighter/80 text-white cursor-not-allowed! hover:bg-card-lighter/80"
+                        }`}
                     >
                         <FileArchive className="h-5 w-5 shrink-0" />
                         Export Code .zip
@@ -84,7 +90,12 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
 
                     <Button
                         onClick={onDownloadJar}
-                        className="flex h-auto flex-1 items-center justify-center gap-2 rounded-xl bg-green-600 px-4 py-4 text-white hover:bg-green-700 cursor-pointer"
+                        disabled={!hasGeneratedOutput}
+                        className={`flex h-auto flex-1 items-center justify-center gap-2 rounded-xl px-4 py-4 ${
+                            hasGeneratedOutput
+                                ? "bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                                : "bg-green-600/80 text-white cursor-not-allowed! hover:bg-green-600/80"
+                        }`}
                     >
                         <Package className="h-5 w-5 shrink-0" />
                         Export Plugin .jar
