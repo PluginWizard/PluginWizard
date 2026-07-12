@@ -1,18 +1,16 @@
 services:
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
+    image: ghcr.io/pluginwizard/pluginwizard-backend:${IMAGE_TAG:-latest}
+    pull_policy: always
     container_name: pluginwizard-backend
     ports:
       - "8080:8080"
     restart: unless-stopped
 
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
+    image: ghcr.io/pluginwizard/pluginwizard-frontend:${IMAGE_TAG:-latest}
     container_name: pluginwizard-frontend
+    pull_policy: always
     ports:
       - "80:80"
     depends_on:

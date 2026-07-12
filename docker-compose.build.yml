@@ -1,0 +1,13 @@
+# Local development override: build images from source instead of pulling
+# from GHCR. Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.build.yml up --build
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
