@@ -1,7 +1,7 @@
-package net.kalbskinder.net.kalbskinder.service
+package net.kalbskinder.service
 
-import net.kalbskinder.net.kalbskinder.models.BuildRequest
-import net.kalbskinder.net.kalbskinder.models.BuildResponse
+import net.kalbskinder.models.BuildRequest
+import net.kalbskinder.models.BuildResponse
 
 class BuildService {
     fun build(request: BuildRequest): BuildResponse {

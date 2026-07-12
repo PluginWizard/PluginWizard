@@ -1,4 +1,4 @@
-package net.kalbskinder.net.kalbskinder
+package net.kalbskinder
 
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
@@ -9,7 +9,7 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.routing.routing
-import net.kalbskinder.net.kalbskinder.routes.buildRoutes
+import net.kalbskinder.routes.buildRoutes
 
 fun main() {
     embeddedServer(Netty, port = 8080) {
