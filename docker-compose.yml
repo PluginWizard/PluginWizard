@@ -5,6 +5,10 @@ services:
     container_name: pluginwizard-backend
     ports:
       - "8080:8080"
+    # The backend fetches the plugin template from the frontend's public folder
+    # (at request time, so no startup ordering is required).
+    environment:
+      PLUGINWIZARD_TEMPLATE_BASE_URL: "http://frontend"
     restart: unless-stopped
 
   frontend:

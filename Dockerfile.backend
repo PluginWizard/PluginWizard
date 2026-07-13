@@ -9,7 +9,7 @@ RUN chmod +x gradlew
 RUN ./gradlew --no-daemon clean buildFatJar
 RUN cp build/libs/*-all.jar build/libs/app.jar
 
-FROM eclipse-temurin:21-jre-alpine AS runner
+FROM eclipse-temurin:21-jdk-alpine AS runner
 
 WORKDIR /app
 

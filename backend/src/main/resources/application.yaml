@@ -1,3 +1,16 @@
 ktor:
   deployment:
     port: 8080
+  application:
+    modules:
+      - net.kalbskinder.ApplicationKt.module
+
+pluginwizard:
+  cors:
+    allowedHosts:
+      - "localhost:5173"
+      - "editor.kalbskinder.net"
+  build:
+    tempDir: "/tmp/pluginwizard-builds"
+    timeoutSeconds: 300
+    templateBaseUrl: "http://localhost:5173"

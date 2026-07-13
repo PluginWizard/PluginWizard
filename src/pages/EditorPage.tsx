@@ -37,6 +37,7 @@ import StorageConsentModal from "../components/modal/StorageConsentModal"
 import { ExportModal } from "../components/modal/ExportModal"
 import ProjectSettingsModal from "../components/modal/ProjectSettingsModal"
 import { ensureJavaGeneratorsLoaded, generateJava } from "../lib/codegen/generators/java"
+import { buildPluginZip, downloadBytes, projectBaseName, requestPluginJar } from "../lib/codegen/export"
 import {
     ProjectStore,
     createProjectStore,
@@ -79,6 +80,8 @@ export default function EditorPage() {
     // Workspace action states
     const [isExporting, setIsExporting] = useState(false)
     const [isBlocklyLoaded, setIsBlocklyLoaded] = useState(false)
+    const [isBuildingJar, setIsBuildingJar] = useState(false)
+    const [jarBuildErrors, setJarBuildErrors] = useState<string[]>([])
 
     // Persistence
     const [store, setStore] = useState<ProjectStore | null>(null)
@@ -383,6 +386,7 @@ export default function EditorPage() {
 
     async function openExportModal() {
         setIsExporting(true)
+        setJarBuildErrors([])
         const generated = await handleExport()
         setExportCode(generated)
         setIsExporting(false)
@@ -417,6 +421,39 @@ export default function EditorPage() {
         link.click()
         link.remove()
         URL.revokeObjectURL(downloadUrl)
+    }
+
+    // Bundle the generated code and the gradle template into a downloadable .zip
+    const handleDownloadZip = async () => {
+        if (!project || !exportCode) return
+
+        try {
+            const zip = await buildPluginZip(project, exportCode)
+            downloadBytes(zip, `${projectBaseName(project)}.zip`, "application/zip")
+        } catch (error) {
+            console.error("Failed to export .zip:", error)
+        }
+    }
+
+    // Send the generated project to the build backend and download the compiled .jar
+    const handleDownloadJar = async () => {
+        if (!project || !exportCode || isBuildingJar) return
+
+        setIsBuildingJar(true)
+        setJarBuildErrors([])
+        try {
+            const result = await requestPluginJar(project, exportCode)
+            if (!result.success || !result.jar) {
+                setJarBuildErrors(result.errors.length > 0 ? result.errors : ["The plugin could not be built."])
+                return
+            }
+            downloadBytes(result.jar, `${projectBaseName(project)}.jar`, "application/java-archive")
+        } catch (error) {
+            console.error("Failed to build .jar:", error)
+            setJarBuildErrors(["Could not reach the build service. Please try again later."])
+        } finally {
+            setIsBuildingJar(false)
+        }
     }
 
     // Export blockly code to java code/classes and in the future a jar file
@@ -610,8 +647,10 @@ export default function EditorPage() {
                 project={project}
                 onClose={() => setIsExportModalOpen(false)}
                 onDownloadProject={handleDownloadProject}
-                onDownloadZip={() => {}}
-                onDownloadJar={() => {}}
+                onDownloadZip={() => void handleDownloadZip()}
+                onDownloadJar={() => void handleDownloadJar()}
+                isBuildingJar={isBuildingJar}
+                jarBuildErrors={jarBuildErrors}
                 code={exportCode?.code || ""}
                 config={exportCode?.config || ""}
             />
