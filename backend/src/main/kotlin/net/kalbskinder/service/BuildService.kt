@@ -10,6 +10,7 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.nio.file.Files
 import java.nio.file.Path
+import java.time.Duration
 import java.util.Base64
 import java.util.concurrent.TimeUnit
 
@@ -25,10 +26,15 @@ import java.util.concurrent.TimeUnit
  */
 class BuildService(private val config: BuildConfig) {
 
-    private val httpClient: HttpClient = HttpClient.newHttpClient()
+    private val httpClient: HttpClient = HttpClient.newBuilder()
+        .version(HttpClient.Version.HTTP_1_1)
+        .connectTimeout(TEMPLATE_FETCH_TIMEOUT)
+        .build()
     private val logger = LoggerFactory.getLogger(BuildService::class.java)
 
     private companion object {
+        val TEMPLATE_FETCH_TIMEOUT: Duration = Duration.ofSeconds(30)
+
         const val USER_PLUGIN_PATH = "src/main/java/net/kalbskinder/plugin/UserPlugin.java"
         const val CONFIG_PATH = "src/main/resources/config.yml"
         const val BUILD_GRADLE_PATH = "build.gradle"
@@ -121,7 +127,10 @@ class BuildService(private val config: BuildConfig) {
             }
 
             val response = httpClient.send(
-                HttpRequest.newBuilder(URI.create("$base/plugin/$relative")).GET().build(),
+                HttpRequest.newBuilder(URI.create("$base/plugin/$relative"))
+                    .timeout(TEMPLATE_FETCH_TIMEOUT)
+                    .GET()
+                    .build(),
                 HttpResponse.BodyHandlers.ofByteArray()
             )
             if (response.statusCode() != 200) {
