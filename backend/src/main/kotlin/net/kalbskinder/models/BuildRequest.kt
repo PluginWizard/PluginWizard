@@ -1,4 +1,4 @@
-package net.kalbskinder.net.kalbskinder.models
+package net.kalbskinder.models
 
 import kotlinx.serialization.Serializable
 

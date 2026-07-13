@@ -1,14 +1,15 @@
-package net.kalbskinder.net.kalbskinder.routes
+package net.kalbskinder.routes
 
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.post
-import net.kalbskinder.net.kalbskinder.models.BuildRequest
-import net.kalbskinder.net.kalbskinder.service.BuildService
+import net.kalbskinder.config.BuildConfig
+import net.kalbskinder.models.BuildRequest
+import net.kalbskinder.service.BuildService
 
-fun Routing.buildRoutes() {
-    val buildService = BuildService()
+fun Routing.buildRoutes(config: BuildConfig) {
+    val buildService = BuildService(config)
 
     post("/api/build/full") {
         val request = call.receive<BuildRequest>()
