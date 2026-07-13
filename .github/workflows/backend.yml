@@ -26,7 +26,11 @@ jobs:
           java-version: "21"
           cache: gradle
 
-      - name: Build fat JAR
+      - name: Run tests
         run: |
           chmod +x gradlew
+          ./gradlew --no-daemon test
+
+      - name: Build fat JAR
+        run: |
           ./gradlew --no-daemon clean buildFatJar
