@@ -10,6 +10,8 @@ import java.nio.file.Path
 import java.util.Base64
 import java.util.zip.ZipInputStream
 import java.util.concurrent.TimeUnit
+import net.kalbskinder.models.BuildRequest
+import net.kalbskinder.models.BuildResponse
 
 class BuildService(private val config: BuildConfig) {
     fun build(request: BuildRequest): BuildResponse {
