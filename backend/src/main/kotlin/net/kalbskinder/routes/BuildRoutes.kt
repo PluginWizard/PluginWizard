@@ -4,6 +4,8 @@ import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.post
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.kalbskinder.config.BuildConfig
 import net.kalbskinder.models.BuildRequest
 import net.kalbskinder.service.BuildService
@@ -21,7 +23,7 @@ fun Routing.buildRoutes(config: BuildConfig) {
             request.pluginName, request.groupId, request.version,
         )
 
-        val result = buildService.build(request)
+        val result = withContext(Dispatchers.IO) { buildService.build(request) }
 
         if (result.success) {
             logger.info(
