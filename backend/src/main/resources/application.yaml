@@ -12,4 +12,5 @@ pluginwizard:
       - "editor.kalbskinder.net"
   build:
     tempDir: "/tmp/pluginwizard-builds"
-    timeoutSeconds: 30
+    timeoutSeconds: 300
+    templateBaseUrl: "http://localhost:5173"

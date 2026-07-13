@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { JavaGenerator, indent, imports } from '../../java.js';
+import { JavaGenerator, indent, imports, pluginRegionEvents } from '../../java.js';
 
 export default {
     block: 'minecraft_event',
@@ -18,6 +18,7 @@ export default {
 
         imports.add(`import org.bukkit.event.${eventPackage}.${eventName};`);
 
-        return `Helpers.eventHelper.subscribe(${eventClass}, event -> {\n${indent(executes, 4)}});\n`;
+        pluginRegionEvents.push(`Helpers.eventHelper.subscribe(${eventClass}, event -> {\n${indent(executes, 4)}});\n`);
+        return '';
     }
 }

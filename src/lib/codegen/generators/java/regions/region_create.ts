@@ -10,7 +10,7 @@ export default {
         const loc2 = JavaGenerator.valueToCode(block, 'POS2', Order.ATOMIC) || 'null';
 
 
-        imports.add("import net.kalbskinder.plugin.helpers.regions.Region;");
+        imports.add("import net.kalbskinder.helpers.regions.Region;");
         imports.add("import java.util.UUID;");
 
 

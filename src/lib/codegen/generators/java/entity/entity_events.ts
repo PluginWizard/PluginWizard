@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { indent, JavaGenerator, imports } from '../../java';
+import { indent, JavaGenerator, imports, pluginRegionEvents } from '../../java';
 
 export default {
     block: 'entity_events',
@@ -10,6 +10,7 @@ export default {
 
         imports.add(`import org.bukkit.event.entity.${eventType.replace('.class', '')};`);
 
-        return `Helpers.eventHelper.forEntity("${entityId}").on(\n${indent(`${eventType}.class,\n${eventType}::getEntity,\nevent -> {\n${executionCode}}\n`, 4)});\n`;
+        pluginRegionEvents.push(`Helpers.eventHelper.forEntity("${entityId}").on(\n${indent(`${eventType}.class,\n${eventType}::getEntity,\nevent -> {\n${executionCode}}\n`, 4)});\n`);
+        return '';
     },
 };

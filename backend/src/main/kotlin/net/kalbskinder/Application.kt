@@ -5,8 +5,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
+import io.ktor.server.netty.EngineMain
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.response.respondText
@@ -17,8 +16,8 @@ import net.kalbskinder.config.BuildConfig
 import net.kalbskinder.config.CorsConfig
 import net.kalbskinder.routes.buildRoutes
 
-fun main() {
-    embeddedServer(Netty, port = 8080, module = Application::module).start(wait = true)
+fun main(args: Array<String>) {
+    EngineMain.main(args)
 }
 
 fun Application.module() {
@@ -34,7 +33,11 @@ fun Application.module() {
                 .getString(),
             timeoutSeconds = environment.config
                 .property("pluginwizard.build.timeoutSeconds")
-                .getString().toLong()
+                .getString().toLong(),
+            templateBaseUrl = System.getenv("PLUGINWIZARD_TEMPLATE_BASE_URL")
+                ?: environment.config
+                    .property("pluginwizard.build.templateBaseUrl")
+                    .getString()
         )
     )
 

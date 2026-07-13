@@ -3,122 +3,217 @@ package net.kalbskinder.service
 import net.kalbskinder.config.BuildConfig
 import net.kalbskinder.models.BuildRequest
 import net.kalbskinder.models.BuildResponse
-import java.util.jar.JarEntry
-import java.util.jar.JarOutputStream
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.Base64
-import java.util.zip.ZipInputStream
 import java.util.concurrent.TimeUnit
 
+/**
+ * Assembles and builds a plugin on the server.
+ *
+ * The client only sends the generated Java class and the config. The
+ * structural files (build scripts, gradle wrapper, main class) come from a
+ * trusted project template that this service fetches itself, so a client can
+ * never smuggle extra files, overwrite the build script, or escape the build
+ * directory. The two client-controlled blobs are written to fixed, known
+ * paths, and the metadata that flows into the build files is validated first.
+ */
 class BuildService(private val config: BuildConfig) {
+
+    private val httpClient: HttpClient = HttpClient.newHttpClient()
+
+    private companion object {
+        const val USER_PLUGIN_PATH = "src/main/java/net/kalbskinder/plugin/UserPlugin.java"
+        const val CONFIG_PATH = "src/main/resources/config.yml"
+        const val BUILD_GRADLE_PATH = "build.gradle"
+        const val PLUGIN_YML_PATH = "src/main/resources/plugin.yml"
+
+        // Metadata that is interpolated into build.gradle / plugin.yml must be
+        // strictly validated — otherwise it could inject Groovy or YAML.
+        val GROUP_ID_REGEX = Regex("^[A-Za-z0-9_.]+$")
+        val VERSION_REGEX = Regex("^[A-Za-z0-9_.+-]+$")
+
+        // Trusted template files, relative to <templateBaseUrl>/plugin/.
+        val TEMPLATE_FILES = listOf(
+            ".gitignore",
+            "build.gradle",
+            "gradle.properties",
+            "gradlew",
+            "gradlew.bat",
+            "settings.gradle",
+            "gradle/wrapper/gradle-wrapper.jar",
+            "gradle/wrapper/gradle-wrapper.properties",
+            "src/main/resources/plugin.yml",
+            "src/main/resources/config.yml",
+            "src/main/java/net/kalbskinder/plugin/Plugin.java",
+            "src/main/java/net/kalbskinder/plugin/UserPlugin.java",
+        )
+    }
+
     fun build(request: BuildRequest): BuildResponse {
         val start = System.currentTimeMillis()
+
+        val validationErrors = validate(request)
+        if (validationErrors.isNotEmpty()) {
+            return BuildResponse(success = false, errors = validationErrors)
+        }
+
         Files.createDirectories(Path.of(config.tempDir))
         val workDir = Files.createTempDirectory(Path.of(config.tempDir), "pwiz-")
 
         try {
-            // decode and unzip plugin zip
-            val zipBytes = Base64.getDecoder().decode(request.pluginZipBase64)
-            val unzipSuccess = unzip(zipBytes, workDir)
-            if (!unzipSuccess) {
-                return BuildResponse(success = false, errors = listOf("Failed to unzip plugin zip file"))
-            }
-
-            // collect java files
-            val javaFiles = workDir.toFile()
-                .walkTopDown()
-                .filter { it.extension == "java" }
-                .map { it.absolutePath }
-                .toList()
-
-            if (javaFiles.isEmpty()) {
+            try {
+                fetchTemplate(workDir)
+            } catch (e: Exception) {
                 return BuildResponse(
                     success = false,
-                    errors = listOf("No Java files found in zip")
+                    errors = listOf("Failed to fetch plugin template: ${e.message}")
                 )
             }
 
-            // output dir for class files
-            val classesDir = workDir.resolve("classes").also { Files.createDirectories(it) }
-            val process = ProcessBuilder(
-                listOf("javac", "-d", classesDir.toString()) + javaFiles
-            )
-                .directory(workDir.toFile())
-                .redirectErrorStream(true)
-                .start()
+            // Inject the client-provided sources into their fixed locations
+            writeText(workDir.resolve(USER_PLUGIN_PATH), request.code)
+            writeText(workDir.resolve(CONFIG_PATH), request.config)
 
-            val finished = process.waitFor(config.timeoutSeconds, TimeUnit.SECONDS)
-            if (!finished) {
-                process.destroyForcibly()
-                return BuildResponse(
-                    success = false,
-                    errors = listOf("Compilation exceeded timeout (${config.timeoutSeconds}s).")
-                )
-            }
+            // Apply the project metadata to the template files
+            patchText(workDir.resolve(BUILD_GRADLE_PATH)) { patchBuildGradle(it, request) }
+            patchText(workDir.resolve(PLUGIN_YML_PATH)) { patchPluginYml(it, request) }
 
-            val output = process.inputStream.bufferedReader().readText()
-            if (process.exitValue() != 0) {
-                return BuildResponse(
-                    success = false,
-                    errors = parseJavacErrors(output)
-                )
-            }
-
-            val jarFile = workDir.resolve("plugin.jar")
-            buildJar(jarFile, classesDir, workDir)
-
-            return BuildResponse(
-                success = true,
-                jarBase64 = Base64.getEncoder().encodeToString(jarFile.toFile().readBytes()),
-                buildTimeMs = System.currentTimeMillis() - start
-            )
-
+            // Build the assembled project
+            return runGradleBuild(workDir, start)
         } finally {
             workDir.toFile().deleteRecursively()
         }
     }
 
-    private fun unzip(zipBytes: ByteArray, targetDir: Path): Boolean {
-        ZipInputStream(zipBytes.inputStream()).use { zis ->
-            generateSequence { zis.nextEntry }
-                .filterNot { it.isDirectory }
-                .forEach { entry ->
-                    val outFile = targetDir.resolve(entry.name).normalize().toFile()
-
-                    // Zip Slip Check
-                    if (!outFile.absolutePath.startsWith(targetDir.toAbsolutePath().toString())) {
-                        return false
-                    }
-
-                    outFile.parentFile.mkdirs()
-                    outFile.outputStream().use { zis.copyTo(it) }
-                    return true
-                }
+    private fun validate(request: BuildRequest): List<String> {
+        val errors = mutableListOf<String>()
+        if (!GROUP_ID_REGEX.matches(request.groupId)) {
+            errors.add("Invalid group id '${request.groupId}'. Only letters, digits, '.' and '_' are allowed.")
         }
-        return false
+        if (!VERSION_REGEX.matches(request.version)) {
+            errors.add("Invalid version '${request.version}'. Only letters, digits, '.', '+', '-' and '_' are allowed.")
+        }
+        return errors
     }
 
-    private fun buildJar(output: Path, classesDir: Path, workDir: Path) {
-        JarOutputStream(output.toFile().outputStream()).use { jar ->
-            // .class files
-            classesDir.toFile().walkTopDown().filter { it.isFile }.forEach { file ->
-                jar.putNextEntry(JarEntry(file.relativeTo(classesDir.toFile()).path))
-                jar.write(file.readBytes())
-                jar.closeEntry()
+    private fun fetchTemplate(workDir: Path) {
+        val base = config.templateBaseUrl.trimEnd('/')
+        for (relative in TEMPLATE_FILES) {
+            val target = workDir.resolve(relative).normalize()
+            // Defence in depth: never write outside the work dir.
+            if (!target.startsWith(workDir)) {
+                throw IllegalStateException("Illegal template path: $relative")
             }
-            // resource files (config.yml, plugin.yml)
-            workDir.toFile().walkTopDown()
-                .filter { it.isFile && it.extension !in listOf("java", "class") }
-                .filter { !it.startsWith(classesDir.toFile()) }
-                .forEach { file ->
-                    jar.putNextEntry(JarEntry(file.relativeTo(workDir.toFile()).path))
-                    jar.write(file.readBytes())
-                    jar.closeEntry()
-                }
+
+            val response = httpClient.send(
+                HttpRequest.newBuilder(URI.create("$base/plugin/$relative")).GET().build(),
+                HttpResponse.BodyHandlers.ofByteArray()
+            )
+            if (response.statusCode() != 200) {
+                throw IllegalStateException("GET $relative returned HTTP ${response.statusCode()}")
+            }
+
+            Files.createDirectories(target.parent)
+            Files.write(target, response.body())
         }
     }
 
-    private fun parseJavacErrors(output: String): List<String> =
-        output.lines().filter { it.contains("error:") }
+    /** Update the gradle group id and version to match the project. */
+    private fun patchBuildGradle(content: String, request: BuildRequest): String =
+        content
+            .replace(Regex("(?m)^group\\s*=\\s*['\"].*['\"]\\s*$")) { "group = '${request.groupId}'" }
+            .replace(Regex("(?m)^version\\s*=\\s*['\"].*['\"]\\s*$")) { "version = '${request.version}'" }
+
+    /** Fill the {{...}} placeholders in plugin.yml with the project metadata. */
+    private fun patchPluginYml(content: String, request: BuildRequest): String =
+        content
+            .replace("{{version}}", request.version)
+            .replace("{{description}}", yamlEscape(request.description))
+            .replace("{{author}}", yamlEscape(request.author))
+
+    /** Escape a value so it stays inside a double-quoted YAML scalar. */
+    private fun yamlEscape(value: String): String =
+        value.replace("\\", "\\\\").replace("\"", "\\\"").replace(Regex("[\\r\\n]+"), " ")
+
+    private fun runGradleBuild(workDir: Path, start: Long): BuildResponse {
+        workDir.resolve("gradlew").toFile().setExecutable(true)
+
+        // Share the gradle distribution and dependency cache across builds so
+        // only the very first build pays the download cost.
+        val gradleHome = Path.of(config.tempDir).resolve("gradle-home")
+            .also { Files.createDirectories(it) }
+
+        val builder = ProcessBuilder("./gradlew", "shadowJar", "--no-daemon", "--console=plain")
+            .directory(workDir.toFile())
+            .redirectErrorStream(true)
+        builder.environment()["GRADLE_USER_HOME"] = gradleHome.toAbsolutePath().toString()
+
+        val process = builder.start()
+
+        // Drain the output on a separate thread so a full pipe buffer can never
+        // deadlock the build.
+        val output = StringBuilder()
+        val reader = Thread {
+            process.inputStream.bufferedReader().forEachLine { output.appendLine(it) }
+        }.apply { start() }
+
+        val finished = process.waitFor(config.timeoutSeconds, TimeUnit.SECONDS)
+        if (!finished) {
+            process.destroyForcibly()
+            reader.join(1000)
+            return BuildResponse(
+                success = false,
+                errors = listOf("Build exceeded timeout (${config.timeoutSeconds}s).")
+            )
+        }
+        reader.join()
+
+        if (process.exitValue() != 0) {
+            return BuildResponse(success = false, errors = parseBuildErrors(output.toString()))
+        }
+
+        val jar = findBuiltJar(workDir)
+            ?: return BuildResponse(
+                success = false,
+                errors = listOf("Build succeeded but no jar artifact was produced.")
+            )
+
+        return BuildResponse(
+            success = true,
+            jarBase64 = Base64.getEncoder().encodeToString(Files.readAllBytes(jar)),
+            buildTimeMs = System.currentTimeMillis() - start
+        )
+    }
+
+    /** The shadow jar bundles the dependencies, so it is the largest jar produced. */
+    private fun findBuiltJar(workDir: Path): Path? {
+        val libs = workDir.resolve("build/libs")
+        if (!Files.isDirectory(libs)) return null
+        return Files.list(libs).use { stream ->
+            stream.filter { it.toString().endsWith(".jar") }
+                .max(compareBy { Files.size(it) })
+                .orElse(null)
+        }
+    }
+
+    private fun parseBuildErrors(output: String): List<String> {
+        val compileErrors = output.lines().filter { it.contains("error:") }
+        if (compileErrors.isNotEmpty()) return compileErrors
+        // No compiler errors, surface the tail of the log for diagnostics.
+        return output.lines().filter { it.isNotBlank() }.takeLast(20)
+    }
+
+    private fun writeText(target: Path, content: String) {
+        Files.createDirectories(target.parent)
+        Files.writeString(target, content)
+    }
+
+    private fun patchText(target: Path, transform: (String) -> String) {
+        Files.writeString(target, transform(Files.readString(target)))
+    }
 }

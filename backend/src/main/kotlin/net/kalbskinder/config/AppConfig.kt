@@ -10,4 +10,5 @@ data class CorsConfig(val allowedHosts: List<String>)
 data class BuildConfig(
     val tempDir: String,
     val timeoutSeconds: Long,
+    val templateBaseUrl: String,
 )
