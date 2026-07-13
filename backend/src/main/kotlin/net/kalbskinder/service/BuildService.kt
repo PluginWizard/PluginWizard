@@ -3,6 +3,7 @@ package net.kalbskinder.service
 import net.kalbskinder.config.BuildConfig
 import net.kalbskinder.models.BuildRequest
 import net.kalbskinder.models.BuildResponse
+import org.slf4j.LoggerFactory
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -25,6 +26,7 @@ import java.util.concurrent.TimeUnit
 class BuildService(private val config: BuildConfig) {
 
     private val httpClient: HttpClient = HttpClient.newHttpClient()
+    private val logger = LoggerFactory.getLogger(BuildService::class.java)
 
     private companion object {
         const val USER_PLUGIN_PATH = "src/main/java/net/kalbskinder/plugin/UserPlugin.java"
@@ -32,8 +34,6 @@ class BuildService(private val config: BuildConfig) {
         const val BUILD_GRADLE_PATH = "build.gradle"
         const val PLUGIN_YML_PATH = "src/main/resources/plugin.yml"
 
-        // Metadata that is interpolated into build.gradle / plugin.yml must be
-        // strictly validated — otherwise it could inject Groovy or YAML.
         val GROUP_ID_REGEX = Regex("^[A-Za-z0-9_.]+$")
         val VERSION_REGEX = Regex("^[A-Za-z0-9_.+-]+$")
 
@@ -56,19 +56,26 @@ class BuildService(private val config: BuildConfig) {
 
     fun build(request: BuildRequest): BuildResponse {
         val start = System.currentTimeMillis()
+        logger.info(
+            "Starting build for plugin '{}' (groupId='{}', version='{}')",
+            request.pluginName, request.groupId, request.version,
+        )
 
         val validationErrors = validate(request)
         if (validationErrors.isNotEmpty()) {
+            logger.warn("Build for '{}' rejected: {}", request.pluginName, validationErrors)
             return BuildResponse(success = false, errors = validationErrors)
         }
 
         Files.createDirectories(Path.of(config.tempDir))
         val workDir = Files.createTempDirectory(Path.of(config.tempDir), "pwiz-")
+        logger.debug("Created work directory {} for '{}'", workDir, request.pluginName)
 
         try {
             try {
                 fetchTemplate(workDir)
             } catch (e: Exception) {
+                logger.error("Failed to fetch plugin template for '{}'", request.pluginName, e)
                 return BuildResponse(
                     success = false,
                     errors = listOf("Failed to fetch plugin template: ${e.message}")
@@ -82,11 +89,13 @@ class BuildService(private val config: BuildConfig) {
             // Apply the project metadata to the template files
             patchText(workDir.resolve(BUILD_GRADLE_PATH)) { patchBuildGradle(it, request) }
             patchText(workDir.resolve(PLUGIN_YML_PATH)) { patchPluginYml(it, request) }
+            logger.debug("Assembled project for '{}' in {}", request.pluginName, workDir)
 
             // Build the assembled project
             return runGradleBuild(workDir, start)
         } finally {
             workDir.toFile().deleteRecursively()
+            logger.debug("Cleaned up work directory {}", workDir)
         }
     }
 
@@ -103,6 +112,7 @@ class BuildService(private val config: BuildConfig) {
 
     private fun fetchTemplate(workDir: Path) {
         val base = config.templateBaseUrl.trimEnd('/')
+        logger.info("Fetching {} template file(s) from {}", TEMPLATE_FILES.size, base)
         for (relative in TEMPLATE_FILES) {
             val target = workDir.resolve(relative).normalize()
             // Defence in depth: never write outside the work dir.
@@ -120,6 +130,7 @@ class BuildService(private val config: BuildConfig) {
 
             Files.createDirectories(target.parent)
             Files.write(target, response.body())
+            logger.debug("Fetched template file {} ({} bytes)", relative, response.body().size)
         }
     }
 
@@ -153,6 +164,7 @@ class BuildService(private val config: BuildConfig) {
             .redirectErrorStream(true)
         builder.environment()["GRADLE_USER_HOME"] = gradleHome.toAbsolutePath().toString()
 
+        logger.info("Running 'gradlew shadowJar' in {} (timeout {}s)", workDir, config.timeoutSeconds)
         val process = builder.start()
 
         // Drain the output on a separate thread so a full pipe buffer can never
@@ -164,6 +176,7 @@ class BuildService(private val config: BuildConfig) {
 
         val finished = process.waitFor(config.timeoutSeconds, TimeUnit.SECONDS)
         if (!finished) {
+            logger.warn("Gradle build in {} exceeded timeout of {}s; killing process", workDir, config.timeoutSeconds)
             process.destroyForcibly()
             reader.join(1000)
             return BuildResponse(
@@ -173,20 +186,28 @@ class BuildService(private val config: BuildConfig) {
         }
         reader.join()
 
-        if (process.exitValue() != 0) {
-            return BuildResponse(success = false, errors = parseBuildErrors(output.toString()))
+        val exitCode = process.exitValue()
+        if (exitCode != 0) {
+            val errors = parseBuildErrors(output.toString())
+            logger.warn("Gradle build in {} failed with exit code {}: {} error line(s)", workDir, exitCode, errors.size)
+            return BuildResponse(success = false, errors = errors)
         }
 
         val jar = findBuiltJar(workDir)
-            ?: return BuildResponse(
-                success = false,
-                errors = listOf("Build succeeded but no jar artifact was produced.")
-            )
+            ?: run {
+                logger.error("Gradle build in {} succeeded but produced no jar artifact", workDir)
+                return BuildResponse(
+                    success = false,
+                    errors = listOf("Build succeeded but no jar artifact was produced.")
+                )
+            }
 
+        val buildTimeMs = System.currentTimeMillis() - start
+        logger.info("Gradle build succeeded in {} ms, artifact {} ({} bytes)", buildTimeMs, jar.fileName, Files.size(jar))
         return BuildResponse(
             success = true,
             jarBase64 = Base64.getEncoder().encodeToString(Files.readAllBytes(jar)),
-            buildTimeMs = System.currentTimeMillis() - start
+            buildTimeMs = buildTimeMs
         )
     }
 
