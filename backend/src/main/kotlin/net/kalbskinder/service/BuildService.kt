@@ -35,10 +35,16 @@ class BuildService(private val config: BuildConfig) {
     private companion object {
         val TEMPLATE_FETCH_TIMEOUT: Duration = Duration.ofSeconds(30)
 
-        const val USER_PLUGIN_PATH = "src/main/java/net/kalbskinder/plugin/UserPlugin.java"
+        const val TEMPLATE_MAIN_CLASS_PATH = "src/main/java/net/kalbskinder/plugin/Plugin.java"
+        const val TEMPLATE_USER_PLUGIN_PATH = "src/main/java/net/kalbskinder/plugin/UserPlugin.java"
         const val CONFIG_PATH = "src/main/resources/config.yml"
         const val BUILD_GRADLE_PATH = "build.gradle"
         const val PLUGIN_YML_PATH = "src/main/resources/plugin.yml"
+
+        // The package and main-class name hard-coded in the template sources.
+        // They are rewritten to the project's own identity on build.
+        const val TEMPLATE_PACKAGE = "net.kalbskinder.plugin"
+        const val TEMPLATE_MAIN_CLASS = "Plugin"
 
         val GROUP_ID_REGEX = Regex("^[A-Za-z0-9_.]+$")
         val VERSION_REGEX = Regex("^[A-Za-z0-9_.+-]+$")
@@ -73,6 +79,8 @@ class BuildService(private val config: BuildConfig) {
             return BuildResponse(success = false, errors = validationErrors)
         }
 
+        val naming = resolveNaming(request)
+
         Files.createDirectories(Path.of(config.tempDir))
         val workDir = Files.createTempDirectory(Path.of(config.tempDir), "pwiz-")
         logger.debug("Created work directory {} for '{}'", workDir, request.pluginName)
@@ -88,13 +96,20 @@ class BuildService(private val config: BuildConfig) {
                 )
             }
 
-            // Inject the client-provided sources into their fixed locations
-            writeText(workDir.resolve(USER_PLUGIN_PATH), request.code)
+            // Move the template main class into the project's own package,
+            // rewriting its package declaration and class name.
+            val mainClassSource = Files.readString(safeResolve(workDir, TEMPLATE_MAIN_CLASS_PATH))
+            Files.deleteIfExists(safeResolve(workDir, TEMPLATE_MAIN_CLASS_PATH))
+            Files.deleteIfExists(safeResolve(workDir, TEMPLATE_USER_PLUGIN_PATH))
+            writeText(safeResolve(workDir, naming.mainClassPath), patchMainClass(mainClassSource, naming))
+
+            // Inject the client-provided sources into the project package.
+            writeText(safeResolve(workDir, naming.userPluginPath), patchUserPlugin(request.code, naming))
             writeText(workDir.resolve(CONFIG_PATH), request.config)
 
             // Apply the project metadata to the template files
             patchText(workDir.resolve(BUILD_GRADLE_PATH)) { patchBuildGradle(it, request) }
-            patchText(workDir.resolve(PLUGIN_YML_PATH)) { patchPluginYml(it, request) }
+            patchText(workDir.resolve(PLUGIN_YML_PATH)) { patchPluginYml(it, request, naming) }
             logger.debug("Assembled project for '{}' in {}", request.pluginName, workDir)
 
             // Build the assembled project
@@ -120,11 +135,7 @@ class BuildService(private val config: BuildConfig) {
         val base = config.templateBaseUrl.trimEnd('/')
         logger.info("Fetching {} template file(s) from {}", TEMPLATE_FILES.size, base)
         for (relative in TEMPLATE_FILES) {
-            val target = workDir.resolve(relative).normalize()
-            // Defence in depth: never write outside the work dir.
-            if (!target.startsWith(workDir)) {
-                throw IllegalStateException("Illegal template path: $relative")
-            }
+            val target = safeResolve(workDir, relative)
 
             val response = httpClient.send(
                 HttpRequest.newBuilder(URI.create("$base/plugin/$relative"))
@@ -143,15 +154,88 @@ class BuildService(private val config: BuildConfig) {
         }
     }
 
+    /** Resolve a path inside the work dir, refusing anything that escapes it. */
+    private fun safeResolve(workDir: Path, relative: String): Path {
+        val target = workDir.resolve(relative).normalize()
+        // Defence in depth: never touch anything outside the work dir.
+        if (!target.startsWith(workDir)) {
+            throw IllegalStateException("Illegal path: $relative")
+        }
+        return target
+    }
+
+    /** The plugin's Java identity, derived from the plugin name and group id. */
+    private data class PluginNaming(
+        val className: String,
+        val packageName: String,
+    ) {
+        val packagePath: String get() = packageName.replace('.', '/')
+        val mainClassPath: String get() = "src/main/java/$packagePath/$className.java"
+        val userPluginPath: String get() = "src/main/java/$packagePath/UserPlugin.java"
+    }
+
+    /** Resolve the plugin's Java identity (class name + package). */
+    private fun resolveNaming(request: BuildRequest): PluginNaming {
+        val groupSegments = request.groupId.split('.')
+            .map(::sanitizeSegment)
+            .filter { it.isNotEmpty() }
+        val packageName = (groupSegments + toPackageSegment(request.pluginName)).joinToString(".")
+        return PluginNaming(toClassName(request.pluginName), packageName)
+    }
+
+    /** Strip a string down to a Java-identifier-safe segment (no leading digits). */
+    private fun sanitizeSegment(segment: String): String =
+        segment.filter { it in 'A'..'Z' || it in 'a'..'z' || it in '0'..'9' || it == '_' }
+            .dropWhile { it.isDigit() }
+
+    /** Derive a PascalCase Java class name from a display name. */
+    private fun toClassName(name: String): String {
+        val pascal = name.split(Regex("[^A-Za-z0-9]+"))
+            .filter { it.isNotEmpty() }
+            .joinToString("") { it.replaceFirstChar(Char::uppercaseChar) }
+            .dropWhile { it.isDigit() }
+        return pascal.ifEmpty { TEMPLATE_MAIN_CLASS }
+    }
+
+    /** Derive a lowercase Java package segment from a display name. */
+    private fun toPackageSegment(name: String): String {
+        val segment = name.lowercase()
+            .filter { it in 'a'..'z' || it in '0'..'9' }
+            .dropWhile { it.isDigit() }
+        return segment.ifEmpty { "plugin" }
+    }
+
+    /** Rewrite the main class template into the project's package and name. */
+    private fun patchMainClass(content: String, naming: PluginNaming): String =
+        content
+            .replace("package $TEMPLATE_PACKAGE;", "package ${naming.packageName};")
+            .replace(
+                "class $TEMPLATE_MAIN_CLASS extends JavaPlugin",
+                "class ${naming.className} extends JavaPlugin",
+            )
+
+    /** Rewrite the user plugin into the project's package, updating its
+     * reference to the main class type. */
+    private fun patchUserPlugin(content: String, naming: PluginNaming): String =
+        content
+            .replace("package $TEMPLATE_PACKAGE;", "package ${naming.packageName};")
+            .replace(
+                "private final $TEMPLATE_MAIN_CLASS plugin;",
+                "private final ${naming.className} plugin;",
+            )
+
     /** Update the gradle group id and version to match the project. */
     private fun patchBuildGradle(content: String, request: BuildRequest): String =
         content
             .replace(Regex("(?m)^group\\s*=\\s*['\"].*['\"]\\s*$")) { "group = '${request.groupId}'" }
             .replace(Regex("(?m)^version\\s*=\\s*['\"].*['\"]\\s*$")) { "version = '${request.version}'" }
 
-    /** Fill the {{...}} placeholders in plugin.yml with the project metadata. */
-    private fun patchPluginYml(content: String, request: BuildRequest): String =
+    /** Set the plugin name / main class and fill the {{...}} placeholders in
+     * plugin.yml with the project metadata. */
+    private fun patchPluginYml(content: String, request: BuildRequest, naming: PluginNaming): String =
         content
+            .replace(Regex("(?m)^name:.*$")) { "name: ${naming.className}" }
+            .replace(Regex("(?m)^main:.*$")) { "main: ${naming.packageName}.${naming.className}" }
             .replace("{{version}}", request.version)
             .replace("{{description}}", yamlEscape(request.description))
             .replace("{{author}}", yamlEscape(request.author))
