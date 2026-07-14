@@ -38,7 +38,7 @@
             {
                 "type": "input_value",
                 "name": "CONTENT",
-                "check": "String"
+                "check": null
             }
         ],
         "inputsInline": true,

@@ -9,9 +9,8 @@ export default {
         const contentCode = JavaGenerator.valueToCode(block, 'CONTENT', Order.ATOMIC) || '""';
 
         const key = extractStringLiteral(keyCode);
-        const content = extractStringLiteral(contentCode);
 
-        configYamlLines.push(`${key}: ${content}`);
+        configYamlLines.push(`${key}: ${contentCode}`);
         return '';
     },
 };
