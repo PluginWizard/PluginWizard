@@ -43,6 +43,14 @@
     {
       "kind": "block",
       "type": "command_sender_get"
+    },
+    {
+      "kind": "block",
+      "type": "command_sender_player_get"
+    },
+    {
+      "kind": "block",
+      "type": "command_executed_by_player"
     }
   ]
 }

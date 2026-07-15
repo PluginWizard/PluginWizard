@@ -29,7 +29,7 @@
             {
                 "type": "input_value",
                 "name": "TARGET",
-                "check": "Player"
+                "check": ["Player", "CommandSender"]
             }
         ],
         "previousStatement": null,

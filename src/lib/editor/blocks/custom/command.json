@@ -156,48 +156,48 @@
                 "options": [
                     [
                         "string",
-                        "getString"
+                        "getStringArg"
                     ],
                     [
                         "integer",
-                        "getInt"
+                        "getIntArg"
                     ],
                     [
                         "float",
-                        "getFloat"
+                        "getFloatArg"
                     ],
                     [
                         "boolean",
-                        "getBoolean"
+                        "getBooleanArg"
                     ],
                 
                     [
                         "player",
-                        "getPlayer"
+                        "getPlayerArg"
                     ],
                     [
                         "entity",
-                        "getEntity"
+                        "getEntityArg"
                     ],
                     [
                         "item",
-                        "getItem"
+                        "getItemArg"
                     ],
                     [
                         "block",
-                        "getBlock"
+                        "getBlockArg"
                     ],
                     [
                         "gamemode",
-                        "getGameMode"
+                        "getGameModeArg"
                     ],
                     [
                         "color code",
-                        "getColorCode"
+                        "getColorCodeArg"
                     ],
                     [
                         "worlds",
-                        "getWorld"
+                        "getWorldArg"
                     ],
                     [
                         "custom",
@@ -218,9 +218,23 @@
     },
     "command_sender_get": {
         "message0": "command sender",
+        "output": "CommandSender",
+        "colour": "#456bd6",
+        "tooltip": "Get the command sender that executed the command.",
+        "helpUrl": ""
+    },
+    "command_sender_player_get": {
+        "message0": "command sender (player)",
         "output": "Player",
         "colour": "#456bd6",
         "tooltip": "Get the command sender as a player. Only works if the command was executed by a player",
+        "helpUrl": ""
+    },
+    "command_executed_by_player": {
+        "message0": "was executed by player?",
+        "output": "Boolean",
+        "colour": "#456bd6",
+        "tooltip": "Returns true if the command was executed by a player, false otherwise.",
         "helpUrl": ""
     }
 }
