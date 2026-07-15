@@ -35,10 +35,16 @@ class BuildService(private val config: BuildConfig) {
     private companion object {
         val TEMPLATE_FETCH_TIMEOUT: Duration = Duration.ofSeconds(30)
 
+        const val MAIN_CLASS_PATH = "src/main/java/net/kalbskinder/plugin/Plugin.java"
         const val USER_PLUGIN_PATH = "src/main/java/net/kalbskinder/plugin/UserPlugin.java"
         const val CONFIG_PATH = "src/main/resources/config.yml"
         const val BUILD_GRADLE_PATH = "build.gradle"
         const val PLUGIN_YML_PATH = "src/main/resources/plugin.yml"
+
+        // Root of the Java sources in the template. The Java files ship under
+        // the template package net.kalbskinder.plugin and are relocated into
+        // the project's own package during assembly.
+        const val JAVA_SOURCE_ROOT = "src/main/java"
 
         val GROUP_ID_REGEX = Regex("^[A-Za-z0-9_.]+$")
         val VERSION_REGEX = Regex("^[A-Za-z0-9_.+-]+$")
@@ -88,8 +94,17 @@ class BuildService(private val config: BuildConfig) {
                 )
             }
 
-            // Inject the client-provided sources into their fixed locations
-            writeText(workDir.resolve(USER_PLUGIN_PATH), request.code)
+            // Relocate the Java sources into the project's own package and
+            // rewrite the main class name, then inject the client's sources.
+            val packageDir = workDir.resolve("$JAVA_SOURCE_ROOT/${pluginPackage(request).replace('.', '/')}")
+            Files.createDirectories(packageDir)
+
+            val mainClassSource = patchMainClass(Files.readString(workDir.resolve(MAIN_CLASS_PATH)), request)
+            Files.deleteIfExists(workDir.resolve(MAIN_CLASS_PATH))
+            Files.deleteIfExists(workDir.resolve(USER_PLUGIN_PATH))
+            writeText(packageDir.resolve("${mainClassName(request)}.java"), mainClassSource)
+            writeText(packageDir.resolve("UserPlugin.java"), patchUserPlugin(request.code, request))
+
             writeText(workDir.resolve(CONFIG_PATH), request.config)
 
             // Apply the project metadata to the template files
@@ -143,15 +158,63 @@ class BuildService(private val config: BuildConfig) {
         }
     }
 
+    /** The PascalCase Java class name for the plugin's main class. */
+    private fun mainClassName(request: BuildRequest): String {
+        val pascal = request.pluginName
+            .replace(Regex("[^A-Za-z0-9]+"), " ")
+            .trim()
+            .split(Regex("\\s+"))
+            .filter { it.isNotEmpty() }
+            .joinToString("") { it.replaceFirstChar { c -> c.uppercaseChar() } }
+        return when {
+            pascal.isEmpty() -> "Plugin"
+            pascal[0].isDigit() -> "Plugin$pascal"
+            else -> pascal
+        }
+    }
+
+    /** The Java package for the exported plugin: <groupId>.<name-segment>. */
+    private fun pluginPackage(request: BuildRequest): String {
+        val segment = request.pluginName.lowercase().replace(Regex("[^a-z0-9]"), "")
+        val safeSegment = when {
+            segment.isEmpty() -> "plugin"
+            segment[0].isDigit() -> "plugin$segment"
+            else -> segment
+        }
+        return "${request.groupId}.$safeSegment"
+    }
+
+    /** A plugin.yml-safe plugin name derived from the project name. */
+    private fun pluginYmlName(request: BuildRequest): String {
+        val cleaned = request.pluginName.trim()
+            .replace(Regex("[^A-Za-z0-9_.-]+"), "_")
+            .trim('_')
+        return cleaned.ifEmpty { "Plugin" }
+    }
+
     /** Update the gradle group id and version to match the project. */
     private fun patchBuildGradle(content: String, request: BuildRequest): String =
         content
             .replace(Regex("(?m)^group\\s*=\\s*['\"].*['\"]\\s*$")) { "group = '${request.groupId}'" }
             .replace(Regex("(?m)^version\\s*=\\s*['\"].*['\"]\\s*$")) { "version = '${request.version}'" }
 
-    /** Fill the {{...}} placeholders in plugin.yml with the project metadata. */
+    /** Rewrite the template package declaration to the project's package. */
+    private fun patchPackage(content: String, request: BuildRequest): String =
+        content.replace(Regex("(?m)^package\\s+net\\.kalbskinder\\.plugin\\s*;")) { "package ${pluginPackage(request)};" }
+
+    /** Rewrite the main class source: package declaration and class name. */
+    private fun patchMainClass(content: String, request: BuildRequest): String =
+        patchPackage(content, request).replace(Regex("\\bclass\\s+Plugin\\b")) { "class ${mainClassName(request)}" }
+
+    /** Rewrite the UserPlugin source: package declaration and main-class type reference. */
+    private fun patchUserPlugin(content: String, request: BuildRequest): String =
+        patchPackage(content, request).replace(Regex("\\bfinal\\s+Plugin\\s+plugin\\b")) { "final ${mainClassName(request)} plugin" }
+
+    /** Fill the placeholders in plugin.yml with the project metadata. */
     private fun patchPluginYml(content: String, request: BuildRequest): String =
         content
+            .replace(Regex("(?m)^name:.*$")) { "name: ${pluginYmlName(request)}" }
+            .replace(Regex("(?m)^main:.*$")) { "main: ${pluginPackage(request)}.${mainClassName(request)}" }
             .replace("{{version}}", request.version)
             .replace("{{description}}", yamlEscape(request.description))
             .replace("{{author}}", yamlEscape(request.author))

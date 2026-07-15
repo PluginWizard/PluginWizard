@@ -33,10 +33,16 @@ const TEMPLATE_FILES = [
 const TEMPLATE_BASE = "/plugin"
 
 // Template paths whose contents are replaced or patched during export.
+const MAIN_CLASS_PATH = "src/main/java/net/kalbskinder/plugin/Plugin.java"
 const USER_PLUGIN_PATH = "src/main/java/net/kalbskinder/plugin/UserPlugin.java"
 const CONFIG_PATH = "src/main/resources/config.yml"
 const BUILD_GRADLE_PATH = "build.gradle"
 const PLUGIN_YML_PATH = "src/main/resources/plugin.yml"
+
+// Root of the Java sources in the template. The two Java files live under the
+// template package net.kalbskinder.plugin and are relocated into the project's
+// own package during export.
+const JAVA_SOURCE_ROOT = "src/main/java"
 
 const DEFAULT_VERSION = "1.0.0"
 
@@ -81,6 +87,32 @@ async function fetchTemplateFile(relativePath: string): Promise<Uint8Array> {
     return new Uint8Array(await response.arrayBuffer())
 }
 
+/** The PascalCase Java class name for the plugin's main class. */
+function mainClassName(project: Project): string {
+    const pascal = project.name
+        .replace(/[^A-Za-z0-9]+/g, " ")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join("")
+    if (!pascal) return "Plugin"
+    return /^[0-9]/.test(pascal) ? `Plugin${pascal}` : pascal
+}
+
+/** The Java package for the exported plugin: <groupId>.<name-segment>. */
+function pluginPackage(project: Project): string {
+    const segment = project.name.toLowerCase().replace(/[^a-z0-9]/g, "")
+    const safeSegment = !segment ? "plugin" : /^[0-9]/.test(segment) ? `plugin${segment}` : segment
+    return `${project.groupId}.${safeSegment}`
+}
+
+/** A plugin.yml-safe plugin name derived from the project name. */
+function pluginYmlName(project: Project): string {
+    const cleaned = project.name.trim().replace(/[^A-Za-z0-9_.-]+/g, "_").replace(/^_+|_+$/g, "")
+    return cleaned || "Plugin"
+}
+
 /** Update the gradle group id and version to match the project. */
 function patchBuildGradle(content: string, project: Project): string {
     return content
@@ -88,9 +120,26 @@ function patchBuildGradle(content: string, project: Project): string {
         .replace(/^version\s*=\s*['"].*['"]\s*$/m, `version = '${resolveVersion(project)}'`)
 }
 
-/** Fill the {{...}} placeholders in plugin.yml with the project metadata. */
+/** Rewrite the template package declaration to the project's package. */
+function patchPackage(content: string, project: Project): string {
+    return content.replace(/^package\s+net\.kalbskinder\.plugin\s*;/m, `package ${pluginPackage(project)};`)
+}
+
+/** Rewrite the main class source: package declaration and class name. */
+function patchMainClass(content: string, project: Project): string {
+    return patchPackage(content, project).replace(/\bclass\s+Plugin\b/, `class ${mainClassName(project)}`)
+}
+
+/** Rewrite the UserPlugin source: package declaration and main-class type reference. */
+function patchUserPlugin(content: string, project: Project): string {
+    return patchPackage(content, project).replace(/\bfinal\s+Plugin\s+plugin\b/, `final ${mainClassName(project)} plugin`)
+}
+
+/** Fill the placeholders in plugin.yml with the project metadata. */
 function patchPluginYml(content: string, project: Project): string {
     return content
+        .replace(/^name:.*$/m, `name: ${pluginYmlName(project)}`)
+        .replace(/^main:.*$/m, `main: ${pluginPackage(project)}.${mainClassName(project)}`)
         .split("{{version}}").join(resolveVersion(project))
         .split("{{description}}").join(project.description ?? "")
         .split("{{author}}").join(project.author ?? "")
@@ -105,13 +154,24 @@ export async function buildPluginZip(project: Project, generated: GeneratedCode)
         TEMPLATE_FILES.map(async (path) => [path, await fetchTemplateFile(path)] as const),
     )
 
+    // The Java sources are relocated into the project's own package and the
+    // main class is renamed after the project, so work out their destinations.
+    const packageDir = `${JAVA_SOURCE_ROOT}/${pluginPackage(project).replace(/\./g, "/")}`
+    const mainClassDest = `${packageDir}/${mainClassName(project)}.java`
+    const userPluginDest = `${packageDir}/UserPlugin.java`
+
     const zip: Zippable = {}
     for (const [path, bytes] of entries) {
+        // Skip the template Java sources; they are re-added below at their
+        // relocated paths with the package and class name rewritten.
+        if (path === MAIN_CLASS_PATH || path === USER_PLUGIN_PATH) continue
         zip[path] = bytes
     }
 
-    // Inject the generated sources.
-    zip[USER_PLUGIN_PATH] = strToU8(generated.code)
+    // Relocate and rewrite the main class, and inject the generated UserPlugin.
+    const mainClassTemplate = entries.find(([path]) => path === MAIN_CLASS_PATH)![1]
+    zip[mainClassDest] = strToU8(patchMainClass(strFromU8(mainClassTemplate), project))
+    zip[userPluginDest] = strToU8(patchUserPlugin(generated.code, project))
     zip[CONFIG_PATH] = strToU8(generated.config)
 
     // Apply project metadata to the template files.
