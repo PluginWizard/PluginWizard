@@ -37,6 +37,7 @@ const MAIN_CLASS_PATH = "src/main/java/net/kalbskinder/plugin/Plugin.java"
 const USER_PLUGIN_PATH = "src/main/java/net/kalbskinder/plugin/UserPlugin.java"
 const CONFIG_PATH = "src/main/resources/config.yml"
 const BUILD_GRADLE_PATH = "build.gradle"
+const SETTINGS_GRADLE_PATH = "settings.gradle"
 const PLUGIN_YML_PATH = "src/main/resources/plugin.yml"
 
 // Root of the Java sources in the template. The two Java files live under the
@@ -120,6 +121,11 @@ function patchBuildGradle(content: string, project: Project): string {
         .replace(/^version\s*=\s*['"].*['"]\s*$/m, `version = '${resolveVersion(project)}'`)
 }
 
+/** Update the gradle root project name to match the project. */
+function patchSettingsGradle(content: string, project: Project): string {
+    return content.replace(/^rootProject\.name\s*=\s*['"].*['"]\s*$/m, `rootProject.name = '${pluginYmlName(project)}'`)
+}
+
 /** Rewrite the template package declaration to the project's package. */
 function patchPackage(content: string, project: Project): string {
     return content.replace(/^package\s+net\.kalbskinder\.plugin\s*;/m, `package ${pluginPackage(project)};`)
@@ -176,6 +182,7 @@ export async function buildPluginZip(project: Project, generated: GeneratedCode)
 
     // Apply project metadata to the template files.
     zip[BUILD_GRADLE_PATH] = strToU8(patchBuildGradle(strFromU8(zip[BUILD_GRADLE_PATH] as Uint8Array), project))
+    zip[SETTINGS_GRADLE_PATH] = strToU8(patchSettingsGradle(strFromU8(zip[SETTINGS_GRADLE_PATH] as Uint8Array), project))
     zip[PLUGIN_YML_PATH] = strToU8(patchPluginYml(strFromU8(zip[PLUGIN_YML_PATH] as Uint8Array), project))
 
     return zipSync(zip, { level: 6 })

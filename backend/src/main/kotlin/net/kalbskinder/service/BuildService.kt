@@ -39,6 +39,7 @@ class BuildService(private val config: BuildConfig) {
         const val USER_PLUGIN_PATH = "src/main/java/net/kalbskinder/plugin/UserPlugin.java"
         const val CONFIG_PATH = "src/main/resources/config.yml"
         const val BUILD_GRADLE_PATH = "build.gradle"
+        const val SETTINGS_GRADLE_PATH = "settings.gradle"
         const val PLUGIN_YML_PATH = "src/main/resources/plugin.yml"
 
         // Root of the Java sources in the template. The Java files ship under
@@ -109,6 +110,7 @@ class BuildService(private val config: BuildConfig) {
 
             // Apply the project metadata to the template files
             patchText(workDir.resolve(BUILD_GRADLE_PATH)) { patchBuildGradle(it, request) }
+            patchText(workDir.resolve(SETTINGS_GRADLE_PATH)) { patchSettingsGradle(it, request) }
             patchText(workDir.resolve(PLUGIN_YML_PATH)) { patchPluginYml(it, request) }
             logger.debug("Assembled project for '{}' in {}", request.pluginName, workDir)
 
@@ -197,6 +199,10 @@ class BuildService(private val config: BuildConfig) {
         content
             .replace(Regex("(?m)^group\\s*=\\s*['\"].*['\"]\\s*$")) { "group = '${request.groupId}'" }
             .replace(Regex("(?m)^version\\s*=\\s*['\"].*['\"]\\s*$")) { "version = '${request.version}'" }
+
+    /** Update the gradle root project name to match the project. */
+    private fun patchSettingsGradle(content: String, request: BuildRequest): String =
+        content.replace(Regex("(?m)^rootProject\\.name\\s*=\\s*['\"].*['\"]\\s*$")) { "rootProject.name = '${pluginYmlName(request)}'" }
 
     /** Rewrite the template package declaration to the project's package. */
     private fun patchPackage(content: String, request: BuildRequest): String =
