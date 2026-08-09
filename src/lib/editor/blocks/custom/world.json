@@ -88,32 +88,32 @@
         "tooltip": "Gets a gamerule by name",
         "helpUrl": "https://minecraft.wiki/w/Game_rule"
     },
-    "location_get_block": {
-        "message0": "block at location %1",
+    "block_of": {
+        "message0": "block of %1",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "TYPE",
+                "text": "grass_block"
+            }
+        ],
+        "output": "Block",
+        "colour": "#785a41",
+        "tooltip": "Represents a block of the given material",
+        "helpUrl": "https://minecraft.wiki/w/Java_Edition_data_values#Blocks"
+    },
+    "set_block_type": {
+        "message0": "set block at location %1 to %2",
         "args0": [
             {
                 "type": "input_value",
                 "name": "LOCATION",
                 "check": "Location"
-            }
-        ],
-        "output": "Block",
-        "colour": "#785a41",
-        "tooltip": "Gets the block at a location",
-        "helpUrl": ""
-    },
-    "set_block_type": {
-        "message0": "set block %1 to %2",
-        "args0": [
-            {
-                "type": "input_value",
-                "name": "BLOCK",
-                "check": "Block"
             },
             {
-                "type": "field_input",
+                "type": "input_value",
                 "name": "TYPE",
-                "text": "grass_block"
+                "check": "Block"
             }
         ],
         "previousStatement": null,

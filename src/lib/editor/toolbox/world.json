@@ -62,11 +62,21 @@
         },
         {
             "kind": "block",
-            "type": "location_get_block"
+            "type": "block_of"
         },
         {
             "kind": "block",
-            "type": "set_block_type"
+            "type": "set_block_type",
+            "inputs": {
+                "TYPE": {
+                    "shadow": {
+                        "type": "block_of",
+                        "fields": {
+                            "TYPE": "grass_block"
+                        }
+                    }
+                }
+            }
         },
         {
             "kind": "block",
