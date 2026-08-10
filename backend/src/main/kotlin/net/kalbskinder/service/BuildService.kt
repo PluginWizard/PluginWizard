@@ -1,6 +1,9 @@
 package net.kalbskinder.service
 
 import net.kalbskinder.config.BuildConfig
+import net.kalbskinder.database.Database
+import net.kalbskinder.database.model.BuildErrorType
+import net.kalbskinder.database.model.ProjectData
 import net.kalbskinder.models.BuildRequest
 import net.kalbskinder.models.BuildResponse
 import org.slf4j.LoggerFactory
@@ -24,7 +27,10 @@ import java.util.concurrent.TimeUnit
  * directory. The two client-controlled blobs are written to fixed, known
  * paths, and the metadata that flows into the build files is validated first.
  */
-class BuildService(private val config: BuildConfig) {
+class BuildService(
+    private val config: BuildConfig,
+    private val database: Database? = null,
+) {
 
     private val httpClient: HttpClient = HttpClient.newBuilder()
         .version(HttpClient.Version.HTTP_1_1)
@@ -69,9 +75,15 @@ class BuildService(private val config: BuildConfig) {
 
     fun build(request: BuildRequest): BuildResponse {
         val start = System.currentTimeMillis()
+        val response = runBuild(request, start)
+        recordBuild(request, response, start)
+        return response
+    }
+
+    private fun runBuild(request: BuildRequest, start: Long): BuildResponse {
         logger.info(
-            "Starting build for plugin '{}' (groupId='{}', version='{}')",
-            request.pluginName, request.groupId, request.version,
+            "Starting build for plugin '{}' (version='{}')",
+            request.pluginName, request.version,
         )
 
         val validationErrors = validate(request)
@@ -305,6 +317,51 @@ class BuildService(private val config: BuildConfig) {
         if (compileErrors.isNotEmpty()) return compileErrors
         // No compiler errors, surface the tail of the log for diagnostics.
         return output.lines().filter { it.isNotBlank() }.takeLast(20)
+    }
+
+    /**
+     * Persist a record of the finished build.
+     * Only the [BuildErrorType] categories are stored, never the raw error
+     * text, so no user code or stacktraces reach the database.
+     */
+    private fun recordBuild(request: BuildRequest, response: BuildResponse, start: Long) {
+        val db = database ?: return
+        val now = System.currentTimeMillis()
+        db.saveProjectData(
+            ProjectData(
+                pluginName = request.pluginName,
+                pluginVersion = request.version,
+                codeLength = request.code.length.toString(),
+                configLength = request.config.length.toString(),
+                buildSuccess = response.success,
+                buildErrors = classifyErrors(response),
+                buildDurationMs = response.buildTimeMs.takeIf { it > 0 } ?: (now - start),
+                timestamp = now,
+            )
+        )
+    }
+
+    /** Reduce raw build errors to their distinct [BuildErrorType] categories. */
+    private fun classifyErrors(response: BuildResponse): List<String> {
+        if (response.success) return emptyList()
+        return response.errors
+            .map { classifyError(it).name }
+            .distinct()
+    }
+
+    private fun classifyError(error: String): BuildErrorType = when {
+        error.contains("Invalid group id") || error.contains("Invalid version") ->
+            BuildErrorType.VALIDATION_ERROR
+        error.contains("Failed to fetch plugin template") ->
+            BuildErrorType.TEMPLATE_FETCH_FAILED
+        error.contains("exceeded timeout") ->
+            BuildErrorType.TIMEOUT
+        error.contains("no jar artifact") ->
+            BuildErrorType.NO_ARTIFACT
+        error.contains("error:") ->
+            BuildErrorType.COMPILE_ERROR
+        else ->
+            BuildErrorType.BUILD_FAILED
     }
 
     private fun writeText(target: Path, content: String) {

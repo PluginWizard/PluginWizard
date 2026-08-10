@@ -7,14 +7,15 @@ import io.ktor.server.routing.post
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.kalbskinder.config.BuildConfig
+import net.kalbskinder.database.Database
 import net.kalbskinder.models.BuildRequest
 import net.kalbskinder.service.BuildService
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("net.kalbskinder.routes.BuildRoutes")
 
-fun Routing.buildRoutes(config: BuildConfig) {
-    val buildService = BuildService(config)
+fun Routing.buildRoutes(config: BuildConfig, database: Database?) {
+    val buildService = BuildService(config, database)
 
     post("/api/build/full") {
         val request = call.receive<BuildRequest>()

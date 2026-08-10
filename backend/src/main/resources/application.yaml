@@ -14,3 +14,8 @@ pluginwizard:
     tempDir: "/tmp/pluginwizard-builds"
     timeoutSeconds: 300
     templateBaseUrl: "http://localhost:5173"
+  database:
+    jdbcUrl: "jdbc:mysql://localhost:3306/pluginwizard"
+    username: "pluginwizard"
+    password: "pluginwizard"
+    maxPoolSize: 5

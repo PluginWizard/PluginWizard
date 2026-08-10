@@ -4,6 +4,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationStopped
 import io.ktor.server.application.install
 import io.ktor.server.application.log
 import io.ktor.server.netty.EngineMain
@@ -18,6 +19,8 @@ import io.ktor.server.routing.get
 import net.kalbskinder.config.AppConfig
 import net.kalbskinder.config.BuildConfig
 import net.kalbskinder.config.CorsConfig
+import net.kalbskinder.config.DatabaseConfig
+import net.kalbskinder.database.Database
 import net.kalbskinder.routes.buildRoutes
 import org.slf4j.event.Level
 
@@ -43,16 +46,38 @@ fun Application.module() {
                 ?: environment.config
                     .property("pluginwizard.build.templateBaseUrl")
                     .getString()
+        ),
+        database = DatabaseConfig(
+            jdbcUrl = System.getenv("PLUGINWIZARD_DB_URL")
+                ?: environment.config
+                    .property("pluginwizard.database.jdbcUrl")
+                    .getString(),
+            username = System.getenv("PLUGINWIZARD_DB_USER")
+                ?: environment.config
+                    .property("pluginwizard.database.username")
+                    .getString(),
+            password = System.getenv("PLUGINWIZARD_DB_PASSWORD")
+                ?: environment.config
+                    .property("pluginwizard.database.password")
+                    .getString(),
+            maxPoolSize = (System.getenv("PLUGINWIZARD_DB_POOL_SIZE")
+                ?: environment.config
+                    .property("pluginwizard.database.maxPoolSize")
+                    .getString()).toInt(),
         )
     )
 
     log.info(
-        "Starting PluginWizard backend: allowedHosts={}, build.tempDir={}, build.timeoutSeconds={}, build.templateBaseUrl={}",
+        "Starting PluginWizard backend: allowedHosts={}, build.tempDir={}, build.timeoutSeconds={}, build.templateBaseUrl={}, database.jdbcUrl={}",
         config.cors.allowedHosts,
         config.build.tempDir,
         config.build.timeoutSeconds,
         config.build.templateBaseUrl,
+        config.database.jdbcUrl,
     )
+
+    val database = Database.connect(config.database)
+    monitor.subscribe(ApplicationStopped) { database?.close() }
 
     install(CallLogging) {
         level = Level.INFO
@@ -74,6 +99,6 @@ fun Application.module() {
         get("/") {
             call.respondText("OK")
         }
-        buildRoutes(config.build)
+        buildRoutes(config.build, database)
     }
 }

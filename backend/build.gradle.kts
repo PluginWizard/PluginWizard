@@ -24,6 +24,8 @@ dependencies {
     implementation(ktorLibs.server.cors)
     implementation(ktorLibs.server.netty)
     implementation(libs.logback.classic)
+    implementation(libs.hikari)
+    runtimeOnly(libs.mysql.connector)
 
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
