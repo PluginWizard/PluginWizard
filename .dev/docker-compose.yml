@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: pluginwizard-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: pluginwizard
+      MYSQL_USER: pluginwizard
+      MYSQL_PASSWORD: pluginwizard
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - pluginwizard-mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pluginwizard-mysql-data:
