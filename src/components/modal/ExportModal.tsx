@@ -64,8 +64,13 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                 </button>
 
                 <h2 className="text-3xl font-semibold tracking-tight">Export {project.name}</h2>
-                <p className="mt-2 mb-6 text-sm text-muted-foreground">
+                <p className="mt-2 mb-1 text-sm text-muted-foreground">
                     Download the project file, generated source bundle, or packaged plugin artifact.
+                </p>
+                <p className="text-sm text-muted-foreground mb-4">
+                    By exporting a plugin JAR, limited build statistics are stored to help us improve PluginWizard. 
+                    <br /> 
+                    Read more <a href="/legal/privacy" target="_blank" rel="noopener noreferrer" className="underline text-green-400">Privacy Policy</a>
                 </p>
 
                 <div className="flex flex-col gap-3 pb-6 sm:flex-row">
