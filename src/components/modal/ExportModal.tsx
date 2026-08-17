@@ -113,20 +113,6 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                     </Button>
                 </div>
 
-                {jarBuildErrors.length > 0 && (
-                    <div className="mb-6 rounded-xl border border-red-500/40 bg-red-500/10 p-4">
-                        <div className="flex items-center gap-2 font-medium text-red-400">
-                            <AlertCircle className="h-4 w-4 shrink-0" />
-                            The plugin could not be built.
-                        </div>
-                        <ul className="mt-2 list-disc space-y-1 pl-6 text-sm text-red-300">
-                            {jarBuildErrors.map((error, index) => (
-                                <li key={index} className="whitespace-pre-wrap break-words font-mono">{error}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
                 <div className="space-y-4">
                     {code && (
                         <div className="space-y-2">
