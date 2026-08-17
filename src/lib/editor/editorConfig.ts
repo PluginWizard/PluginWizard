@@ -35,6 +35,9 @@ export const toolboxCss = `
       .blocklyMainBackground {
         stroke: none;
       }
+      .blocklyScrollbarHandle {
+        fill: #4a4a4a !important;
+      }
 `;
 
 export const getEditorConfig = (toolbox: any) => {
