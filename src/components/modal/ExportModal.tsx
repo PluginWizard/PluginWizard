@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import SyntaxHighlighter from "react-syntax-highlighter"
 import { railscasts } from "react-syntax-highlighter/dist/esm/styles/hljs"
-import { AlertCircle, Check, Copy, Download, FileArchive, Loader2, Package, X } from "lucide-react"
+import { Check, Copy, Download, FileArchive, Package, X } from "lucide-react"
 import { Project } from "../../types/types"
 import { Button } from "../ui/button"
+import { BuildDetailsModal } from "./BuildDetailsModal"
 
 
 interface ExportModalProps {
@@ -12,15 +13,13 @@ interface ExportModalProps {
   onClose?: () => void
   onDownloadProject: () => void
   onDownloadZip: () => void
-  onDownloadJar: () => void
-  isBuildingJar?: boolean
-  jarBuildErrors?: string[]
   code: string | undefined
   config: string | undefined
 }
 
-export function ExportModal({ open, project, onClose, onDownloadProject, onDownloadZip, onDownloadJar, isBuildingJar = false, jarBuildErrors = [], code, config }: ExportModalProps) {
+export function ExportModal({ open, project, onClose, onDownloadProject, onDownloadZip, code, config }: ExportModalProps) {
     const [copiedField, setCopiedField] = useState<"code" | "config" | null>(null)
+    const [buildDetailsOpen, setBuildDetailsOpen] = useState(false)
     const hasGeneratedOutput = Boolean(code?.trim() || config?.trim())
 
     useEffect(() => {
@@ -96,20 +95,11 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                     </Button>
 
                     <Button
-                        onClick={onDownloadJar}
-                        disabled={!hasGeneratedOutput || isBuildingJar}
-                        className={`flex h-auto flex-1 items-center justify-center gap-2 rounded-xl px-4 py-4 ${
-                            hasGeneratedOutput && !isBuildingJar
-                                ? "bg-green-600 text-white hover:bg-green-700 cursor-pointer"
-                                : "bg-green-600/80 text-white cursor-not-allowed! hover:bg-green-600/80"
-                        }`}
+                        onClick={() => { setBuildDetailsOpen(true) }}
+                        className="flex h-auto flex-1 items-center justify-center gap-2 rounded-xl px-4 py-4 bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                     >
-                        {isBuildingJar ? (
-                            <Loader2 className="h-5 w-5 shrink-0 animate-spin" />
-                        ) : (
-                            <Package className="h-5 w-5 shrink-0" />
-                        )}
-                        {isBuildingJar ? "Building..." : "Export Plugin .jar"}
+                        <Package className="h-5 w-5 shrink-0" />
+                        Export Plugin .jar
                     </Button>
                 </div>
 
@@ -161,6 +151,9 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                     )}
                 </div>
             </div>
+
+
+            <BuildDetailsModal open={buildDetailsOpen} project={project} code={code} config={config} onClose={() => setBuildDetailsOpen(false)} />
         </div>
     )
 }
