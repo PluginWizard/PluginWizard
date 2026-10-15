@@ -2,7 +2,6 @@ package net.kalbskinder.plugin;
 
 import lombok.extern.slf4j.Slf4j;
 import net.kalbskinder.helpers.Helpers;
-import net.kalbskinder.helpers.commands.CommandManager;
 import net.kalbskinder.helpers.database.PluginDatabase;
 import net.kalbskinder.helpers.database.Query;
 import net.kalbskinder.helpers.regions.RegionManager;
@@ -46,13 +45,10 @@ public final class Plugin extends JavaPlugin {
         setupDatabase();
         sendStartupMessage();
 
-        // command system
-        CommandManager commandManager = new CommandManager(getLifecycleManager());
-
-        // register helpers
+        // register helpers (also injects the lifecycle manager used by CommandHelper#register)
         Helpers.initialize(this);
 
-        userPlugin = new UserPlugin(commandManager, this);
+        userPlugin = new UserPlugin(this);
         userPlugin.setConfig(getConfig());
         userPlugin.initialize();
     }

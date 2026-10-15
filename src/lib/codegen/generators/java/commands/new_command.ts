@@ -25,19 +25,19 @@ export default {
         }
 
         function commandOnly() {
-            return `commands.add(CommandHelper.create("${commandName}")\n${indent(`.executes(ctx -> {\n${commandExecutes}})`, 4)}\n);\n`;
+            return `CommandHelper.create("${commandName}")\n${indent(`.executes(ctx -> {\n${commandExecutes}}).register();`, 4)}\n`;
         }
 
         function commandWithArgs() {
-            return `commands.add(CommandHelper.create("${commandName}").${commandArguments}\n${indent(`.executes(ctx -> {\n${commandExecutes}})`, 4)}\n);\n`;
+            return `CommandHelper.create("${commandName}").${commandArguments}\n${indent(`.executes(ctx -> {\n${commandExecutes}}).register();`, 4)}\n`;
         }
 
         function commandWithSubs() {
-            return `commands.add(CommandHelper.create("${commandName}")${subCommands}\n${indent(`.executes(ctx -> {\n${commandExecutes}})`)}\n);\n`;
+            return `CommandHelper.create("${commandName}")${subCommands}\n${indent(`.executes(ctx -> {\n${commandExecutes}}).register();`, 4)}\n`;
         }
 
         function commandWithArgsAndSubs() {
-            return `commands.add(CommandHelper.create("${commandName}").${commandArguments}${subCommands}\n${indent(`.executes(ctx -> {\n${commandExecutes}})`, 4)}\n);\n`;
+            return `CommandHelper.create("${commandName}").${commandArguments}${subCommands}\n${indent(`.executes(ctx -> {\n${commandExecutes}}).register();`, 4)}\n`;
         }
 
         return '';
