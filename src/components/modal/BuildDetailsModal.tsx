@@ -136,7 +136,8 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
                 </h1>
 
                 <video
-                    src="/videos/chickens-loading.mp4"
+                    key={hasErrors ? "error" : "loading"}
+                    src={hasErrors ? "/videos/steve-404.mp4" : "/videos/chickens-loading.mp4"}
                     autoPlay
                     loop
                     muted
