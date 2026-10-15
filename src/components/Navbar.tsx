@@ -8,7 +8,7 @@ import { Button } from "./ui/button"
 const navigation = [
     { name: "Home", href: "/", icon: Home },
     { name: "Editor", href: "/editor", icon: Blocks },
-    { name: "Documentation", href: "/docs", icon: Book },
+    { name: "Documentation", href: "https://pluginwizard.github.io/docs/pluginwizard/", icon: Book, target: "_blank" },
     { name: "About", href: "/about", icon: Info },
 ]
 
@@ -38,6 +38,7 @@ export function Navbar() {
                                 <Link
                                     key={item.name}
                                     to={item.href}
+                                    target={item.target ? item.target : "_self"}
                                     className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive
                                             ? "bg-green-500/10 text-green-400"
                                             : "text-muted-foreground hover:text-foreground hover:bg-gray-500/10"
