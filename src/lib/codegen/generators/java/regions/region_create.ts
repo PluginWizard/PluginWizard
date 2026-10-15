@@ -14,6 +14,6 @@ export default {
         imports.add("import java.util.UUID;");
 
 
-        return `Region ${sanitizedName} = new Region(UUID.randomUUID(), "${regionName}", ${loc1}, ${loc2});\nHelpers.regionHelper.addRegion(${sanitizedName});\n`;
+        return `Region ${sanitizedName} = new Region(UUID.randomUUID(), ${JSON.stringify(regionName)}, ${loc1}, ${loc2});\nHelpers.regionHelper.addRegion(${sanitizedName});\n`;
     }
 }

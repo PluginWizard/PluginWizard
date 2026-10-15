@@ -19,7 +19,7 @@
     "@radix-ui/react-label": "2.1.8",
     "@radix-ui/react-separator": "1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
-    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/typography": "^0.5.4",
     "blockly": "^12.5.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

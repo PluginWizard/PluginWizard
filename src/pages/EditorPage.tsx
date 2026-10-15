@@ -78,10 +78,7 @@ export default function EditorPage() {
     const [isLoading, setIsLoading] = useState(true)
 
     // Workspace action states
-    const [isExporting, setIsExporting] = useState(false)
     const [isBlocklyLoaded, setIsBlocklyLoaded] = useState(false)
-    const [isBuildingJar, setIsBuildingJar] = useState(false)
-    const [jarBuildErrors, setJarBuildErrors] = useState<string[]>([])
 
     // Persistence
     const [store, setStore] = useState<ProjectStore | null>(null)
@@ -385,11 +382,8 @@ export default function EditorPage() {
        ====================================== */
 
     async function openExportModal() {
-        setIsExporting(true)
-        setJarBuildErrors([])
         const generated = await handleExport()
         setExportCode(generated)
-        setIsExporting(false)
         setIsExportModalOpen(true)
     }
 
@@ -435,39 +429,14 @@ export default function EditorPage() {
         }
     }
 
-    // Send the generated project to the build backend and download the compiled .jar
-    const handleDownloadJar = async () => {
-        if (!project || !exportCode || isBuildingJar) return
-
-        setIsBuildingJar(true)
-        setJarBuildErrors([])
-        try {
-            const result = await requestPluginJar(project, exportCode)
-            if (!result.success || !result.jar) {
-                setJarBuildErrors(result.errors.length > 0 ? result.errors : ["The plugin could not be built."])
-                return
-            }
-            downloadBytes(result.jar, `${projectBaseName(project)}.jar`, "application/java-archive")
-        } catch (error) {
-            console.error("Failed to build .jar:", error)
-            setJarBuildErrors(["Could not reach the build service. Please try again later."])
-        } finally {
-            setIsBuildingJar(false)
-        }
-    }
-
     // Export blockly code to java code/classes and in the future a jar file
     // Returns generated code object containing java code and plugin.yml config as strings
     const handleExport = async (): Promise<ExportCode | undefined> => {
-        setIsExporting(true)
         const workspace = Blockly.getMainWorkspace()
         if (!workspace) {
-            setIsExporting(false)
             return undefined
         }
         console.log("Exporting workspace: ", Blockly.serialization.workspaces.save(workspace))
-
-        setIsExporting(false)
         await ensureJavaGeneratorsLoaded();
         const generated = generateJava(workspace)
         return generated
@@ -570,12 +539,11 @@ export default function EditorPage() {
                         <div className="flex items-center space-x-2">
                             <Button
                                 onClick={openExportModal}
-                                disabled={isExporting}
                                 variant="outline"
                                 className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
                             >
                                 <Download className="h-4 w-4 mr-1" />
-                                {isExporting ? "Exporting..." : "Export"}
+                                Export
                             </Button>
                         </div>
                         <div className="flex items-center space-x-2">
@@ -648,9 +616,6 @@ export default function EditorPage() {
                 onClose={() => setIsExportModalOpen(false)}
                 onDownloadProject={handleDownloadProject}
                 onDownloadZip={() => void handleDownloadZip()}
-                onDownloadJar={() => void handleDownloadJar()}
-                isBuildingJar={isBuildingJar}
-                jarBuildErrors={jarBuildErrors}
                 code={exportCode?.code || ""}
                 config={exportCode?.config || ""}
             />
