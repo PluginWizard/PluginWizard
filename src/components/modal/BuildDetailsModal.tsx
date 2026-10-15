@@ -52,14 +52,12 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
         return () => clearTimeout(timeoutId)
     }, [isBuildingJar])
 
-    // Cycle through the status messages while building.
+    // Step through the status messages while building, stopping at the last one.
     useEffect(() => {
-        if (!isBuildingJar) return
-        const id = setInterval(() => {
-            setTextIndex((prev) => (prev + 1) % progressBarTexts.length)
-        }, 1800)
-        return () => clearInterval(id)
-    }, [isBuildingJar])
+        if (!isBuildingJar || textIndex >= progressBarTexts.length - 1) return
+        const id = setTimeout(() => setTextIndex(textIndex + 1), 1800)
+        return () => clearTimeout(id)
+    }, [isBuildingJar, textIndex])
 
     // Warn the user before they reload/close the tab mid-build (can't be aborted).
     useEffect(() => {

@@ -6,7 +6,6 @@ import { Project } from "../../types/types"
 import { Button } from "../ui/button"
 import { BuildDetailsModal } from "./BuildDetailsModal"
 
-
 interface ExportModalProps {
   open: boolean
   project: Project | null
