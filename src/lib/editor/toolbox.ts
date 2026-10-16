@@ -9,6 +9,7 @@ import eventsCategory from './toolbox/events.json'
 import messagesCategory from './toolbox/messages.json'
 import playerCategory from './toolbox/player.json'
 import itemsCategory from './toolbox/items.json'
+import guiCategory from './toolbox/gui.json'
 import worldCategory from './toolbox/world.json'
 import entitiesCategory from './toolbox/entities.json'
 import configCategory from './toolbox/config.json'
@@ -29,6 +30,7 @@ const categoryOrder = [
   messagesCategory,
   playerCategory,
   itemsCategory,
+  guiCategory,
   worldCategory,
   entitiesCategory,
   configCategory

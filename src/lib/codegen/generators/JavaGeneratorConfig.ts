@@ -10,6 +10,7 @@ export class JavaGeneratorConfig {
         "Block": "org.bukkit.block.Block",
         "Material": "org.bukkit.Material",
         "World": "org.bukkit.World",
+        "GUI": "net.kalbskinder.helpers.inventories.GUI",
     }
 }
 

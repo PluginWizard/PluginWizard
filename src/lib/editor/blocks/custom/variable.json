@@ -43,6 +43,10 @@
                         "Component"
                     ],
                     [
+                        "GUI",
+                        "GUI"
+                    ],
+                    [
                         "List type String",
                         "List<String>"
                     ],

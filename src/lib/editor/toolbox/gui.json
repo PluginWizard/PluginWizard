@@ -1,0 +1,145 @@
+{
+  "kind": "category",
+  "name": "GUIs",
+  "colour": "#326e70",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "gui_create",
+      "inputs": {
+        "TITLE": {
+          "shadow": {
+            "type": "text",
+            "fields": {
+              "TEXT": "<gold><bold>My Menu"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "gui_open",
+      "inputs": {
+        "PLAYER": {
+          "shadow": {
+            "type": "player"
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "gui_close",
+      "inputs": {
+        "PLAYER": {
+          "shadow": {
+            "type": "player"
+          }
+        }
+      }
+    },
+    {
+      "kind": "LABEL",
+      "text": "Items",
+      "web-class": "ioLabel"
+    },
+    {
+      "kind": "block",
+      "type": "gui_fill",
+      "inputs": {
+        "ITEM": {
+          "shadow": {
+            "type": "string_to_item",
+            "fields": {
+              "ITEM": "minecraft:gray_stained_glass_pane"
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "gui_set_item",
+      "inputs": {
+        "SLOT": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 13
+            }
+          }
+        },
+        "ITEM": {
+          "shadow": {
+            "type": "string_to_item"
+          }
+        }
+      }
+    },
+    {
+      "kind": "LABEL",
+      "text": "Clicks",
+      "web-class": "ioLabel"
+    },
+    {
+      "kind": "block",
+      "type": "gui_set_item_click",
+      "inputs": {
+        "SLOT": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 13
+            }
+          }
+        },
+        "ITEM": {
+          "shadow": {
+            "type": "string_to_item"
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "gui_on_click",
+      "inputs": {
+        "SLOT": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 13
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "gui_on_other_click"
+    },
+    {
+      "kind": "block",
+      "type": "gui_remove_click",
+      "inputs": {
+        "SLOT": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 13
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "gui_click_get"
+    },
+    {
+      "kind": "block",
+      "type": "gui_get"
+    }
+  ]
+}

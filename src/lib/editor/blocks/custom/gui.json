@@ -1,0 +1,272 @@
+{
+    "gui_create": {
+        "message0": "create GUI %1 title %2 locked %3",
+        "output": "GUI",
+        "colour": "#326e70",
+        "inputsInline": true,
+        "tooltip": "Creates a clickable menu. A locked GUI stops players from taking or moving its items.",
+        "helpUrl": "",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "LAYOUT",
+                "options": [
+                    ["chest 1 row", "1"],
+                    ["chest 2 rows", "2"],
+                    ["chest 3 rows", "3"],
+                    ["chest 4 rows", "4"],
+                    ["chest 5 rows", "5"],
+                    ["chest 6 rows", "6"],
+                    ["hopper", "HOPPER"],
+                    ["dispenser", "DISPENSER"],
+                    ["dropper", "DROPPER"]
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "TITLE",
+                "check": ["String", "Text"]
+            },
+            {
+                "type": "field_checkbox",
+                "name": "LOCKED",
+                "checked": true
+            }
+        ]
+    },
+    "gui_open": {
+        "message0": "open GUI %1 for %2",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "GUI"
+            },
+            {
+                "type": "input_value",
+                "name": "PLAYER",
+                "check": "Player"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#326e70",
+        "tooltip": "Opens the GUI for a player",
+        "helpUrl": ""
+    },
+    "gui_close": {
+        "message0": "close GUI %1 for %2",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "GUI"
+            },
+            {
+                "type": "input_value",
+                "name": "PLAYER",
+                "check": "Player"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#326e70",
+        "tooltip": "Closes the GUI for a player",
+        "helpUrl": ""
+    },
+    "gui_set_item": {
+        "message0": "in GUI %1 set slot %2 to %3",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "GUI"
+            },
+            {
+                "type": "input_value",
+                "name": "SLOT",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "ITEM"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#326e70",
+        "tooltip": "Places an item in a slot of the GUI. Slots start at 0 in the top left corner.",
+        "helpUrl": ""
+    },
+    "gui_set_item_click": {
+        "message0": "in GUI %1 set slot %2 to %3 %4 on click do %5",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "GUI"
+            },
+            {
+                "type": "input_value",
+                "name": "SLOT",
+                "check": "Number"
+            },
+            {
+                "type": "input_value",
+                "name": "ITEM"
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "input_statement",
+                "name": "DO"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#326e70",
+        "tooltip": "Places an item in a slot of the GUI and runs the blocks inside when a player clicks it",
+        "helpUrl": ""
+    },
+    "gui_on_click": {
+        "message0": "in GUI %1 when slot %2 is clicked %3 do %4",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "GUI"
+            },
+            {
+                "type": "input_value",
+                "name": "SLOT",
+                "check": "Number"
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "input_statement",
+                "name": "DO"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#326e70",
+        "tooltip": "Runs the blocks inside when a player clicks the slot, without changing its item",
+        "helpUrl": ""
+    },
+    "gui_on_other_click": {
+        "message0": "in GUI %1 when any other slot is clicked %2 do %3",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "GUI"
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "input_statement",
+                "name": "DO"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#326e70",
+        "tooltip": "Runs the blocks inside when a player clicks a slot that has no click action of its own",
+        "helpUrl": ""
+    },
+    "gui_remove_click": {
+        "message0": "in GUI %1 remove click action of slot %2",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "GUI"
+            },
+            {
+                "type": "input_value",
+                "name": "SLOT",
+                "check": "Number"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#326e70",
+        "tooltip": "Removes the click action of a slot, the item stays in place",
+        "helpUrl": ""
+    },
+    "gui_fill": {
+        "message0": "in GUI %1 fill %2 with %3",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "GUI"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "AREA",
+                "options": [
+                    ["every slot", "setBackground"],
+                    ["the border", "setFrame"]
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "ITEM"
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#326e70",
+        "tooltip": "Fills the GUI with an item. Do this before placing your clickable items, otherwise they get overwritten.",
+        "helpUrl": ""
+    },
+    "gui_get": {
+        "message0": "%1 of GUI %2",
+        "output": null,
+        "colour": "#326e70",
+        "inputsInline": true,
+        "tooltip": "Gets information about a GUI",
+        "helpUrl": "",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "VALUE",
+                "options": [
+                    ["size", "getSize()"],
+                    ["viewers", "getViewers()"]
+                ]
+            },
+            {
+                "type": "input_value",
+                "name": "GUI"
+            }
+        ]
+    },
+    "gui_click_get": {
+        "message0": "click %1",
+        "output": null,
+        "colour": "#326e70",
+        "tooltip": "Information about the current click. Only works inside a GUI click action.",
+        "helpUrl": "",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "VALUE",
+                "options": [
+                    ["player", "PLAYER"],
+                    ["GUI", "GUI"],
+                    ["slot", "SLOT"],
+                    ["clicked item", "ITEM"],
+                    ["is left click", "LEFT"],
+                    ["is right click", "RIGHT"],
+                    ["is shift click", "SHIFT"]
+                ]
+            }
+        ]
+    }
+}
