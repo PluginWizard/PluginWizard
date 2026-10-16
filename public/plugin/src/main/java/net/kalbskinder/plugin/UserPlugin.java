@@ -1,6 +1,5 @@
 package net.kalbskinder.plugin;
 
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.kalbskinder.helpers.Helpers;
 import net.kalbskinder.helpers.commands.CommandHelper;
@@ -12,10 +11,16 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
 public class UserPlugin {
     private final Plugin plugin;
     @Setter private FileConfiguration config;
+// {userPluginFields}
+
+    public UserPlugin(Plugin plugin) {
+        this.plugin = plugin;
+        this.config = plugin.getConfig();
+// {userPluginFieldValues}
+    }
 
     public void initialize() {
 // {userPluginCode}

@@ -85,6 +85,97 @@
         "helpUrl": ""
     },
     
+    "variables_declare_global": {
+        "message0": "Declare global variable %1 %2 %3 = %4 final %5",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "TYPE",
+                "options": [
+                    [
+                        "int",
+                        "int"
+                    ],
+                    [
+                        "double",
+                        "double"
+                    ],
+                    [
+                        "String",
+                        "String"
+                    ],
+                    [
+                        "boolean",
+                        "boolean"
+                    ],
+                    [
+                        "Player",
+                        "Player"
+                    ],
+                    [
+                        "Entity",
+                        "Entity"
+                    ],
+                    [
+                        "Location",
+                        "Location"
+                    ],
+                    [
+                        "Component",
+                        "Component"
+                    ],
+                    [
+                        "GUI",
+                        "GUI"
+                    ],
+                    [
+                        "List type String",
+                        "List<String>"
+                    ],
+                    [
+                        "List type int",
+                        "List<Integer>"
+                    ],
+                    [
+                        "List type double",
+                        "List<? extends Number>"
+                    ],
+                    [
+                        "List type Player",
+                        "List<Player>"
+                    ],
+                    [
+                        "List type Location",
+                        "List<Location>"
+                    ]
+                ]
+            },
+            {
+                "type": "field_variable",
+                "name": "VAR",
+                "text": "x"
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "input_value",
+                "name": "VALUE"
+            },
+            {
+                "type": "field_checkbox",
+                "name": "FINAL",
+                "checked": false
+            }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#ff872b",
+        "tooltip": "Declares a variable outside of the main function, so it can be used everywhere, including inside other functions. A final variable can't be changed after it is set.",
+        "helpUrl": ""
+    },
+    
     "variables_set": {
         "message0": "set %1 = %2",
         "args0": [

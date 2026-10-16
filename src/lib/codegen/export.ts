@@ -136,9 +136,9 @@ function patchMainClass(content: string, project: Project): string {
     return patchPackage(content, project).replace(/\bclass\s+Plugin\b/, `class ${mainClassName(project)}`)
 }
 
-/** Rewrite the UserPlugin source: package declaration and main-class type reference. */
+/** Rewrite the UserPlugin source: package declaration and main-class type references (field and constructor). */
 function patchUserPlugin(content: string, project: Project): string {
-    return patchPackage(content, project).replace(/\bfinal\s+Plugin\s+plugin\b/, `final ${mainClassName(project)} plugin`)
+    return patchPackage(content, project).replace(/\bPlugin(\s+plugin)\b/g, `${mainClassName(project)}$1`)
 }
 
 /** Fill the placeholders in plugin.yml with the project metadata. */

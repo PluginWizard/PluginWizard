@@ -8,6 +8,8 @@ export let configYamlLines: string[] = [];
 export let pluginMethods: string[] = [];
 export let pluginRegionEvents: string[] = [];
 export let pluginCommands: string[] = [];
+export let pluginFields: string[] = [];
+export let pluginFieldValues: string[] = [];
 export let pluginCode = "";
 
 /* =================================================================
@@ -92,12 +94,16 @@ export function generateJava(workspace: Blockly.Workspace): { code: string; conf
   pluginMethods = [];
   pluginRegionEvents = [];
   pluginCommands = [];
+  pluginFields = [];
+  pluginFieldValues = [];
   JavaGenerator.init(tempWorkspace);
   const generatorCode = JavaGenerator.workspaceToCode(tempWorkspace);
 
   // Replace plugin placeholders with values
   let code = JavaGenerator.finish(generatorCode);
   code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginImports}", Array.from(imports).join('\n'), 0);
+  code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginFields}", pluginFields.join('\n'), 4);
+  code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginFieldValues}", pluginFieldValues.join('\n'), 8);
   code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginMethods}", pluginMethods.join('\n'), 4);
   code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginRegionEvents}", pluginRegionEvents.join('\n'), 8);
   code = JavaGeneratorUtils.replacePlaceholderWithCode(code, "{userPluginCommands}", pluginCommands.join('\n'), 8);

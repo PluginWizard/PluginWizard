@@ -9,6 +9,10 @@
     },
     {
       "kind": "block",
+      "type": "variables_declare_global"
+    },
+    {
+      "kind": "block",
       "type": "variables_set"
     },
     {
