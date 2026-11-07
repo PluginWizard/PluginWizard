@@ -28,9 +28,12 @@ fun main(args: Array<String>) {
 fun Application.module() {
     val config = AppConfig(
         cors = CorsConfig(
-            allowedHosts = environment.config
-                .property("pluginwizard.cors.allowedHosts")
-                .getList()
+            // Comma-separated, e.g. "editor.kalbskinder.net,localhost:5173"
+            allowedHosts = System.getenv("PLUGINWIZARD_CORS_ALLOWED_HOSTS")
+                ?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }
+                ?: environment.config
+                    .property("pluginwizard.cors.allowedHosts")
+                    .getList()
         ),
         build = BuildConfig(
             tempDir = environment.config
@@ -68,7 +71,8 @@ fun Application.module() {
         allowMethod(HttpMethod.Get)
         allowHeader(HttpHeaders.Authorization)
         allowHeader(HttpHeaders.ContentType)
-        config.cors.allowedHosts.forEach { host -> allowHost(host) }
+        // Production is served over https (via the tunnel), local dev over http.
+        config.cors.allowedHosts.forEach { host -> allowHost(host, schemes = listOf("http", "https")) }
     }
     routing {
         get("/") {

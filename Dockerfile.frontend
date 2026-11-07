@@ -10,16 +10,17 @@ RUN npm run build
 
 FROM node:22-alpine AS runner
 
-RUN npm install -g serve@14.2.4
-
 WORKDIR /app
 
-# serve.json falls back to index.html for react-router routes, but never for
-# /plugin/: the backend fetches the plugin template from there, and those
-# files must be served as-is (or 404) rather than as the app.
-COPY serve.json ./
+# Serves the app and forwards /api to the backend (see frontend-server.mjs).
+COPY frontend-server.mjs ./
 COPY --from=builder /app/dist ./dist
+
+ENV PORT=3001
+ENV BACKEND_URL=http://backend:8080
 
 EXPOSE 3001
 
-CMD ["serve", "-c", "serve.json", "-l", "tcp://0.0.0.0:3001", "--no-clipboard"]
+USER node
+
+CMD ["node", "frontend-server.mjs"]

@@ -4,8 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile.backend
     container_name: pluginwizard-backend
-    ports:
-      - "8080:8080"
+    # Not published on the host: the frontend forwards /api to it.
     # The backend fetches the plugin template from the frontend's public folder
     # (at request time, so no startup ordering is required).
     environment:
@@ -17,6 +16,9 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     container_name: pluginwizard-frontend
+    # Forwards /api/* to the backend, so the tunnel only needs to point here.
+    environment:
+      BACKEND_URL: "http://backend:8080"
     ports:
       - "3001:3001"
     depends_on:
