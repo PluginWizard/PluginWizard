@@ -1,0 +1,10 @@
+{
+  "public": "dist",
+  "cleanUrls": false,
+  "directoryListing": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/!(plugin)", "destination": "/index.html" },
+    { "source": "/!(plugin)/**", "destination": "/index.html" }
+  ]
+}
