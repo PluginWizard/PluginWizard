@@ -92,14 +92,14 @@ export default function ProjectsModal({
                         <Button
                             onClick={() => fileInputRef.current?.click()}
                             variant="outline"
-                            className=" border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
+                            className="border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
                         >
                             <Upload className="h-4 w-4 mr-2" />
                             Import
                         </Button>
                         <Button
                             onClick={onNewProject}
-                            className=" bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                            className="bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                         >
                             <Plus className="h-4 w-4 mr-2" />
                             New Project
@@ -160,7 +160,7 @@ export default function ProjectsModal({
                                     <div className="flex shrink-0 items-center gap-2">
                                         <Button
                                             onClick={() => onOpenProject(project)}
-                                            className=" bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                                            className="bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                                         >
                                             <FolderOpen className="h-4 w-4 mr-1" />
                                             Open
@@ -169,7 +169,7 @@ export default function ProjectsModal({
                                             type="button"
                                             aria-label={`Delete ${project.name}`}
                                             onClick={() => setPendingDelete(project)}
-                                            className=" p-2 text-muted-foreground transition-colors hover:bg-red-500/15 hover:text-red-500 cursor-pointer"
+                                            className="p-2 text-muted-foreground transition-colors hover:bg-red-500/15 hover:text-red-500 cursor-pointer"
                                         >
                                             <Trash2 className="h-4 w-4" />
                                         </button>
@@ -215,7 +215,7 @@ export default function ProjectsModal({
                             <Button
                                 onClick={() => setPendingDelete(null)}
                                 variant="outline"
-                                className=" border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
+                                className="border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
                             >
                                 Cancel
                             </Button>
@@ -224,7 +224,7 @@ export default function ProjectsModal({
                                     onDeleteProject(pendingDelete.id);
                                     setPendingDelete(null);
                                 }}
-                                className=" bg-red-600 text-white hover:bg-red-700 cursor-pointer"
+                                className="bg-red-600 text-white hover:bg-red-700 cursor-pointer"
                             >
                                 <Trash2 className="h-4 w-4 mr-2" />
                                 Delete

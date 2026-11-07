@@ -146,7 +146,7 @@ export default function HomePage() {
                 <Button
                   asChild
                   size="lg"
-                  className=" bg-green-600 text-white transition-all duration-300 hover:bg-green-700"
+                  className="bg-green-600 text-white transition-all duration-300 hover:bg-green-700"
                 >
                   <Link to="/editor">
                     Get Started
@@ -158,7 +158,7 @@ export default function HomePage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className=" border-muted-foreground/20! bg-card-lighter transition-all duration-300 hover:border-muted-foreground/80! hover:bg-card-lighter/80"
+                  className="border-muted-foreground/20! bg-card-lighter transition-all duration-300 hover:border-muted-foreground/80! hover:bg-card-lighter/80"
                 >
                   <Link to="/about">Learn More</Link>
                 </Button>
