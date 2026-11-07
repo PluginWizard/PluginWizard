@@ -3,11 +3,8 @@
 import { useRef, useState } from "react"
 import {
   ArrowRight,
-  Compass,
   Globe,
-  Lightbulb,
   Quote,
-  Wand2,
 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { Button } from "../components/ui/button"
@@ -71,25 +68,6 @@ const team: TeamMember[] = [
     socials: [
       { type: "discord", url: "https://discord.com/users/1282774431080382534" },
     ],
-  },
-]
-
-/* The origin story, told as a short timeline. */
-const story = [
-  {
-    icon: Lightbulb,
-    title: "The wish",
-    text: "It started with a simple frustration: wanting to build Minecraft plugins, but having no idea how to write Java or how PaperMC actually worked under the hood.",
-  },
-  {
-    icon: Compass,
-    title: "The gap",
-    text: "Tutorials assumed too much, and the blank editor was intimidating. There was no friendly, visual way to learn the basics.",
-  },
-  {
-    icon: Wand2,
-    title: "The result",
-    text: "So we made it ourselves. PluginWizard turns plugin development into drag-and-drop blocks that compile to real, readable Paper code - so the next person doesn't have to start from zero.",
   },
 ]
 
@@ -182,7 +160,6 @@ function TiltPhoto() {
   const ref = useRef<HTMLDivElement>(null)
   const rest = "perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)"
   const [transform, setTransform] = useState(rest)
-  const [active, setActive] = useState(false)
 
   function handleMove(e: React.MouseEvent) {
     const el = ref.current
@@ -200,20 +177,10 @@ function TiltPhoto() {
   return (
     <div
       ref={ref}
-      onMouseEnter={() => setActive(true)}
       onMouseMove={handleMove}
-      onMouseLeave={() => {
-        setActive(false)
-        setTransform(rest)
-      }}
+      onMouseLeave={() => setTransform(rest)}
       className="group relative isolate w-full max-w-xl transform-3d"
     >
-      {/* Soft green glow that intensifies on hover */}
-      <div
-        className={`pointer-events-none absolute inset-6 -z-10 rounded-full bg-green-500/20 blur-3xl transition-opacity duration-500 ${
-          active ? "opacity-100" : "opacity-40"
-        }`}
-      />
       <div
         style={{ transform, transition: "transform 150ms ease-out" }}
         className="relative z-10 w-full will-change-transform"
@@ -241,7 +208,6 @@ export default function AboutPage() {
       <section className="relative overflow-hidden px-4 pt-28 pb-16 sm:px-8 lg:px-16 xl:px-24">
         {/* dotted backdrop */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.07)_1px,transparent_1px)] bg-size-[20px_20px] opacity-60" />
-        <div className="pointer-events-none absolute -top-40 left-1/2 h-96 w-160 -translate-x-1/2 rounded-full bg-green-500/10 blur-[120px]" />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
           <div className="space-y-6">
@@ -286,55 +252,6 @@ export default function AboutPage() {
       </section>
 
       {/* ---------------------------------------------------------------- */}
-      {/* Origin story timeline                                             */}
-      {/* ---------------------------------------------------------------- */}
-      <section className="border-t border-white/5 px-4 py-20 sm:px-8 lg:px-16 xl:px-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-12 max-w-3xl">
-            <h2 className="text-3xl font-black uppercase tracking-[0.28em] sm:text-4xl">
-              How It Started
-            </h2>
-            <p className="mt-4 text-lg leading-8 text-card-muted-foreground">
-              Every tool is born from a problem. Ours was the steep, lonely climb
-              from "I have an idea for a plugin" to actually shipping one.
-            </p>
-          </div>
-
-          <div className="relative">
-            <div className="pointer-events-none absolute bottom-0 left-7 top-0 w-px bg-linear-to-b from-transparent via-green-400/45 to-transparent" />
-
-            <div className="space-y-7 md:space-y-9">
-              {story.map((step, i) => (
-                <article
-                  key={step.title}
-                  className={`group relative border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))] p-6 pl-20 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-green-400/35 hover:shadow-[0_14px_38px_rgba(34,197,94,0.12)] md:p-8 md:pl-24 ${
-                    i % 2 ? "md:ml-10" : "md:mr-10"
-                  }`}
-                >
-                  <div className="absolute left-4 top-7 md:left-5 md:top-8">
-                    <div className="relative size-7 rounded-full border border-green-400/35 bg-[#0f1712]">
-                      <span className="absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-300" />
-                    </div>
-                  </div>
-
-                  <div className="mb-4 flex items-center">
-                    <div className="inline-flex border border-green-500/20 bg-green-500/10 p-2.5">
-                      <step.icon className="h-5 w-5 text-green-300" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-2xl font-semibold tracking-tight text-white/95">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 max-w-4xl leading-7 text-[#d1d5db]">{step.text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------------- */}
       {/* Meet the team                                                     */}
       {/* ---------------------------------------------------------------- */}
       <section className="border-t border-white/5 px-4 py-20 sm:px-8 lg:px-16 xl:px-24">
@@ -353,7 +270,7 @@ export default function AboutPage() {
             {team.map((member) => (
               <div
                 key={member.id}
-                className="group relative flex flex-col border border-white/10 bg-[#161616] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-green-500/40 hover:shadow-[0_0_30px_rgba(34,197,94,0.15)]"
+                className="group relative flex flex-col border border-white/10 bg-[#161616] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-green-500/40"
               >
                 <div className="flex items-center gap-4">
                   <Avatar member={member} />
