@@ -6,6 +6,7 @@ import { X } from "lucide-react";
 import { Project } from "../../types/types";
 import { v4 as uuidv4 } from "uuid";
 import { defaultWorkspcaeJson } from "../../lib/config";
+import { DEFAULT_MINECRAFT_VERSION } from "../../lib/minecraftVersions"
 
 interface NewProjectModalProps {
     onNewProject: (project: Project) => void;
@@ -50,6 +51,7 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
             author: authorName,
             groupId: groupId,
             version: "1.0.0",
+            mcVersion: DEFAULT_MINECRAFT_VERSION,
             workspaceJson: defaultWorkspcaeJson,
             createdAt: now,
             updatedAt: now

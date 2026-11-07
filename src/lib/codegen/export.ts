@@ -1,5 +1,6 @@
 import { zipSync, strToU8, strFromU8, type Zippable } from "fflate";
 import { Project } from "../../types/types";
+import { sanitizeMinecraftVersion } from "../minecraftVersions";
 
 /* =================================================================
  * Plugin export
@@ -64,6 +65,18 @@ export interface JarBuildResult {
     buildTimeMs: number
 }
 
+/**
+ * Check a plugin version against the same rule the build backend enforces.
+ * Returns an error message, or null when the version is valid.
+ */
+export function validateVersion(version: string): string | null {
+    const trimmed = version.trim()
+    if (trimmed.length === 0) return "Version is required"
+    if (trimmed.length > 26) return "Version must be under 26 characters"
+    if (!/^[A-Za-z0-9_.+-]+$/.test(trimmed)) return "Only letters, digits, '.', '+', '-' and '_' are allowed"
+    return null
+}
+
 /** Resolve the plugin version, falling back to a sensible default. */
 function resolveVersion(project: Project): string {
     return project.version?.trim() || DEFAULT_VERSION
@@ -114,11 +127,12 @@ function pluginYmlName(project: Project): string {
     return cleaned || "Plugin"
 }
 
-/** Update the gradle group id and version to match the project. */
+/** Update the gradle group id, version and Paper version to match the project. */
 function patchBuildGradle(content: string, project: Project): string {
     return content
         .replace(/^group\s*=\s*['"].*['"]\s*$/m, `group = '${project.groupId}'`)
         .replace(/^version\s*=\s*['"].*['"]\s*$/m, `version = '${resolveVersion(project)}'`)
+        .replace(/^def\s+paperVersion\s*=\s*['"].*['"]\s*$/m, `def paperVersion = "${sanitizeMinecraftVersion(project.mcVersion)}"`)
 }
 
 /** Update the gradle root project name to match the project. */
@@ -211,6 +225,7 @@ export async function requestPluginJar(project: Project, generated: GeneratedCod
             pluginName: project.name,
             groupId: project.groupId,
             version: resolveVersion(project),
+            mcVersion: sanitizeMinecraftVersion(project.mcVersion),
             description: project.description ?? "",
             author: project.author ?? "",
             code: generated.code,

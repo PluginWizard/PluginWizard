@@ -4,12 +4,15 @@ import { Project } from "../../types/types";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { validateVersion } from "../../lib/codegen/export";
+import { sanitizeMinecraftVersion } from "../../lib/minecraftVersions";
+import { MinecraftVersionSelect } from "../ui/minecraft-version-select";
 
 interface ProjectSettingsModalProps {
 	isOpen: boolean;
 	project: Project | null;
 	onClose: () => void;
-	onSave: (updates: Pick<Project, "name" | "description" | "author" | "groupId">) => void;
+	onSave: (updates: Pick<Project, "name" | "description" | "author" | "groupId" | "version" | "mcVersion">) => void;
 }
 
 export default function ProjectSettingsModal({ isOpen, project, onClose, onSave }: ProjectSettingsModalProps) {
@@ -18,6 +21,8 @@ export default function ProjectSettingsModal({ isOpen, project, onClose, onSave 
 	const [projectDescription, setProjectDescription] = useState("");
 	const [authorName, setAuthorName] = useState("");
 	const [groupId, setGroupId] = useState("");
+	const [version, setVersion] = useState("");
+	const [mcVersion, setMcVersion] = useState("");
 	const [isSaving, setIsSaving] = useState(false);
 
 	useEffect(() => {
@@ -27,6 +32,8 @@ export default function ProjectSettingsModal({ isOpen, project, onClose, onSave 
 		setProjectDescription(project.description ?? "");
 		setAuthorName(project.author ?? "");
 		setGroupId(project.groupId ?? "");
+		setVersion(project.version ?? "1.0.0");
+		setMcVersion(sanitizeMinecraftVersion(project.mcVersion));
 	}, [isOpen, project]);
 
 	const handleSave = () => {
@@ -44,6 +51,8 @@ export default function ProjectSettingsModal({ isOpen, project, onClose, onSave 
 		if (projectDescription.length > 120) newErrors.projectDescription = "Description must be under 120 characters";
 		if (authorName.length > 26) newErrors.authorName = "Author name must be under 26 characters";
 		if (groupId.split(".").length < 2) newErrors.groupId = "Group ID must be in the format 'com.yourname'";
+		const versionError = validateVersion(version);
+		if (versionError) newErrors.version = versionError;
 
 		if (Object.keys(newErrors).length > 0) {
 			setErrors(newErrors);
@@ -56,6 +65,8 @@ export default function ProjectSettingsModal({ isOpen, project, onClose, onSave 
 			description: projectDescription,
 			author: authorName,
 			groupId,
+			version: version.trim(),
+			mcVersion: sanitizeMinecraftVersion(mcVersion),
 		});
 
 		setIsSaving(false);
@@ -126,6 +137,29 @@ export default function ProjectSettingsModal({ isOpen, project, onClose, onSave 
 						/>
 						<p className="text-xs text-muted-foreground">Use reverse domain notation (for example: com.example)</p>
 						{errors.groupId && <p className="text-sm text-red-500 mt-1">{errors.groupId}</p>}
+					</div>
+
+					<div className="space-y-2 w-full">
+						<Label htmlFor="settingsVersion" className="text-sm font-medium">Version</Label>
+						<Input
+							id="settingsVersion"
+							placeholder="1.0.0"
+							value={version}
+							onChange={(e) => setVersion(e.target.value)}
+							required
+							className={`h-11 border-border focus:border-muted-foreground/40 ${errors.version ? "border-red-500" : ""}`}
+						/>
+						{errors.version && <p className="text-sm text-red-500 mt-1">{errors.version}</p>}
+					</div>
+
+					<div className="space-y-2 w-full">
+						<Label htmlFor="settingsMcVersion" className="text-sm font-medium">Minecraft Version</Label>
+						<MinecraftVersionSelect
+							id="settingsMcVersion"
+							value={mcVersion}
+							onChange={setMcVersion}
+							className="h-11 border-border focus:border-muted-foreground/40"
+						/>
 					</div>
 
 					<div className="space-y-2 w-full">

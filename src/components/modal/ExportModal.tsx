@@ -4,6 +4,11 @@ import { railscasts } from "react-syntax-highlighter/dist/esm/styles/hljs"
 import { Check, Copy, Download, FileArchive, Package, X } from "lucide-react"
 import { Project } from "../../types/types"
 import { Button } from "../ui/button"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
+import { validateVersion } from "../../lib/codegen/export"
+import { sanitizeMinecraftVersion } from "../../lib/minecraftVersions"
+import { MinecraftVersionSelect } from "../ui/minecraft-version-select"
 import { BuildDetailsModal } from "./BuildDetailsModal"
 
 interface ExportModalProps {
@@ -12,14 +17,29 @@ interface ExportModalProps {
   onClose?: () => void
   onDownloadProject: () => void
   onDownloadZip: () => void
+  onProjectUpdate: (updates: Partial<Pick<Project, "version" | "mcVersion">>) => void
   code: string | undefined
   config: string | undefined
 }
 
-export function ExportModal({ open, project, onClose, onDownloadProject, onDownloadZip, code, config }: ExportModalProps) {
+export function ExportModal({ open, project, onClose, onDownloadProject, onDownloadZip, onProjectUpdate, code, config }: ExportModalProps) {
     const [copiedField, setCopiedField] = useState<"code" | "config" | null>(null)
     const [buildDetailsOpen, setBuildDetailsOpen] = useState(false)
+    const [version, setVersion] = useState("")
+    const versionError = validateVersion(version)
     const hasGeneratedOutput = Boolean(code?.trim() || config?.trim())
+    const canExportOutput = hasGeneratedOutput && !versionError
+
+    // Load the project's version whenever the modal opens. Edits while it is
+    // open stay local until valid, so an invalid draft is never overwritten.
+    useEffect(() => {
+        if (open && project) setVersion(project.version ?? "1.0.0")
+    }, [open, project?.id])
+
+    const handleVersionInput = (value: string) => {
+        setVersion(value)
+        if (!validateVersion(value)) onProjectUpdate({ version: value.trim() })
+    }
 
     useEffect(() => {
         if (!copiedField) return
@@ -66,7 +86,7 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                     Download the project file, generated source bundle, or packaged plugin artifact.
                 </p>
 
-                <div className="flex flex-col gap-3 pb-6 sm:flex-row">
+                <div className="flex flex-col gap-3 pb-4 sm:flex-row">
                     <Button
                         onClick={onDownloadProject}
                         className="flex h-auto flex-1 items-center justify-center gap-2 bg-card-lighter px-4 py-4 text-foreground hover:bg-foreground/15 cursor-pointer"
@@ -77,9 +97,9 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
 
                     <Button
                         onClick={onDownloadZip}
-                        disabled={!hasGeneratedOutput}
+                        disabled={!canExportOutput}
                         className={`flex h-auto flex-1 items-center justify-center gap-2 px-4 py-4 ${
-                            hasGeneratedOutput
+                            canExportOutput
                                 ? "bg-card-lighter text-foreground hover:bg-foreground/15 cursor-pointer"
                                 : "bg-card-lighter/80 text-white cursor-not-allowed! hover:bg-card-lighter/80"
                         }`}
@@ -90,11 +110,40 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
 
                     <Button
                         onClick={() => { setBuildDetailsOpen(true) }}
-                        className="flex h-auto flex-1 items-center justify-center gap-2 px-4 py-4 bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                        disabled={!!versionError}
+                        className={`flex h-auto flex-1 items-center justify-center gap-2 px-4 py-4 text-white ${
+                            versionError
+                                ? "bg-green-600/50 cursor-not-allowed! hover:bg-green-600/50"
+                                : "bg-green-600 hover:bg-green-700 cursor-pointer"
+                        }`}
                     >
                         <Package className="h-5 w-5 shrink-0" />
                         Export Plugin .jar
                     </Button>
+                </div>
+
+                <div className="grid gap-4 pb-6 sm:grid-cols-2 sm:max-w-2xl">
+                    <div className="space-y-2">
+                        <Label htmlFor="exportVersion" className="text-sm font-medium">Plugin Version</Label>
+                        <Input
+                            id="exportVersion"
+                            placeholder="1.0.0"
+                            value={version}
+                            onChange={(e) => handleVersionInput(e.target.value)}
+                            className={`h-11 border-border focus:border-muted-foreground/40 ${versionError ? "border-red-500" : ""}`}
+                        />
+                        {versionError && <p className="text-sm text-red-500 mt-1">{versionError}</p>}
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="exportMcVersion" className="text-sm font-medium">Minecraft Version</Label>
+                        <MinecraftVersionSelect
+                            id="exportMcVersion"
+                            value={sanitizeMinecraftVersion(project.mcVersion)}
+                            onChange={(mcVersion) => onProjectUpdate({ mcVersion: sanitizeMinecraftVersion(mcVersion) })}
+                            className="h-11 border-border focus:border-muted-foreground/40"
+                        />
+                    </div>
                 </div>
 
                 <div className="space-y-4">

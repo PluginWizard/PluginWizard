@@ -13,11 +13,16 @@ data class BuildRequest(
     val pluginName: String,
     val groupId: String,
     val version: String,
+    val mcVersion: String = BuildRequest.DEFAULT_MC_VERSION,
     val description: String = "",
     val author: String = "",
     val code: String,
     val config: String,
-)
+) {
+    companion object {
+        const val DEFAULT_MC_VERSION = "26.3"
+    }
+}
 
 @Serializable
 data class BuildResponse(

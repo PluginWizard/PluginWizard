@@ -50,6 +50,10 @@ class BuildService(private val config: BuildConfig) {
         val GROUP_ID_REGEX = Regex("^[A-Za-z0-9_.]+$")
         val VERSION_REGEX = Regex("^[A-Za-z0-9_.+-]+$")
 
+        // Minecraft versions the client may build against. Must stay in sync
+        // with MINECRAFT_VERSIONS in src/lib/minecraftVersions.ts.
+        val MC_VERSIONS = setOf("26.1", "26.1.2", "26.2", "26.3", "26.4")
+
         // Trusted template files, relative to <templateBaseUrl>/plugin/.
         val TEMPLATE_FILES = listOf(
             ".gitignore",
@@ -130,6 +134,9 @@ class BuildService(private val config: BuildConfig) {
         if (!VERSION_REGEX.matches(request.version)) {
             errors.add("Invalid version '${request.version}'. Only letters, digits, '.', '+', '-' and '_' are allowed.")
         }
+        if (request.mcVersion !in MC_VERSIONS) {
+            errors.add("Unsupported Minecraft version '${request.mcVersion}'. Supported versions: ${MC_VERSIONS.joinToString()}.")
+        }
         return errors
     }
 
@@ -194,11 +201,12 @@ class BuildService(private val config: BuildConfig) {
         return cleaned.ifEmpty { "Plugin" }
     }
 
-    /** Update the gradle group id and version to match the project. */
+    /** Update the gradle group id, version and Paper version to match the project. */
     private fun patchBuildGradle(content: String, request: BuildRequest): String =
         content
             .replace(Regex("(?m)^group\\s*=\\s*['\"].*['\"]\\s*$")) { "group = '${request.groupId}'" }
             .replace(Regex("(?m)^version\\s*=\\s*['\"].*['\"]\\s*$")) { "version = '${request.version}'" }
+            .replace(Regex("(?m)^def\\s+paperVersion\\s*=\\s*['\"].*['\"]\\s*$")) { "def paperVersion = \"${request.mcVersion}\"" }
 
     /** Update the gradle root project name to match the project. */
     private fun patchSettingsGradle(content: String, request: BuildRequest): String =
@@ -212,9 +220,9 @@ class BuildService(private val config: BuildConfig) {
     private fun patchMainClass(content: String, request: BuildRequest): String =
         patchPackage(content, request).replace(Regex("\\bclass\\s+Plugin\\b")) { "class ${mainClassName(request)}" }
 
-    /** Rewrite the UserPlugin source: package declaration and main-class type reference. */
+    /** Rewrite the UserPlugin source: package declaration and main-class type references (field and constructor). */
     private fun patchUserPlugin(content: String, request: BuildRequest): String =
-        patchPackage(content, request).replace(Regex("\\bfinal\\s+Plugin\\s+plugin\\b")) { "final ${mainClassName(request)} plugin" }
+        patchPackage(content, request).replace(Regex("\\bPlugin(\\s+plugin)\\b")) { "${mainClassName(request)}${it.groupValues[1]}" }
 
     /** Fill the placeholders in plugin.yml with the project metadata. */
     private fun patchPluginYml(content: String, request: BuildRequest): String =

@@ -5,6 +5,7 @@ export interface Project {
     groupId: string;
     author: string;
     version: string | null;
+    mcVersion?: string | null;
     workspaceJson: any;
     createdAt?: number;
     updatedAt?: number;

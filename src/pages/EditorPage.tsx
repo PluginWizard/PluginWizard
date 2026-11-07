@@ -38,6 +38,8 @@ import { ExportModal } from "../components/modal/ExportModal"
 import ProjectSettingsModal from "../components/modal/ProjectSettingsModal"
 import { ensureJavaGeneratorsLoaded, generateJava } from "../lib/codegen/generators/java"
 import { buildPluginZip, downloadBytes, projectBaseName, requestPluginJar } from "../lib/codegen/export"
+import { WorkspaceProblem, findWorkspaceProblems } from "../lib/editor/workspaceChecks"
+import WorkspaceProblemsButton from "../components/WorkspaceProblemsButton"
 import {
     ProjectStore,
     createProjectStore,
@@ -69,6 +71,7 @@ export default function EditorPage() {
     // Project & workspace
     const [project, setProject] = useState<Project | null>(null)
     const [workspace, setWorkspace] = useState<any>(null)
+    const [problems, setProblems] = useState<WorkspaceProblem[]>([])
     const [blocks, setBlocks] = useState<any>(null)
     const [blocksConfig, setBlocksConfig] = useState<any>(null)
     const [exportCode, setExportCode] = useState<ExportCode | undefined>(undefined)
@@ -361,6 +364,9 @@ export default function EditorPage() {
 
         // Persist workspace edits automatically
         ws.addChangeListener((event: any) => {
+            if (!event.isUiEvent || event.type === Blockly.Events.FINISHED_LOADING) {
+                setProblems(findWorkspaceProblems(ws))
+            }
             if (suppressSaveRef.current) {
                 if (event.type === Blockly.Events.FINISHED_LOADING) {
                     suppressSaveRef.current = false
@@ -469,7 +475,7 @@ export default function EditorPage() {
         }
     }
 
-    const handleSaveProjectSettings = async (updates: Pick<Project, "name" | "description" | "author" | "groupId">) => {
+    const handleSaveProjectSettings = async (updates: Pick<Project, "name" | "description" | "author" | "groupId" | "version" | "mcVersion">) => {
         if (!project) return
 
         const updatedProject: Project = {
@@ -482,6 +488,15 @@ export default function EditorPage() {
         projectRef.current = updatedProject
         await persistProject(updatedProject)
         setIsProjectSettingsModalOpen(false)
+    }
+
+    const handleProjectUpdate = async (updates: Partial<Pick<Project, "version" | "mcVersion">>) => {
+        if (!project) return
+
+        const updatedProject: Project = { ...project, ...updates, updatedAt: Date.now() }
+        setProject(updatedProject)
+        projectRef.current = updatedProject
+        await persistProject(updatedProject)
     }
 
     return (
@@ -526,6 +541,7 @@ export default function EditorPage() {
 
                     {/* Right buttons */}
                     <div className="flex flex-row gap-3 justify-items-center">
+                        <WorkspaceProblemsButton workspace={workspace} problems={problems} />
                         <div className="flex items-center space-x-2">
                             <Button
                                 onClick={() => setProject(null)}
@@ -616,6 +632,7 @@ export default function EditorPage() {
                 onClose={() => setIsExportModalOpen(false)}
                 onDownloadProject={handleDownloadProject}
                 onDownloadZip={() => void handleDownloadZip()}
+                onProjectUpdate={(updates) => void handleProjectUpdate(updates)}
                 code={exportCode?.code || ""}
                 config={exportCode?.config || ""}
             />
