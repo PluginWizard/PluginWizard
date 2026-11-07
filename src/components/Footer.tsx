@@ -36,7 +36,10 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold">Product</h3>
             <ul className="space-y-2 text-sm">
-              <li>
+              <li className="flex flex-col space-y-2">
+                <Link to="/editor" className="text-muted-foreground hover:text-green-400 transition-colors">
+                  Editor
+                </Link>
                 <Link to="/documentation" className="text-muted-foreground hover:text-green-400 transition-colors">
                   Documentation
                 </Link>
