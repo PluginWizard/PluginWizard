@@ -13,9 +13,9 @@ export default function StorageConsentModal({ isOpen, isProcessing = false, onAc
 
     return (
         <div className="fixed inset-0 z-101 flex items-center justify-center bg-black/60 p-4">
-            <div className="relative w-full max-w-lg rounded-2xl border border-border/80 bg-card-darker p-6 sm:p-8 shadow-2xl">
+            <div className="relative w-full max-w-lg border border-border/80 bg-card-darker p-6 sm:p-8 shadow-2xl">
                 <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-600/15 text-green-500">
+                    <div className="flex h-11 w-11 items-center justify-center bg-green-600/15 text-green-500">
                         <Database className="h-6 w-6" />
                     </div>
                     <h2 className="text-2xl font-semibold tracking-tight">Save your projects automatically</h2>
@@ -48,7 +48,7 @@ export default function StorageConsentModal({ isOpen, isProcessing = false, onAc
                     <Button
                         onClick={onAccept}
                         disabled={isProcessing}
-                        className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                        className="flex h-11 flex-1 items-center justify-center gap-2 bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                     >
                         <Database className="h-4 w-4" />
                         {isProcessing ? "Enabling..." : "Enable persistent storage"}
@@ -57,7 +57,7 @@ export default function StorageConsentModal({ isOpen, isProcessing = false, onAc
                         onClick={onDecline}
                         disabled={isProcessing}
                         variant="outline"
-                        className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
+                        className="flex h-11 flex-1 items-center justify-center gap-2 border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
                     >
                         <HardDrive className="h-4 w-4" />
                         Use basic storage

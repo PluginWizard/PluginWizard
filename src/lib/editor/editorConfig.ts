@@ -23,7 +23,7 @@ export const toolboxCss = `
       .blocklyToolboxCategory {
         padding: 3px;
         margin-bottom: 0.5em;
-        border-radius: 4px;
+        border-radius: 0;
       }
       .blocklyFlyout, blocklyFlyoutBackground {
         overflow-x: scroll;

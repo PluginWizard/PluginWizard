@@ -39,7 +39,7 @@
   --sidebar-accent-foreground: oklch(0.95 0 0);
   --sidebar-border: oklch(0.2 0 0);
   --sidebar-ring: oklch(0.4 0 0);
-  --radius: 0.625rem;
+  --radius: 0rem;
 }
 
 @theme inline {

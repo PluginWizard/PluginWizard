@@ -10,7 +10,7 @@ export default function PrivacyPage() {
                         <p className="text-card-muted-foreground">Last updated: August 2026</p>
                     </div>
 
-                    <Card className="border-white/10 bg-[#161616] rounded-xl">
+                    <Card className="border-white/10 bg-[#161616]">
                         <CardHeader>
                             <CardTitle className="text-2xl text-green-400">Data Collection and Usage</CardTitle>
                         </CardHeader>

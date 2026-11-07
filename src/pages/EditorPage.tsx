@@ -491,17 +491,17 @@ export default function EditorPage() {
                 <div className="flex items-center justify-between px-6 py-2">
                     {/* Undo/Redo/Zoom buttons */}
                     <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm" onClick={handleUndo} className="rounded-lg cursor-pointer">
+                        <Button variant="ghost" size="sm" onClick={handleUndo} className=" cursor-pointer">
                             <Undo className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={handleRedo} className="rounded-lg cursor-pointer">
+                        <Button variant="ghost" size="sm" onClick={handleRedo} className=" cursor-pointer">
                             <Redo className="h-4 w-4" />
                         </Button>
                         <Separator orientation="vertical" className="h-4" />
-                        <Button variant="ghost" size="sm" onClick={handleZoomIn} className="rounded-lg cursor-pointer">
+                        <Button variant="ghost" size="sm" onClick={handleZoomIn} className=" cursor-pointer">
                             <ZoomIn className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={handleZoomOut} className="rounded-lg cursor-pointer">
+                        <Button variant="ghost" size="sm" onClick={handleZoomOut} className=" cursor-pointer">
                             <ZoomOut className="h-4 w-4" />
                         </Button>
                     </div>
@@ -530,7 +530,7 @@ export default function EditorPage() {
                             <Button
                                 onClick={() => setProject(null)}
                                 variant="outline"
-                                className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
+                                className=" border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
                             >
                                 <FolderOpen className="h-4 w-4 mr-1" />
                                 Open project
@@ -540,7 +540,7 @@ export default function EditorPage() {
                             <Button
                                 onClick={openExportModal}
                                 variant="outline"
-                                className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
+                                className=" border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
                             >
                                 <Download className="h-4 w-4 mr-1" />
                                 Export
@@ -551,7 +551,7 @@ export default function EditorPage() {
                                 onClick={() => setIsProjectSettingsModalOpen(true)}
                                 disabled={!project}
                                 variant="outline"
-                                className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
+                                className=" border-card-muted-foreground/30! bg-card-lighter! cursor-pointer"
                             >
                                 <Settings className="h-4 w-4 mr-1" />
                                 Settings

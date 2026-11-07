@@ -70,12 +70,12 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
                 }
             }}
         >
-            <div className="relative w-full max-w-2xl rounded-2xl border border-border/80 bg-card-darker p-6 sm:p-8 shadow-2xl">
+            <div className="relative w-full max-w-2xl border border-border/80 bg-card-darker p-6 sm:p-8 shadow-2xl">
                 <button
                     type="button"
                     aria-label="Close modal"
                     onClick={() => onClose?.()}
-                    className="absolute right-4 top-4 rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-card-lighter hover:text-foreground cursor-pointer"
+                    className="absolute right-4 top-4 p-1.5 text-muted-foreground transition-colors hover:bg-card-lighter hover:text-foreground cursor-pointer"
                 >
                     <X className="h-4 w-4" />
                 </button>
@@ -95,7 +95,7 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
                         value={projectName}
                         onChange={(e) => setProjectName(e.target.value)}
                         required
-                        className={`h-11 rounded-xl border-border focus:border-muted-foreground/40 ${errors.projectName ? "border-red-500" : ""}`}
+                        className={`h-11 border-border focus:border-muted-foreground/40 ${errors.projectName ? "border-red-500" : ""}`}
                         />
                         {errors.projectName && <p className="text-sm text-red-500 mt-1">{errors.projectName}</p>}
                     </div>
@@ -109,7 +109,7 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
                         value={projectDescription}
                         onChange={(e) => setProjectDescription(e.target.value)}
                         required
-                        className={`h-11 rounded-xl border-border focus:border-muted-foreground/40 ${errors.projectDescription ? "border-red-500" : ""}`}
+                        className={`h-11 border-border focus:border-muted-foreground/40 ${errors.projectDescription ? "border-red-500" : ""}`}
                         />
                         {errors.projectDescription && <p className="text-sm text-red-500 mt-1">{errors.projectDescription}</p>}
                     </div>
@@ -123,7 +123,7 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
                         value={groupId}
                         onChange={(e) => setGroupId(e.target.value)}
                         required
-                        className={`h-11 rounded-xl border-border focus:border-muted-foreground/40 ${errors.groupId ? "border-red-500" : ""}`}
+                        className={`h-11 border-border focus:border-muted-foreground/40 ${errors.groupId ? "border-red-500" : ""}`}
                         />
                         <p className="text-xs text-muted-foreground">Use reverse domain notation (for example: com.example)</p>
                         {errors.groupId && <p className="text-sm text-red-500 mt-1">{errors.groupId}</p>}
@@ -138,7 +138,7 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
                         value={authorName}
                         onChange={(e) => setAuthorName(e.target.value)}
                         required
-                        className={`h-11 rounded-xl border-border focus:border-muted-foreground/40 ${errors.authorName ? "border-red-500" : ""}`}
+                        className={`h-11 border-border focus:border-muted-foreground/40 ${errors.authorName ? "border-red-500" : ""}`}
                         />
                         {errors.authorName && <p className="text-sm text-red-500 mt-1">{errors.authorName}</p>}
                     </div>
@@ -147,7 +147,7 @@ export default function NewProjectModal({ onNewProject, isOpen, onClose }: NewPr
                     {/* Submit Button */}
                     <Button
                         type="submit"
-                        className="mt-2 h-11 w-full bg-green-600 hover:bg-green-700 text-white rounded-xl cursor-pointer"
+                        className="mt-2 h-11 w-full bg-green-600 hover:bg-green-700 text-white cursor-pointer"
                         disabled={isLoading}
                         onClick={handleSubmit}
                     >

@@ -154,8 +154,8 @@ function Avatar({ member }: { member: TeamMember }) {
 
 
   return (
-    <div className={`rounded-2xl p-0.5 shadow-lg`}>
-      <div className="size-20 overflow-hidden rounded-[14px] bg-[#0b0b0d]">
+    <div className="p-0.5 shadow-lg">
+      <div className="size-20 overflow-hidden bg-[#0b0b0d]">
         {failed ? (
           <div
             className={`flex size-full items-center justify-center bg-linear-to-br text-2xl font-black text-white`}
@@ -258,7 +258,7 @@ export default function AboutPage() {
               <Button
                 asChild
                 size="lg"
-                className="rounded-xl bg-green-600 text-white transition-all duration-300 hover:bg-green-700"
+                className=" bg-green-600 text-white transition-all duration-300 hover:bg-green-700"
               >
                 <Link to="/editor">
                   Try the Editor
@@ -269,7 +269,7 @@ export default function AboutPage() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="rounded-xl border-muted-foreground/20! bg-card-lighter transition-all duration-300 hover:border-muted-foreground/80! hover:bg-card-lighter/80"
+                className=" border-muted-foreground/20! bg-card-lighter transition-all duration-300 hover:border-muted-foreground/80! hover:bg-card-lighter/80"
               >
                 <Link to="https://discord.gg/wGKncuKFAw" target="_blank">
                   Join the Community
@@ -307,7 +307,7 @@ export default function AboutPage() {
               {story.map((step, i) => (
                 <article
                   key={step.title}
-                  className={`group relative rounded-3xl border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))] p-6 pl-20 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-green-400/35 hover:shadow-[0_14px_38px_rgba(34,197,94,0.12)] md:p-8 md:pl-24 ${
+                  className={`group relative border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))] p-6 pl-20 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-green-400/35 hover:shadow-[0_14px_38px_rgba(34,197,94,0.12)] md:p-8 md:pl-24 ${
                     i % 2 ? "md:ml-10" : "md:mr-10"
                   }`}
                 >
@@ -318,7 +318,7 @@ export default function AboutPage() {
                   </div>
 
                   <div className="mb-4 flex items-center">
-                    <div className="inline-flex rounded-xl border border-green-500/20 bg-green-500/10 p-2.5">
+                    <div className="inline-flex border border-green-500/20 bg-green-500/10 p-2.5">
                       <step.icon className="h-5 w-5 text-green-300" />
                     </div>
                   </div>
@@ -353,7 +353,7 @@ export default function AboutPage() {
             {team.map((member) => (
               <div
                 key={member.id}
-                className="group relative flex flex-col rounded-2xl border border-white/10 bg-[#161616] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-green-500/40 hover:shadow-[0_0_30px_rgba(34,197,94,0.15)]"
+                className="group relative flex flex-col border border-white/10 bg-[#161616] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-green-500/40 hover:shadow-[0_0_30px_rgba(34,197,94,0.15)]"
               >
                 <div className="flex items-center gap-4">
                   <Avatar member={member} />
@@ -380,7 +380,7 @@ export default function AboutPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       title={socialLabels[social.type]}
-                      className="inline-flex size-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-muted-foreground transition-colors hover:border-green-500/40 hover:bg-green-500/10 hover:text-green-400"
+                      className="inline-flex size-9 items-center justify-center border border-white/10 bg-white/5 text-muted-foreground transition-colors hover:border-green-500/40 hover:bg-green-500/10 hover:text-green-400"
                     >
                       <SocialIcon type={social.type} />
                       <span className="sr-only">{socialLabels[social.type]}</span>

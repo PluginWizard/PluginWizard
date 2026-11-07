@@ -51,12 +51,12 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                 }
             }}
         >
-            <div className="relative w-full max-w-6xl max-h-[95vh] overflow-y-scroll rounded-2xl border border-border/80 bg-card-darker p-6 shadow-2xl sm:p-8">
+            <div className="relative w-full max-w-6xl max-h-[95vh] overflow-y-scroll border border-border/80 bg-card-darker p-6 shadow-2xl sm:p-8">
                 <button
                     type="button"
                     aria-label="Close modal"
                     onClick={() => onClose?.()}
-                    className="absolute right-4 top-4 rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-card-lighter hover:text-foreground cursor-pointer"
+                    className="absolute right-4 top-4 p-1.5 text-muted-foreground transition-colors hover:bg-card-lighter hover:text-foreground cursor-pointer"
                 >
                     <X className="h-4 w-4" />
                 </button>
@@ -74,7 +74,7 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                 <div className="flex flex-col gap-3 pb-6 sm:flex-row">
                     <Button
                         onClick={onDownloadProject}
-                        className="flex h-auto flex-1 items-center justify-center gap-2 rounded-xl bg-card-lighter px-4 py-4 text-foreground hover:bg-foreground/15 cursor-pointer"
+                        className="flex h-auto flex-1 items-center justify-center gap-2 bg-card-lighter px-4 py-4 text-foreground hover:bg-foreground/15 cursor-pointer"
                     >
                         <Download className="h-5 w-5 shrink-0" />
                         Export Project .mcwizard
@@ -83,7 +83,7 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                     <Button
                         onClick={onDownloadZip}
                         disabled={!hasGeneratedOutput}
-                        className={`flex h-auto flex-1 items-center justify-center gap-2 rounded-xl px-4 py-4 ${
+                        className={`flex h-auto flex-1 items-center justify-center gap-2 px-4 py-4 ${
                             hasGeneratedOutput
                                 ? "bg-card-lighter text-foreground hover:bg-foreground/15 cursor-pointer"
                                 : "bg-card-lighter/80 text-white cursor-not-allowed! hover:bg-card-lighter/80"
@@ -95,7 +95,7 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
 
                     <Button
                         onClick={() => { setBuildDetailsOpen(true) }}
-                        className="flex h-auto flex-1 items-center justify-center gap-2 rounded-xl px-4 py-4 bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                        className="flex h-auto flex-1 items-center justify-center gap-2 px-4 py-4 bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                     >
                         <Package className="h-5 w-5 shrink-0" />
                         Export Plugin .jar
@@ -110,13 +110,13 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                                 <button
                                     type="button"
                                     onClick={() => handleCopy("code", code)}
-                                    className="inline-flex items-center gap-2 rounded-lg border border-border/80 bg-card-darker px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-card-lighter cursor-pointer"
+                                    className="inline-flex items-center gap-2 border border-border/80 bg-card-darker px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-card-lighter cursor-pointer"
                                 >
                                     {copiedField === "code" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                                     {copiedField === "code" ? "Copied!" : "Copy"}
                                 </button>
                             </div>
-                            <div className="rounded-xl border border-border/80 max-h-100 overflow-y-scroll">
+                            <div className=" border border-border/80 max-h-100 overflow-y-scroll">
                                 <SyntaxHighlighter language="java" style={railscasts} showLineNumbers={true} wrapLongLines={false}>
                                     {code}
                                 </SyntaxHighlighter>
@@ -131,13 +131,13 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                                 <button
                                     type="button"
                                     onClick={() => handleCopy("config", config)}
-                                    className="inline-flex items-center gap-2 rounded-lg border border-border/80 bg-card-darker px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-card-lighter cursor-pointer"
+                                    className="inline-flex items-center gap-2 border border-border/80 bg-card-darker px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-card-lighter cursor-pointer"
                                 >
                                     {copiedField === "config" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                                     {copiedField === "config" ? "Copied!" : "Copy"}
                                 </button>
                             </div>
-                            <div className="rounded-xl border border-border/80 max-h-100 overflow-y-scroll">
+                            <div className=" border border-border/80 max-h-100 overflow-y-scroll">
                                 <SyntaxHighlighter language="yaml" style={railscasts} showLineNumbers={true} wrapLongLines={false}>
                                     {config}
                                 </SyntaxHighlighter>

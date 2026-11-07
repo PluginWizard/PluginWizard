@@ -39,7 +39,7 @@ export function Navbar() {
                                     key={item.name}
                                     to={item.href}
                                     target={item.target ? item.target : "_self"}
-                                    className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive
+                                    className={`flex items-center space-x-1 px-3 py-2 text-sm font-medium transition-colors ${isActive
                                             ? "bg-green-500/10 text-green-400"
                                             : "text-muted-foreground hover:text-foreground hover:bg-gray-500/10"
                                         }`}
@@ -68,7 +68,7 @@ export function Navbar() {
 
                     {/* Mobile menu button */}
                     <div className="ml-auto flex items-center md:hidden">
-                        <Button variant="ghost" size="sm" onClick={() => setIsOpen(!isOpen)} className="rounded-lg">
+                        <Button variant="ghost" size="sm" onClick={() => setIsOpen(!isOpen)}>
                             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                         </Button>
                     </div>
@@ -87,7 +87,7 @@ export function Navbar() {
                                     key={item.name}
                                     to={item.href}
                                     onClick={() => setIsOpen(false)}
-                                    className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-base font-medium transition-colors ${isActive
+                                    className={`flex items-center space-x-2 px-3 py-2 text-base font-medium transition-colors ${isActive
                                             ? "bg-green-500/10 text-green-400"
                                             : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                                         }`}

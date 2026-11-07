@@ -14,7 +14,7 @@ export default function NotFoundPage() {
         loop
         muted
         playsInline
-        className="mt-10 w-full max-w-md rounded-lg"
+        className="mt-10 w-full max-w-md"
       />
     </main>
   )

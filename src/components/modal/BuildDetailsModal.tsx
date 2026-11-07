@@ -116,7 +116,7 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
             onClick={handleCloseAttempt}
         >
             <div
-                className={`relative flex w-full max-w-4xl max-h-[95vh] flex-col items-center overflow-y-auto rounded-3xl border border-border/80 bg-card-darker p-12 text-center shadow-2xl sm:p-16 ${isShaking ? "animate-shake" : ""}`}
+                className={`relative flex w-full max-w-4xl max-h-[95vh] flex-col items-center overflow-y-auto border border-border/80 bg-card-darker p-12 text-center shadow-2xl sm:p-16 ${isShaking ? "animate-shake" : ""}`}
                 onClick={(event) => event.stopPropagation()}
                 onAnimationEnd={() => setIsShaking(false)}
             >
@@ -125,7 +125,7 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
                         type="button"
                         onClick={onClose}
                         aria-label="Close"
-                        className="absolute right-5 top-5 rounded-lg p-1.5 text-card-muted-foreground transition-colors hover:bg-card-lighter hover:text-foreground cursor-pointer"
+                        className="absolute right-5 top-5 p-1.5 text-card-muted-foreground transition-colors hover:bg-card-lighter hover:text-foreground cursor-pointer"
                     >
                         <X className="h-6 w-6" />
                     </button>
@@ -142,7 +142,7 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
                     loop
                     muted
                     playsInline
-                    className="mt-10 w-full max-w-xl rounded-2xl"
+                    className="mt-10 w-full max-w-xl"
                 />
 
                 <div className="mt-10 flex items-center justify-center gap-3">
@@ -166,9 +166,9 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
                 </div>
 
                 {/* Progress bar — diagonally striped green */}
-                <div className="mt-6 h-4 w-full max-w-xl overflow-hidden rounded-full bg-card-muted">
+                <div className="mt-6 h-4 w-full max-w-xl overflow-hidden bg-card-muted">
                     <div
-                        className="h-full rounded-full bg-green-500"
+                        className="h-full bg-green-500"
                         style={{
                             width: `${progress}%`,
                             transition: "width 0.6s ease-in-out",
@@ -179,7 +179,7 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
                 </div>
 
                 {hasErrors && (
-                    <div className="mt-8 w-full max-w-xl rounded-xl border border-red-500/40 bg-red-500/10 p-5 text-left">
+                    <div className="mt-8 w-full max-w-xl border border-red-500/40 bg-red-500/10 p-5 text-left">
                         <div className="flex items-center gap-2 text-lg font-medium text-red-400">
                             <AlertCircle className="h-5 w-5 shrink-0" />
                             The plugin could not be built.

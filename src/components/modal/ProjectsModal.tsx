@@ -79,7 +79,7 @@ export default function ProjectsModal({
 
     return (
         <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 p-4">
-            <div className="relative flex max-h-[90vh] w-full max-w-3xl flex-col rounded-2xl border border-border/80 bg-card-darker p-6 shadow-2xl sm:p-8">
+            <div className="relative flex max-h-[90vh] w-full max-w-3xl flex-col border border-border/80 bg-card-darker p-6 shadow-2xl sm:p-8">
                 {/* Header */}
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
@@ -92,14 +92,14 @@ export default function ProjectsModal({
                         <Button
                             onClick={() => fileInputRef.current?.click()}
                             variant="outline"
-                            className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
+                            className=" border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
                         >
                             <Upload className="h-4 w-4 mr-2" />
                             Import
                         </Button>
                         <Button
                             onClick={onNewProject}
-                            className="rounded-xl bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                            className=" bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                         >
                             <Plus className="h-4 w-4 mr-2" />
                             New Project
@@ -110,8 +110,8 @@ export default function ProjectsModal({
                 {/* Body */}
                 <div className="mt-6 flex-1 overflow-y-auto pr-1">
                     {sortedProjects.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border/80 bg-card-lighter/40 px-6 py-14 text-center">
-                            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-card-lighter text-muted-foreground">
+                        <div className="flex flex-col items-center justify-center border border-dashed border-border/80 bg-card-lighter/40 px-6 py-14 text-center">
+                            <div className="flex h-14 w-14 items-center justify-center bg-card-lighter text-muted-foreground">
                                 <FolderOpen className="h-7 w-7" />
                             </div>
                             <h3 className="mt-4 text-lg font-medium">No saved projects yet</h3>
@@ -121,7 +121,7 @@ export default function ProjectsModal({
                             </p>
                             <Button
                                 onClick={onNewProject}
-                                className="mt-5 rounded-xl bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                                className="mt-5 bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                             >
                                 <Plus className="h-4 w-4" />
                                 Create new project
@@ -132,7 +132,7 @@ export default function ProjectsModal({
                             {sortedProjects.map((project) => (
                                 <li
                                     key={project.id}
-                                    className="group flex items-center justify-between gap-4 rounded-xl border border-border/80 bg-card-lighter/50 p-4 transition-colors hover:border-muted-foreground/40"
+                                    className="group flex items-center justify-between gap-4 border border-border/80 bg-card-lighter/50 p-4 transition-colors hover:border-muted-foreground/40"
                                 >
                                     <div className="min-w-0">
                                         <h3 className="truncate text-base font-medium">{project.name}</h3>
@@ -160,7 +160,7 @@ export default function ProjectsModal({
                                     <div className="flex shrink-0 items-center gap-2">
                                         <Button
                                             onClick={() => onOpenProject(project)}
-                                            className="rounded-xl bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                                            className=" bg-green-600 text-white hover:bg-green-700 cursor-pointer"
                                         >
                                             <FolderOpen className="h-4 w-4 mr-1" />
                                             Open
@@ -169,7 +169,7 @@ export default function ProjectsModal({
                                             type="button"
                                             aria-label={`Delete ${project.name}`}
                                             onClick={() => setPendingDelete(project)}
-                                            className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-red-500/15 hover:text-red-500 cursor-pointer"
+                                            className=" p-2 text-muted-foreground transition-colors hover:bg-red-500/15 hover:text-red-500 cursor-pointer"
                                         >
                                             <Trash2 className="h-4 w-4" />
                                         </button>
@@ -199,9 +199,9 @@ export default function ProjectsModal({
                         if (event.target === event.currentTarget) setPendingDelete(null);
                     }}
                 >
-                    <div className="w-full max-w-sm rounded-2xl border border-border/80 bg-card-darker p-6 shadow-2xl">
+                    <div className="w-full max-w-sm border border-border/80 bg-card-darker p-6 shadow-2xl">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/15 text-red-500">
+                            <div className="flex h-10 w-10 items-center justify-center bg-red-500/15 text-red-500">
                                 <Trash2 className="h-5 w-5" />
                             </div>
                             <h3 className="text-lg font-semibold">Delete project</h3>
@@ -215,7 +215,7 @@ export default function ProjectsModal({
                             <Button
                                 onClick={() => setPendingDelete(null)}
                                 variant="outline"
-                                className="rounded-xl border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
+                                className=" border-card-muted-foreground/30! bg-card-lighter! hover:bg-foreground/15 cursor-pointer"
                             >
                                 Cancel
                             </Button>
@@ -224,7 +224,7 @@ export default function ProjectsModal({
                                     onDeleteProject(pendingDelete.id);
                                     setPendingDelete(null);
                                 }}
-                                className="rounded-xl bg-red-600 text-white hover:bg-red-700 cursor-pointer"
+                                className=" bg-red-600 text-white hover:bg-red-700 cursor-pointer"
                             >
                                 <Trash2 className="h-4 w-4 mr-2" />
                                 Delete
