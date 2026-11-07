@@ -89,6 +89,12 @@ export function projectBaseName(project: Project): string {
     return base.replace(/[^a-zA-Z0-9-_ .]/g, "_")
 }
 
+/** Base file name for the built plugin: {pluginName}-{mcVersion}-{pluginVersion}. */
+export function pluginFileBaseName(project: Project): string {
+    const pluginVersion = resolveVersion(project).replace(/[^a-zA-Z0-9-_+.]/g, "_")
+    return `${projectBaseName(project)}-${sanitizeMinecraftVersion(project.mcVersion)}-${pluginVersion}`
+}
+
 async function fetchTemplateFile(relativePath: string): Promise<Uint8Array> {
     const response = await fetch(`${TEMPLATE_BASE}/${relativePath}`)
     if (!response.ok) {

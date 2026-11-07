@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { AlertCircle, CheckCircle2, Loader2, X } from "lucide-react"
 import { Project } from "../../types/types"
-import { downloadBytes, projectBaseName, requestPluginJar } from "../../lib/codegen/export"
+import { downloadBytes, pluginFileBaseName, requestPluginJar } from "../../lib/codegen/export"
 
 interface BuildDetailsModalProps {
     open: boolean
@@ -99,7 +99,7 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
 
             setProgress(100)
             setSucceeded(true)
-            downloadBytes(result.jar, `${projectBaseName(project)}.jar`, "application/java-archive")
+            downloadBytes(result.jar, `${pluginFileBaseName(project)}.jar`, "application/java-archive")
         } catch (error) {
             console.error("Failed to build .jar:", error)
             setJarBuildErrors(["Could not reach the build service. Please try again later."])

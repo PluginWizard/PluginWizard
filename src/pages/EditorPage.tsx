@@ -37,7 +37,7 @@ import StorageConsentModal from "../components/modal/StorageConsentModal"
 import { ExportModal } from "../components/modal/ExportModal"
 import ProjectSettingsModal from "../components/modal/ProjectSettingsModal"
 import { ensureJavaGeneratorsLoaded, generateJava } from "../lib/codegen/generators/java"
-import { buildPluginZip, downloadBytes, projectBaseName, requestPluginJar } from "../lib/codegen/export"
+import { buildPluginZip, downloadBytes, pluginFileBaseName, requestPluginJar } from "../lib/codegen/export"
 import { WorkspaceProblem, findWorkspaceProblems } from "../lib/editor/workspaceChecks"
 import WorkspaceProblemsButton from "../components/WorkspaceProblemsButton"
 import {
@@ -429,7 +429,7 @@ export default function EditorPage() {
 
         try {
             const zip = await buildPluginZip(project, exportCode)
-            downloadBytes(zip, `${projectBaseName(project)}.zip`, "application/zip")
+            downloadBytes(zip, `${pluginFileBaseName(project)}.zip`, "application/zip")
         } catch (error) {
             console.error("Failed to export .zip:", error)
         }
