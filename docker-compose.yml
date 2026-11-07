@@ -16,7 +16,7 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     container_name: pluginwizard-frontend
-    # Forwards /api/* to the backend, so the tunnel only needs to point here.
+    # Forwards /api/* to the backend. Caddy (below) terminates TLS in front of it.
     environment:
       BACKEND_URL: "http://backend:8080"
     ports:
@@ -24,3 +24,21 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+
+  caddy:
+    image: caddy:2.10.0-alpine
+    container_name: pluginwizard-caddy
+    # Point the playit.gg HTTPS tunnel for editor.kalbskinder.net at 127.0.0.1:8443.
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -1,0 +1,14 @@
+# TLS termination for the playit.gg HTTPS tunnel. Playit passes the encrypted
+# traffic through, so the certificate has to live here. Caddy obtains and
+# renews it from Let's Encrypt automatically (TLS-ALPN challenge over the
+# same tunnel), and stores it in the caddy_data volume.
+{
+	# The tunnel's origin port. Not 443, so it can't clash with other apps.
+	https_port 8443
+	# Nothing reaches port 80 through the tunnel, so don't listen for redirects.
+	auto_https disable_redirects
+}
+
+editor.kalbskinder.net {
+	reverse_proxy frontend:3001
+}
