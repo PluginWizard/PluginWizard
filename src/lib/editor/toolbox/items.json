@@ -50,8 +50,8 @@
       }
     },
     {
-      "kind":"block",
-      "type":"drop_item",
+      "kind": "block",
+      "type": "drop_item",
       "inputs": {
         "ITEM": {
           "shadow": {
@@ -79,6 +79,10 @@
     {
       "kind": "block",
       "type": "item_flag"
+    },
+    {
+      "kind": "block",
+      "type": "item_enchantment"
     }
   ]
 }

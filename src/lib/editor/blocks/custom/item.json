@@ -12,7 +12,7 @@
         ]
     },
     "create_item": {
-        "message0": "create item %1 Name: %2 Lore: %3 Flags: %4",
+        "message0": "create item %1 Name: %2 Lore: %3 Flags: %4 Enchantments: %5",
         "output": null,
         "colour": "#06b6d4",
         "inputsInline": true,
@@ -46,8 +46,18 @@
                     "Array",
                     "List"
                 ]
+            },
+            {
+                "type": "input_value",
+                "name": "ENCHANTS",
+                "check": [
+                    "ItemEnchantment",
+                    "Array",
+                    "List"
+                ]
             }
-        ]
+        ],
+        "tooltip": "Creates an item. Plug a single block or a list into Flags and Enchantments to apply several."
     },
     "item_flag": {
         "message0": "item flag %1",
@@ -69,6 +79,72 @@
                     ["hide lore (deprecated)", "HIDE_ADDITIONAL_TOOLTIP"],
                     ["unbreakable", "UNBREAKABLE"]
                 ]
+            }
+        ]
+    },
+    "item_enchantment": {
+        "message0": "enchantment %1 level %2",
+        "output": "ItemEnchantment",
+        "colour": "#06b6d4",
+        "tooltip": "A single enchantment for \"create item\". Combine several inside a list to apply more than one. Levels above the normal maximum work too (up to 255).",
+        "helpUrl": "",
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "ENCHANTMENT",
+                "options": [
+                    ["sharpness", "SHARPNESS"],
+                    ["aqua affinity", "AQUA_AFFINITY"],
+                    ["bane of arthropods", "BANE_OF_ARTHROPODS"],
+                    ["blast protection", "BLAST_PROTECTION"],
+                    ["breach", "BREACH"],
+                    ["channeling", "CHANNELING"],
+                    ["curse of binding", "BINDING_CURSE"],
+                    ["curse of vanishing", "VANISHING_CURSE"],
+                    ["density", "DENSITY"],
+                    ["depth strider", "DEPTH_STRIDER"],
+                    ["efficiency", "EFFICIENCY"],
+                    ["feather falling", "FEATHER_FALLING"],
+                    ["fire aspect", "FIRE_ASPECT"],
+                    ["fire protection", "FIRE_PROTECTION"],
+                    ["flame", "FLAME"],
+                    ["fortune", "FORTUNE"],
+                    ["frost walker", "FROST_WALKER"],
+                    ["impaling", "IMPALING"],
+                    ["infinity", "INFINITY"],
+                    ["knockback", "KNOCKBACK"],
+                    ["looting", "LOOTING"],
+                    ["loyalty", "LOYALTY"],
+                    ["luck of the sea", "LUCK_OF_THE_SEA"],
+                    ["lunge", "LUNGE"],
+                    ["lure", "LURE"],
+                    ["mending", "MENDING"],
+                    ["multishot", "MULTISHOT"],
+                    ["piercing", "PIERCING"],
+                    ["power", "POWER"],
+                    ["projectile protection", "PROJECTILE_PROTECTION"],
+                    ["protection", "PROTECTION"],
+                    ["punch", "PUNCH"],
+                    ["quick charge", "QUICK_CHARGE"],
+                    ["respiration", "RESPIRATION"],
+                    ["riptide", "RIPTIDE"],
+                    ["silk touch", "SILK_TOUCH"],
+                    ["smite", "SMITE"],
+                    ["soul speed", "SOUL_SPEED"],
+                    ["sweeping edge", "SWEEPING_EDGE"],
+                    ["swift sneak", "SWIFT_SNEAK"],
+                    ["thorns", "THORNS"],
+                    ["unbreaking", "UNBREAKING"],
+                    ["wind burst", "WIND_BURST"]
+                ]
+            },
+            {
+                "type": "field_number",
+                "name": "LEVEL",
+                "value": 1,
+                "min": 1,
+                "max": 255,
+                "precision": 1
             }
         ]
     },
