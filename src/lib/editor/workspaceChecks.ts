@@ -1,4 +1,5 @@
 import * as Blockly from "blockly"
+import { FUNCTION_WITH_PARAMS_BLOCK, PARAMETER_BLOCK, PARAMETER_GET_BLOCK, getFunctionParameters } from "./blocks/functionParameters"
 
 /** A problem in the workspace that would break or change the generated plugin. */
 export interface WorkspaceProblem {
@@ -29,16 +30,23 @@ const RESTRICTED_INPUTS: Record<string, Record<string, string[]>> = {
     sub_command: {
         ARGS: ["command_argument", "custom_command_argument"],
     },
+    [FUNCTION_WITH_PARAMS_BLOCK]: {
+        PARAMS: [PARAMETER_BLOCK],
+    },
 }
 
 const INPUT_LABELS: Record<string, string> = {
     ARGS: "Arguments",
     SUBS: "Subcommands",
+    PARAMS: "Parameters",
 }
 
 /** Run every check and return the problems found, in display order. */
 export function findWorkspaceProblems(workspace: Blockly.Workspace): WorkspaceProblem[] {
-    return [...checkMainFunction(workspace), ...checkMisplacedBlocks(workspace)]
+    const problems = [...checkMainFunction(workspace), ...checkMisplacedBlocks(workspace), ...checkFunctionParameters(workspace)]
+    // A block can fail several checks; report it once, with the first message.
+    const seen = new Set<string>()
+    return problems.filter((problem) => !seen.has(problem.id) && seen.add(problem.id))
 }
 
 /** The plugin can only be generated with exactly one main function block. */
@@ -86,6 +94,79 @@ function checkMisplacedBlocks(workspace: Blockly.Workspace): WorkspaceProblem[] 
     return problems
 }
 
+/** Parameter blocks outside a function's Parameters, duplicate names, and reads of unknown parameters. */
+function checkFunctionParameters(workspace: Blockly.Workspace): WorkspaceProblem[] {
+    const problems: WorkspaceProblem[] = []
+
+    for (const definition of workspace.getBlocksByType(FUNCTION_WITH_PARAMS_BLOCK, false)) {
+        const seen = new Set<string>()
+        let param = definition.getInputTargetBlock("PARAMS")
+        while (param) {
+            const name = param.getFieldValue("NAME")?.trim()
+            if (param.type === PARAMETER_BLOCK && param.isEnabled() && name) {
+                if (seen.has(name)) {
+                    problems.push({
+                        id: `param-duplicate-${param.id}`,
+                        message: `Parameter "${name}" is defined twice in the same function. Rename one of them.`,
+                        blockId: param.id,
+                    })
+                }
+                seen.add(name)
+            }
+            param = param.getNextBlock()
+        }
+    }
+
+    // Parameters plugged in anywhere other than a function's Parameters input.
+    for (const param of workspace.getBlocksByType(PARAMETER_BLOCK, false)) {
+        if (!param.isEnabled()) continue
+        const container = containingInput(param)
+        if (!container || (container.owner.type === FUNCTION_WITH_PARAMS_BLOCK && container.inputName === "PARAMS")) continue
+        problems.push({
+            id: `misplaced-${param.id}`,
+            message: `"${blockLabel(param)}" only works in the Parameters of a function with parameters.`,
+            blockId: param.id,
+            fix: { label: "Move out", run: () => detachBlock(param) },
+        })
+    }
+
+    // Reads of a parameter the surrounding function doesn't have.
+    for (const read of workspace.getBlocksByType(PARAMETER_GET_BLOCK, false)) {
+        if (!read.isEnabled() || read.getRootBlock() === read) continue
+        const name = read.getFieldValue("NAME")?.trim()
+        const definition = enclosingFunction(read)
+        if (definition && getFunctionParameters(definition).some((param) => param.name === name)) continue
+        problems.push({
+            id: `param-unknown-${read.id}`,
+            message: definition
+                ? `This function has no parameter "${name}".`
+                : `Parameter "${name}" can only be used inside a function with parameters.`,
+            blockId: read.id,
+        })
+    }
+
+    return problems
+}
+
+/** The function-with-parameters block a block is nested in, if any. */
+function enclosingFunction(block: Blockly.Block): Blockly.Block | null {
+    let parent = block.getSurroundParent()
+    while (parent && parent.type !== FUNCTION_WITH_PARAMS_BLOCK) parent = parent.getSurroundParent()
+    return parent
+}
+
+/** The block and input a statement block's stack is plugged into, or null for a top-level stack. */
+function containingInput(block: Blockly.Block): { owner: Blockly.Block; inputName: string } | null {
+    let current = block
+    let parent = current.getParent()
+    while (parent && parent.getNextBlock() === current) {
+        current = parent
+        parent = current.getParent()
+    }
+    const input = parent?.getInputWithBlock(current)
+    return parent && input ? { owner: parent, inputName: input.name } : null
+}
+
 /** Run every available fix as a single undo step. */
 export function fixAllProblems(workspace: Blockly.WorkspaceSvg, problems: WorkspaceProblem[]): void {
     Blockly.Events.setGroup(true)
@@ -116,15 +197,15 @@ function blockLabel(block: Blockly.Block): string {
  * was in, so it no longer ends up in the generated code.
  */
 function detachBlock(block: Blockly.Block): void {
-    const owner = block.getSurroundParent() as Blockly.BlockSvg | null
+    const owner = block.getSurroundParent()
     block.unplug(true)
     block.setDisabledReason(true, Blockly.constants.MANUALLY_DISABLED)
 
-    if (owner) {
+    if (owner instanceof Blockly.BlockSvg && block instanceof Blockly.BlockSvg) {
         const ownerXY = owner.getRelativeToSurfaceXY()
         const { width } = owner.getHeightWidth()
-        ;(block as Blockly.BlockSvg).moveTo(new Blockly.utils.Coordinate(ownerXY.x + width + 40, ownerXY.y))
-        ;(block as Blockly.BlockSvg).bumpNeighbours()
+        block.moveTo(new Blockly.utils.Coordinate(ownerXY.x + width + 40, ownerXY.y))
+        block.bumpNeighbours()
     }
 }
 

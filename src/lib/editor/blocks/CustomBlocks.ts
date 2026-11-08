@@ -1,4 +1,5 @@
 import * as Blockly from 'blockly';
+import './functionParameters';
 
 const allBlocks: { [key: string]: any } = {};
 const definitions: any[] = [];

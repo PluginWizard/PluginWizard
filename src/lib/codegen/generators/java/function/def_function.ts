@@ -1,11 +1,12 @@
 import * as Blockly from 'blockly';
 import { JavaGenerator, pluginMethods, indent, getDefaultValueForType, imports } from '../../java.js';
 import { JavaGeneratorUtils } from '../../JavaGeneratorUtil.js';
+import { javaIdentifier } from './function_utils.js';
 
 export default {
   block: 'def_function',
   generator: function(block: Blockly.Block) {
-    const name = block.getFieldValue('NAME') || 'myFunction';
+    const name = javaIdentifier(block.getFieldValue('NAME'), 'myFunction');
     const returnType = block.getFieldValue('RET_TYPE') || 'void';
     const body = JavaGenerator.statementToCode(block, 'BODY') || '';
     

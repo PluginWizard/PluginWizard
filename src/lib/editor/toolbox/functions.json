@@ -13,6 +13,25 @@
     },
     {
       "kind": "block",
+      "type": "def_function_params",
+      "inputs": {
+        "PARAMS": {
+          "block": {
+            "type": "function_parameter"
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "function_parameter"
+    },
+    {
+      "kind": "block",
+      "type": "function_parameter_get"
+    },
+    {
+      "kind": "block",
       "type": "call_function"
     },
     {

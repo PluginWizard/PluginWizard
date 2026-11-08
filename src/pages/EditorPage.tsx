@@ -39,6 +39,7 @@ import ProjectSettingsModal from "../components/modal/ProjectSettingsModal"
 import { ensureJavaGeneratorsLoaded, generateJava } from "../lib/codegen/generators/java"
 import { buildPluginZip, downloadBytes, pluginFileBaseName, requestPluginJar } from "../lib/codegen/export"
 import { WorkspaceProblem, findWorkspaceProblems } from "../lib/editor/workspaceChecks"
+import { syncFunctionCalls } from "../lib/editor/blocks/functionParameters"
 import WorkspaceProblemsButton from "../components/WorkspaceProblemsButton"
 import {
     ProjectStore,
@@ -365,6 +366,7 @@ export default function EditorPage() {
         // Persist workspace edits automatically
         ws.addChangeListener((event: any) => {
             if (!event.isUiEvent || event.type === Blockly.Events.FINISHED_LOADING) {
+                syncFunctionCalls(ws, event.group)
                 setProblems(findWorkspaceProblems(ws))
             }
             if (suppressSaveRef.current) {

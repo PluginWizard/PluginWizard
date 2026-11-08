@@ -1,9 +1,9 @@
 import * as Blockly from 'blockly';
+import { functionCallCode } from './function_utils.js';
 
 export default {
   block: 'call_function_silent',
   generator: function(block: Blockly.Block) {
-    const name = block.getFieldValue('NAME') || 'myFunction';
-    return `${name}();\n`;
+    return `${functionCallCode(block)};\n`;
   },
 };

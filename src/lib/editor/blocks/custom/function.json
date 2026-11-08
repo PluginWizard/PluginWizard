@@ -96,6 +96,186 @@
         "tooltip": "Defines a function that returns a value",
         "helpUrl": ""
     },
+    "def_function_params": {
+        "message0": "Function %1 returns %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "NAME",
+                "text": "myFunction"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "RET_TYPE",
+                "options": [
+                    [
+                        "nothing",
+                        "void"
+                    ],
+                    [
+                        "int",
+                        "int"
+                    ],
+                    [
+                        "double",
+                        "double"
+                    ],
+                    [
+                        "String",
+                        "String"
+                    ],
+                    [
+                        "boolean",
+                        "boolean"
+                    ],
+                    [
+                        "Player",
+                        "Player"
+                    ],
+                    [
+                        "Entity",
+                        "Entity"
+                    ],
+                    [
+                        "Location",
+                        "Location"
+                    ],
+                    [
+                        "Component",
+                        "Component"
+                    ],
+                    [
+                        "List type String",
+                        "List<String>"
+                    ],
+                    [
+                        "List type int",
+                        "List<Integer>"
+                    ],
+                    [
+                        "List type double",
+                        "List<? extends Number>"
+                    ],
+                    [
+                        "List type Player",
+                        "List<Player>"
+                    ],
+                    [
+                        "List type Location",
+                        "List<Location>"
+                    ]
+                ]
+            }
+        ],
+        "message1": "Parameters %1",
+        "args1": [
+            {
+                "type": "input_statement",
+                "name": "PARAMS"
+            }
+        ],
+        "message2": "Do %1",
+        "args2": [
+            {
+                "type": "input_statement",
+                "name": "BODY"
+            }
+        ],
+        "colour": 330,
+        "tooltip": "Defines a function that takes parameters. Put parameter blocks in \"Parameters\" and read them in the body with the \"parameter\" block.",
+        "helpUrl": ""
+    },
+    "function_parameter": {
+        "message0": "parameter %1 of type %2",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "NAME",
+                "text": "value"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "TYPE",
+                "options": [
+                    [
+                        "int",
+                        "int"
+                    ],
+                    [
+                        "double",
+                        "double"
+                    ],
+                    [
+                        "String",
+                        "String"
+                    ],
+                    [
+                        "boolean",
+                        "boolean"
+                    ],
+                    [
+                        "Player",
+                        "Player"
+                    ],
+                    [
+                        "Entity",
+                        "Entity"
+                    ],
+                    [
+                        "Location",
+                        "Location"
+                    ],
+                    [
+                        "Component",
+                        "Component"
+                    ],
+                    [
+                        "GUI",
+                        "GUI"
+                    ],
+                    [
+                        "List type String",
+                        "List<String>"
+                    ],
+                    [
+                        "List type int",
+                        "List<Integer>"
+                    ],
+                    [
+                        "List type double",
+                        "List<? extends Number>"
+                    ],
+                    [
+                        "List type Player",
+                        "List<Player>"
+                    ],
+                    [
+                        "List type Location",
+                        "List<Location>"
+                    ]
+                ]
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 330,
+        "tooltip": "A parameter of a function. Only works inside the \"Parameters\" of a function with parameters.",
+        "helpUrl": ""
+    },
+    "function_parameter_get": {
+        "message0": "parameter %1",
+        "args0": [
+            {
+                "type": "field_input",
+                "name": "NAME",
+                "text": "value"
+            }
+        ],
+        "output": null,
+        "colour": 330,
+        "tooltip": "The value passed to this parameter. Only works inside the function that defines it.",
+        "helpUrl": ""
+    },
     "call_function": {
         "message0": "call function %1",
         "args0": [
@@ -107,8 +287,10 @@
         ],
         "output": null,
         "colour": 330,
-        "tooltip": "Calls a function and returns the result",
-        "helpUrl": ""
+        "tooltip": "Calls a function and returns the result. Gets an input for every parameter of the function.",
+        "helpUrl": "",
+        "mutator": "function_call_arguments",
+        "inputsInline": true
     },
     "return_of_function": {
         "message0": "return %1",
@@ -135,7 +317,9 @@
         "previousStatement": null,
         "nextStatement": null,
         "colour": 330,
-        "tooltip": "Calls a function without a return",
-        "helpUrl": ""
+        "tooltip": "Calls a function without a return. Gets an input for every parameter of the function.",
+        "helpUrl": "",
+        "mutator": "function_call_arguments",
+        "inputsInline": true
     }
 }
