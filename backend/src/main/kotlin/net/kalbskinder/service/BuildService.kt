@@ -95,7 +95,7 @@ class BuildService(private val config: BuildConfig) {
                 logger.error("Failed to fetch plugin template for '{}'", request.pluginName, e)
                 return BuildResponse(
                     success = false,
-                    errors = listOf("Failed to fetch plugin template: ${e.message}")
+                    errors = listOf("The build server could not load the plugin template. Please try again later.")
                 )
             }
 
@@ -120,6 +120,9 @@ class BuildService(private val config: BuildConfig) {
 
             // Build the assembled project
             return runGradleBuild(workDir, start)
+        } catch (e: Exception) {
+            logger.error("Build for '{}' failed unexpectedly", request.pluginName, e)
+            return BuildResponse(success = false, errors = listOf("The build server ran into an unexpected problem. Please try again."))
         } finally {
             workDir.toFile().deleteRecursively()
             logger.debug("Cleaned up work directory {}", workDir)
@@ -267,16 +270,17 @@ class BuildService(private val config: BuildConfig) {
             reader.join(1000)
             return BuildResponse(
                 success = false,
-                errors = listOf("Build exceeded timeout (${config.timeoutSeconds}s).")
+                errors = listOf("The build took longer than ${config.timeoutSeconds} seconds and was stopped."),
+                log = BuildOutputParser.parse(output.toString(), hiddenPaths(workDir, gradleHome)).log,
             )
         }
         reader.join()
 
         val exitCode = process.exitValue()
         if (exitCode != 0) {
-            val errors = parseBuildErrors(output.toString())
-            logger.warn("Gradle build in {} failed with exit code {}: {} error line(s)", workDir, exitCode, errors.size)
-            return BuildResponse(success = false, errors = errors)
+            val parsed = BuildOutputParser.parse(output.toString(), hiddenPaths(workDir, gradleHome))
+            logger.warn("Gradle build in {} failed with exit code {}: {}", workDir, exitCode, parsed.summary)
+            return BuildResponse(success = false, errors = parsed.summary, diagnostics = parsed.diagnostics, log = parsed.log)
         }
 
         val jar = findBuiltJar(workDir)
@@ -284,7 +288,7 @@ class BuildService(private val config: BuildConfig) {
                 logger.error("Gradle build in {} succeeded but produced no jar artifact", workDir)
                 return BuildResponse(
                     success = false,
-                    errors = listOf("Build succeeded but no jar artifact was produced.")
+                    errors = listOf("The build finished, but no plugin jar was produced.")
                 )
             }
 
@@ -308,12 +312,12 @@ class BuildService(private val config: BuildConfig) {
         }
     }
 
-    private fun parseBuildErrors(output: String): List<String> {
-        val compileErrors = output.lines().filter { it.contains("error:") }
-        if (compileErrors.isNotEmpty()) return compileErrors
-        // No compiler errors, surface the tail of the log for diagnostics.
-        return output.lines().filter { it.isNotBlank() }.takeLast(20)
-    }
+    /** Server directories that must not show up in what the client sees. */
+    private fun hiddenPaths(workDir: Path, gradleHome: Path): List<String> =
+        listOf(workDir, gradleHome, Path.of(config.tempDir))
+            .flatMap { path -> listOf(path.toAbsolutePath().toString(), runCatching { path.toRealPath().toString() }.getOrNull()) }
+            .filterNotNull()
+            .distinct()
 
     private fun writeText(target: Path, content: String) {
         Files.createDirectories(target.parent)

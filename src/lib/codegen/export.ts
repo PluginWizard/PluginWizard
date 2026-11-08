@@ -58,10 +58,29 @@ export interface GeneratedCode {
     config: string
 }
 
+/** A compiler error in the generated sources, as reported by the build backend. */
+export interface BuildDiagnostic {
+    /** File name only, e.g. "UserPlugin.java". */
+    file?: string | null
+    line?: number | null
+    /** 1-based column within `code`. */
+    column?: number | null
+    message: string
+    /** The offending source line, without its indentation. */
+    code?: string | null
+    /** Extra compiler info such as "symbol: variable x". */
+    details?: string[]
+}
+
 export interface JarBuildResult {
     success: boolean
     jar?: Uint8Array
+    /** Short, human readable error summaries. */
     errors: string[]
+    /** Structured compiler errors, when the build failed to compile. */
+    diagnostics: BuildDiagnostic[]
+    /** Tail of the build output, with server paths removed. */
+    log?: string
     buildTimeMs: number
 }
 
@@ -240,13 +259,15 @@ export async function requestPluginJar(project: Project, generated: GeneratedCod
     })
 
     if (!response.ok) {
-        throw new Error(`Build request failed: ${response.status} ${response.statusText}`)
+        throw new Error(`The build server answered with HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ""}.`)
     }
 
     const data = (await response.json()) as {
         success: boolean
         jarBase64?: string | null
         errors?: string[]
+        diagnostics?: BuildDiagnostic[]
+        log?: string | null
         buildTimeMs?: number
     }
 
@@ -254,6 +275,8 @@ export async function requestPluginJar(project: Project, generated: GeneratedCod
         success: data.success,
         jar: data.jarBase64 ? base64ToU8(data.jarBase64) : undefined,
         errors: data.errors ?? [],
+        diagnostics: data.diagnostics ?? [],
+        log: data.log ?? undefined,
         buildTimeMs: data.buildTimeMs ?? 0,
     }
 }

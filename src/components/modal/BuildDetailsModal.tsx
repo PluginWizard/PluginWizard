@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
-import { AlertCircle, CheckCircle2, Loader2, X } from "lucide-react"
+import { AlertCircle, CheckCircle2, Loader2, RotateCw, X } from "lucide-react"
 import { Project } from "../../types/types"
 import { downloadBytes, pluginFileBaseName, requestPluginJar } from "../../lib/codegen/export"
+import { BuildErrors, BuildFailure } from "../BuildErrors"
+import { Button } from "../ui/button"
 
 interface BuildDetailsModalProps {
     open: boolean
@@ -20,7 +22,7 @@ const progressBarTexts = [
 
 export function BuildDetailsModal({ open, project, code, config, onClose }: BuildDetailsModalProps) {
     const [isBuildingJar, setIsBuildingJar] = useState(false)
-    const [jarBuildErrors, setJarBuildErrors] = useState<string[]>([])
+    const [failure, setFailure] = useState<BuildFailure | null>(null)
     const [progress, setProgress] = useState(0)
     const [textIndex, setTextIndex] = useState(0)
     const [succeeded, setSucceeded] = useState(false)
@@ -89,11 +91,15 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
         setTextIndex(0)
         setSucceeded(false)
         setIsBuildingJar(true)
-        setJarBuildErrors([])
+        setFailure(null)
         try {
             const result = await requestPluginJar(project, exportCode)
             if (!result.success || !result.jar) {
-                setJarBuildErrors(result.errors.length > 0 ? result.errors : ["The plugin could not be built."])
+                setFailure({
+                    summary: result.errors.length > 0 ? result.errors : ["The plugin could not be built."],
+                    diagnostics: result.diagnostics,
+                    log: result.log,
+                })
                 return
             }
 
@@ -102,13 +108,17 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
             downloadBytes(result.jar, `${pluginFileBaseName(project)}.jar`, "application/java-archive")
         } catch (error) {
             console.error("Failed to build .jar:", error)
-            setJarBuildErrors(["Could not reach the build service. Please try again later."])
+            setFailure({
+                summary: ["Could not reach the build server. Check your connection and try again in a moment."],
+                diagnostics: [],
+                log: error instanceof Error ? error.message : String(error),
+            })
         } finally {
             setIsBuildingJar(false)
         }
     }
 
-    const hasErrors = jarBuildErrors.length > 0
+    const hasErrors = failure !== null
 
     return (
         <div
@@ -142,7 +152,7 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
                     loop
                     muted
                     playsInline
-                    className="mt-10 w-full max-w-xl"
+                    className={`mt-10 w-full transition-[max-width] duration-500 ${hasErrors ? "max-w-2xs" : "max-w-xl"}`}
                 />
 
                 <div className="mt-10 flex items-center justify-center gap-3">
@@ -165,31 +175,38 @@ export function BuildDetailsModal({ open, project, code, config, onClose }: Buil
                     </span>
                 </div>
 
-                {/* Progress bar — diagonally striped green */}
-                <div className="mt-6 h-4 w-full max-w-xl overflow-hidden bg-card-muted">
-                    <div
-                        className="h-full bg-green-500"
-                        style={{
-                            width: `${progress}%`,
-                            transition: "width 0.6s ease-in-out",
-                            backgroundImage:
-                                "repeating-linear-gradient(45deg, #15803d 0, #15803d 12px, transparent 12px, transparent 24px)",
-                        }}
-                    ></div>
-                </div>
-
-                {hasErrors && (
-                    <div className="mt-8 w-full max-w-xl border border-red-500/40 bg-red-500/10 p-5 text-left">
-                        <div className="flex items-center gap-2 text-lg font-medium text-red-400">
-                            <AlertCircle className="h-5 w-5 shrink-0" />
-                            The plugin could not be built.
-                        </div>
-                        <ul className="mt-3 list-disc space-y-1 pl-6 text-sm text-red-300">
-                            {jarBuildErrors.map((error, index) => (
-                                <li key={index} className="whitespace-pre-wrap break-words font-mono">{error}</li>
-                            ))}
-                        </ul>
+                {/* Progress bar — diagonally striped green, hidden once the build has failed */}
+                {!hasErrors && (
+                    <div className="mt-6 h-4 w-full max-w-xl overflow-hidden bg-card-muted">
+                        <div
+                            className="h-full bg-green-500"
+                            style={{
+                                width: `${progress}%`,
+                                transition: "width 0.6s ease-in-out",
+                                backgroundImage:
+                                    "repeating-linear-gradient(45deg, #15803d 0, #15803d 12px, transparent 12px, transparent 24px)",
+                            }}
+                        ></div>
                     </div>
+                )}
+
+                {failure && (
+                    <>
+                        <div className="mt-8 w-full">
+                            <BuildErrors failure={failure} />
+                        </div>
+                        <div className="mt-6 flex w-full justify-end gap-3">
+                            <Button variant="outline" onClick={onClose} className="cursor-pointer">
+                                Close
+                            </Button>
+                            {failure.diagnostics.length === 0 && (
+                                <Button onClick={handleDownloadJar} className="cursor-pointer">
+                                    <RotateCw className="mr-1 h-4 w-4" />
+                                    Try again
+                                </Button>
+                            )}
+                        </div>
+                    </>
                 )}
             </div>
         </div>
