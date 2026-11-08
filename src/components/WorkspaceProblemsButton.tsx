@@ -7,10 +7,18 @@ import { WorkspaceProblem, fixAllProblems, revealProblem } from "../lib/editor/w
 interface WorkspaceProblemsButtonProps {
     workspace: Blockly.WorkspaceSvg | null
     problems: WorkspaceProblem[]
+    /** Controls whether the list is open; leave unset to let the button manage it. */
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
 }
 
-export default function WorkspaceProblemsButton({ workspace, problems }: WorkspaceProblemsButtonProps) {
-    const [isOpen, setIsOpen] = useState(false)
+export default function WorkspaceProblemsButton({ workspace, problems, open, onOpenChange }: WorkspaceProblemsButtonProps) {
+    const [internalOpen, setInternalOpen] = useState(false)
+    const isOpen = open ?? internalOpen
+    const setIsOpen = (next: boolean) => {
+        setInternalOpen(next)
+        onOpenChange?.(next)
+    }
     const containerRef = useRef<HTMLDivElement>(null)
     const fixableCount = problems.filter((problem) => problem.fix).length
 
@@ -33,7 +41,7 @@ export default function WorkspaceProblemsButton({ workspace, problems }: Workspa
     return (
         <div ref={containerRef} className="relative flex items-center">
             <Button
-                onClick={() => setIsOpen((open) => !open)}
+                onClick={() => setIsOpen(!isOpen)}
                 variant="outline"
                 className="border-red-500/50! bg-red-500/10! text-red-400 hover:bg-red-500/20! cursor-pointer"
             >

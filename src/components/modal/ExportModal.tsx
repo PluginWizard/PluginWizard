@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import SyntaxHighlighter from "react-syntax-highlighter"
 import { railscasts } from "react-syntax-highlighter/dist/esm/styles/hljs"
-import { Check, Copy, Download, FileArchive, Package, X } from "lucide-react"
+import { Check, Copy, Download, FileArchive, Package, TriangleAlert, X } from "lucide-react"
 import { Project } from "../../types/types"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
@@ -10,6 +10,7 @@ import { validateVersion } from "../../lib/codegen/export"
 import { sanitizeMinecraftVersion } from "../../lib/minecraftVersions"
 import { MinecraftVersionSelect } from "../ui/minecraft-version-select"
 import { BuildDetailsModal } from "./BuildDetailsModal"
+import { WorkspaceProblem } from "../../lib/editor/workspaceChecks"
 
 interface ExportModalProps {
   open: boolean
@@ -20,15 +21,24 @@ interface ExportModalProps {
   onProjectUpdate: (updates: Partial<Pick<Project, "version" | "mcVersion">>) => void
   code: string | undefined
   config: string | undefined
+  /** Problems found in the workspace; the .jar can't be built while there are any. */
+  problems: WorkspaceProblem[]
+  /** Close the export and show the problems list in the editor. */
+  onShowProblems: () => void
 }
 
-export function ExportModal({ open, project, onClose, onDownloadProject, onDownloadZip, onProjectUpdate, code, config }: ExportModalProps) {
+/** How many problems the export notice lists before summarising the rest. */
+const LISTED_PROBLEMS = 3
+
+export function ExportModal({ open, project, onClose, onDownloadProject, onDownloadZip, onProjectUpdate, code, config, problems, onShowProblems }: ExportModalProps) {
     const [copiedField, setCopiedField] = useState<"code" | "config" | null>(null)
     const [buildDetailsOpen, setBuildDetailsOpen] = useState(false)
     const [version, setVersion] = useState("")
     const versionError = validateVersion(version)
     const hasGeneratedOutput = Boolean(code?.trim() || config?.trim())
     const canExportOutput = hasGeneratedOutput && !versionError
+    const hasProblems = problems.length > 0
+    const canBuildJar = !versionError && !hasProblems
 
     // Load the project's version whenever the modal opens. Edits while it is
     // open stay local until valid, so an invalid draft is never overwritten.
@@ -109,10 +119,11 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                     </Button>
 
                     <Button
-                        onClick={() => { setBuildDetailsOpen(true) }}
-                        disabled={!!versionError}
+                        onClick={() => { if (canBuildJar) setBuildDetailsOpen(true) }}
+                        disabled={!canBuildJar}
+                        title={hasProblems ? "Fix the problems in your blocks first" : undefined}
                         className={`flex h-auto flex-1 items-center justify-center gap-2 px-4 py-4 text-white ${
-                            versionError
+                            !canBuildJar
                                 ? "bg-green-600/50 cursor-not-allowed! hover:bg-green-600/50"
                                 : "bg-green-600 hover:bg-green-700 cursor-pointer"
                         }`}
@@ -121,6 +132,28 @@ export function ExportModal({ open, project, onClose, onDownloadProject, onDownl
                         Export Plugin .jar
                     </Button>
                 </div>
+
+                {hasProblems && (
+                    <div className="mb-6 flex flex-col gap-3 border border-red-500/40 bg-red-500/10 px-4 py-3 sm:flex-row sm:items-start">
+                        <TriangleAlert className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
+                        <div className="flex-1">
+                            <p className="font-medium text-red-300">
+                                Fix {problems.length === 1 ? "1 problem" : `${problems.length} problems`} in your blocks before exporting the .jar
+                            </p>
+                            <ul className="mt-1 list-disc space-y-0.5 pl-5 text-sm text-card-muted-foreground">
+                                {problems.slice(0, LISTED_PROBLEMS).map((problem) => (
+                                    <li key={problem.id}>{problem.message}</li>
+                                ))}
+                                {problems.length > LISTED_PROBLEMS && (
+                                    <li>and {problems.length - LISTED_PROBLEMS} more</li>
+                                )}
+                            </ul>
+                        </div>
+                        <Button variant="outline" onClick={onShowProblems} className="shrink-0 cursor-pointer">
+                            Show problems
+                        </Button>
+                    </div>
+                )}
 
                 <div className="grid gap-4 pb-6 sm:grid-cols-2 sm:max-w-2xl">
                     <div className="space-y-2">

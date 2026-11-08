@@ -92,6 +92,7 @@ export default function EditorPage() {
 
     // Modals
     const [isExportModalOpen, setIsExportModalOpen] = useState(false)
+    const [isProblemsOpen, setIsProblemsOpen] = useState(false)
     const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false)
     const [isProjectSettingsModalOpen, setIsProjectSettingsModalOpen] = useState(false)
 
@@ -543,7 +544,7 @@ export default function EditorPage() {
 
                     {/* Right buttons */}
                     <div className="flex flex-row gap-3 justify-items-center">
-                        <WorkspaceProblemsButton workspace={workspace} problems={problems} />
+                        <WorkspaceProblemsButton workspace={workspace} problems={problems} open={isProblemsOpen} onOpenChange={setIsProblemsOpen} />
                         <div className="flex items-center space-x-2">
                             <Button
                                 onClick={() => setProject(null)}
@@ -637,6 +638,11 @@ export default function EditorPage() {
                 onProjectUpdate={(updates) => void handleProjectUpdate(updates)}
                 code={exportCode?.code || ""}
                 config={exportCode?.config || ""}
+                problems={problems}
+                onShowProblems={() => {
+                    setIsExportModalOpen(false)
+                    setIsProblemsOpen(true)
+                }}
             />
 
             {/* Workspace file import */}
