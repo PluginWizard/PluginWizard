@@ -366,7 +366,7 @@ export default function EditorPage() {
         // Persist workspace edits automatically
         ws.addChangeListener((event: any) => {
             if (!event.isUiEvent || event.type === Blockly.Events.FINISHED_LOADING) {
-                syncFunctionCalls(ws, event.group)
+                syncFunctionCalls(ws, event)
                 setProblems(findWorkspaceProblems(ws))
             }
             if (suppressSaveRef.current) {

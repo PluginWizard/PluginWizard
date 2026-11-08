@@ -1,5 +1,5 @@
 import * as Blockly from "blockly"
-import { FUNCTION_WITH_PARAMS_BLOCK, PARAMETER_BLOCK, PARAMETER_GET_BLOCK, getFunctionParameters } from "./blocks/functionParameters"
+import { CALL_BLOCKS, FUNCTION_BLOCKS, FUNCTION_WITH_PARAMS_BLOCK, PARAMETER_BLOCK, PARAMETER_GET_BLOCK, getFunctionParameters } from "./blocks/functionParameters"
 
 /** A problem in the workspace that would break or change the generated plugin. */
 export interface WorkspaceProblem {
@@ -43,7 +43,7 @@ const INPUT_LABELS: Record<string, string> = {
 
 /** Run every check and return the problems found, in display order. */
 export function findWorkspaceProblems(workspace: Blockly.Workspace): WorkspaceProblem[] {
-    const problems = [...checkMainFunction(workspace), ...checkMisplacedBlocks(workspace), ...checkFunctionParameters(workspace)]
+    const problems = [...checkMainFunction(workspace), ...checkMisplacedBlocks(workspace), ...checkFunctionParameters(workspace), ...checkFunctionCalls(workspace)]
     // A block can fail several checks; report it once, with the first message.
     const seen = new Set<string>()
     return problems.filter((problem) => !seen.has(problem.id) && seen.add(problem.id))
@@ -146,6 +146,24 @@ function checkFunctionParameters(workspace: Blockly.Workspace): WorkspaceProblem
     }
 
     return problems
+}
+
+/** Calls to a function that doesn't exist (or is disabled). */
+function checkFunctionCalls(workspace: Blockly.Workspace): WorkspaceProblem[] {
+    const defined = new Set(
+        FUNCTION_BLOCKS.flatMap((type) => workspace.getBlocksByType(type, false))
+            .filter((block) => block.isEnabled())
+            .map((block) => block.getFieldValue("NAME").trim()),
+    )
+    return CALL_BLOCKS.flatMap((type) => workspace.getBlocksByType(type, false))
+        // Loose blocks lying on the workspace don't end up in the plugin.
+        .filter((call) => call.isEnabled() && call.getRootBlock() !== call)
+        .filter((call) => !defined.has(call.getFieldValue("NAME").trim()))
+        .map((call) => ({
+            id: `call-unknown-${call.id}`,
+            message: `There is no function called "${call.getFieldValue("NAME").trim()}".`,
+            blockId: call.id,
+        }))
 }
 
 /** The function-with-parameters block a block is nested in, if any. */

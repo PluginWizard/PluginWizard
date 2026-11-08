@@ -32,6 +32,14 @@
     },
     {
       "kind": "block",
+      "type": "call_function_params"
+    },
+    {
+      "kind": "block",
+      "type": "call_function_params_silent"
+    },
+    {
+      "kind": "block",
       "type": "call_function"
     },
     {

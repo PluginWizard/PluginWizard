@@ -276,6 +276,45 @@
         "tooltip": "The value passed to this parameter. Only works inside the function that defines it.",
         "helpUrl": ""
     },
+    "call_function_params": {
+        "message0": "call function %1",
+        "args0": [
+            {
+                "type": "field_function_name",
+                "name": "NAME",
+                "value": "myFunction"
+            }
+        ],
+        "output": null,
+        "inputsInline": true,
+        "colour": 330,
+        "mutator": "function_call_arguments",
+        "extensions": [
+            "default_function_name"
+        ],
+        "tooltip": "Calls a function with parameters and returns the result. Pick the function from the list; it gets an input for every parameter.",
+        "helpUrl": ""
+    },
+    "call_function_params_silent": {
+        "message0": "run function %1",
+        "args0": [
+            {
+                "type": "field_function_name",
+                "name": "NAME",
+                "value": "myFunction"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "inputsInline": true,
+        "colour": 330,
+        "mutator": "function_call_arguments",
+        "extensions": [
+            "default_function_name"
+        ],
+        "tooltip": "Calls a function with parameters without using its result. Pick the function from the list; it gets an input for every parameter.",
+        "helpUrl": ""
+    },
     "call_function": {
         "message0": "call function %1",
         "args0": [
